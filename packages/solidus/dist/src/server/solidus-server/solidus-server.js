@@ -8,10 +8,12 @@ exports.SolidusServer = void 0;
  * adaptor to define
  */
 class SolidusServer {
-    constructor(app, template, config) {
-        this.app = app;
+    constructor(App, template, config) {
+        this.App = App;
         this.template = template;
         this.config = config;
+    }
+    renderAppSync() {
     }
 }
 exports.SolidusServer = SolidusServer;

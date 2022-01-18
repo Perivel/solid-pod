@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js';
+import { Component } from 'solid-js';
 
 /**
  * SolidusServer
@@ -10,10 +10,14 @@ import { JSX } from 'solid-js';
 export abstract class SolidusServer {
 
     constructor(
-        protected readonly app: JSX.Element,
+        protected readonly App: Component,
         protected readonly template: string,
         protected readonly config: any
     ) { }
+
+    private renderAppSync() {
+        
+    }
 
     /**
      * start()
