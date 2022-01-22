@@ -1,4 +1,4 @@
-import { useRoutes } from 'solid-app-router';
+import { Router, useRoutes } from 'solid-app-router';
 import { MetaProvider } from 'solid-meta';
 import { ApplicationComponent } from '../../types/application-component.type';
 import DefaultLayout from '../layout/DefaultLayout';
@@ -38,7 +38,9 @@ const Application: ApplicationComponent = (props) => {
     return (
       <div>
         <MetaProvider>
-          <Layout content={<Content />} />
+          <Router>
+            <Layout content={<Content />} />
+          </Router>
         </MetaProvider>
       </div>
     );
