@@ -7,7 +7,9 @@ import { LayoutComponent } from "../../types/layout-component.type";;
  */
 
 const DefaultLayout: LayoutComponent = (props) => {
-  return <div>{props.content}</div>;
+  return <div>
+    {props.content}
+  </div>;
 };
 
 export default DefaultLayout;

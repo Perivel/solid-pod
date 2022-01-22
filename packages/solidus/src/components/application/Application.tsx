@@ -1,6 +1,7 @@
 import { Router, useRoutes } from 'solid-app-router';
 import { MetaProvider } from 'solid-meta';
 import { ApplicationComponent } from '../../types/application-component.type';
+import SolidusError from '../error/SolidusError';
 import DefaultLayout from '../layout/DefaultLayout';
 import { routesListContainsIndexRoute } from './application.fns';
 
@@ -8,12 +9,14 @@ import { routesListContainsIndexRoute } from './application.fns';
  * Application
  * 
  * The Application component should be the root of any Solidus website.
+ * @note Using lazy() in the routes array seems to cause the route to not be defined. Need to fix this bug.
  */
 
 const Application: ApplicationComponent = (props) => {
-    // merge the props
+    // process props.
     const routes = props.routes ? props.routes : [];
     const Layout =  props.layout ? props.layout : DefaultLayout;
+    const url = props.url;
 
     // resolve the routes.
     if (!routesListContainsIndexRoute(routes)) {
@@ -29,7 +32,12 @@ const Application: ApplicationComponent = (props) => {
         }
         else {
             // there is no index route or index component. We cannot proceed.
-            throw new Error('Index Route ')
+            const error = new Error('No index route defined');
+            routes.push({
+              path: '/',
+              component: () => <SolidusError error={error}
+              />
+            });
         }
     }
 
@@ -38,7 +46,7 @@ const Application: ApplicationComponent = (props) => {
     return (
       <div>
         <MetaProvider>
-          <Router>
+          <Router url={url}>
             <Layout content={<Content />} />
           </Router>
         </MetaProvider>
