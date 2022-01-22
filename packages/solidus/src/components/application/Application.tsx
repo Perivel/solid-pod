@@ -13,10 +13,9 @@ import { routesListContainsIndexRoute } from './application.fns';
  */
 
 const Application: ApplicationComponent = (props) => {
-    // process props.
-    const routes = props.routes ? props.routes : [];
-    const Layout =  props.layout ? props.layout : DefaultLayout;
+    let routes = props.routes ? props.routes : [];
     const url = props.url;
+    let hasSolidusError = false;
 
     // resolve the routes.
     if (!routesListContainsIndexRoute(routes)) {
@@ -32,16 +31,26 @@ const Application: ApplicationComponent = (props) => {
         }
         else {
             // there is no index route or index component. We cannot proceed.
+            // So, we display the Solidus Error page, disregarding all the other
+            // routes.
             const error = new Error('No index route defined');
-            routes.push({
-              path: '/',
-              component: () => <SolidusError error={error}
-              />
-            });
+            hasSolidusError = true;
+            routes = [
+              {
+                path: "/",
+                component: () => <SolidusError error={error} />,
+              },
+            ];
         }
     }
 
     const Content = useRoutes(routes);
+
+    // prepare the layout.
+
+    // When there is a SolidusError, we revert back to the DefaultLayout regardless of whether there is a 
+    // custom layout specified.
+    const Layout = (props.layout) && !hasSolidusError ? props.layout : DefaultLayout;
 
     return (
       <div>

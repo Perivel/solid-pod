@@ -2,7 +2,7 @@ import { RouteDefinition } from "solid-app-router";
 import { Component, JSX } from "solid-js";
 import { LayoutComponent } from "./layout-component.type";
 
-export interface ApplicationProps {
+interface ApplicationProps {
     /**
      * the default component to load. It is equivalent to assigning a component to the '/' route in routes.
      * If index is omitted, be sure you have a '/' route in your routes.
@@ -23,6 +23,9 @@ export interface ApplicationProps {
 
     routes?: RouteDefinition[];
 
+    /**
+     * The url of the route to load. This will be set by the server.
+     */
     url?: string;
 }
 
