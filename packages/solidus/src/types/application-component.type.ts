@@ -24,8 +24,17 @@ interface ApplicationProps {
     routes?: RouteDefinition[];
 
     /**
+     * title
+     * 
+     * A Default title to set.
+     */
+
+    title?: string;
+
+    /**
      * The url of the route to load. This will be set by the server.
      */
+    
     url?: string;
 }
 

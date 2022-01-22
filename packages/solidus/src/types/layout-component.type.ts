@@ -7,7 +7,7 @@ import { Component, JSX } from 'solid-js';
  */
 
 export interface LayoutProps {
-    constent: JSX.Element;
+    content: JSX.Element;
 }
 
 /**
