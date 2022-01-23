@@ -59,7 +59,7 @@ export const runServer = (App: Application, config: Configuration): void => {
             
             if (config.ssr === 'stream') {
                 // set up streaming ssr.
-                renderToStream(() => <App url={req.url}/>).pipe(res);
+                renderToStream(() => <App url={req.url} port={config.port} debug={config.env === 'development'}/>).pipe(res);
             }
             else {
                 // the SSR configuration is set to either synchonous or asynchonous SSR.
@@ -68,11 +68,23 @@ export const runServer = (App: Application, config: Configuration): void => {
 
                     if (config.ssr === 'async') {
                         // set up async ssr.
-                        page = await renderToStringAsync(() => <App url={req.url}/>);
+                        page = await renderToStringAsync(() => (
+                          <App
+                            url={req.url}
+                            port={config.port}
+                            debug={config.env === "development"}
+                          />
+                        ));
                     }
                     else {
                         // set up standard ssr.
-                        page = renderToString(() => <App url={req.url}/>)
+                        page = renderToString(() => (
+                          <App
+                            url={req.url}
+                            port={config.port}
+                            debug={config.env === "development"}
+                          />
+                        ));
                     }
                     res.send(page);
                 }
