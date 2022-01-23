@@ -2,7 +2,7 @@ import { RouteDefinition } from "solid-app-router";
 import { Component, JSX } from "solid-js";
 import { LayoutComponent } from "./layout-component.type";
 
-interface ApplicationProps {
+interface ViewProps {
     /**
      * the default component to load. It is equivalent to assigning a component to the '/' route in routes.
      * If index is omitted, be sure you have a '/' route in your routes.
@@ -44,4 +44,4 @@ interface ApplicationProps {
  * The Application Component is the root of of any Solidus application compoent tree.
  */
 
-export type ApplicationComponent = Component<ApplicationProps>;
+export type ViewComponent = Component<ViewProps>;

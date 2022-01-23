@@ -1,11 +1,11 @@
 import { render } from 'solid-js/web';
-import Application from './components/application/Application';
+import View from './components/view/View';
 import './index.css';
 import App from './App';
 
 render(
   () => (
-    <Application
+    <View
       //index={<App />}
       routes={[
         {

@@ -64,14 +64,6 @@ export interface Configuration {
     middleware: Middleware[];
 
     /**
-     * template
-     * 
-     * The path to the template to load from the root.
-     */
-    
-    template: string;
-
-    /**
      * static
      * 
      * path from the root directory to the static assets directory.

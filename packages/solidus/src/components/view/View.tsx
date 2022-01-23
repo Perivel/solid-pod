@@ -1,18 +1,18 @@
 import { Router, useRoutes } from 'solid-app-router';
 import { MetaProvider } from 'solid-meta';
-import { ApplicationComponent } from '../../types/application-component.type';
+import { ViewComponent } from '../../types/view-component.type';
 import SolidusError from '../error/SolidusError';
 import DefaultLayout from '../layout/DefaultLayout';
-import { routesListContainsIndexRoute } from './application.fns';
+import { routesListContainsIndexRoute } from './view.fns';
 
 /**
- * Application
+ * View
  * 
- * The Application component should be the root of any Solidus website.
+ * A solidus component that automatically sets up routing and a default template.
  * @note Using lazy() in the routes array seems to cause the route to not be defined. Need to fix this bug.
  */
 
-const Application: ApplicationComponent = (props) => {
+const View: ViewComponent = (props) => {
     let routes = props.routes ? props.routes : [];
     const url = props.url;
     let hasSolidusError = false;
@@ -53,14 +53,31 @@ const Application: ApplicationComponent = (props) => {
     const Layout = (props.layout) && !hasSolidusError ? props.layout : DefaultLayout;
 
     return (
-      <div>
-        <MetaProvider>
-          <Router url={url}>
-            <Layout content={<Content />} />
-          </Router>
-        </MetaProvider>
-      </div>
+      <html lang="en">
+        <head>
+          <meta charset="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <meta name="theme-color" content="#000000" />
+          <link
+            rel="shortcut icon"
+            type="image/ico"
+            href="/src/assets/favicon.ico"
+          />
+          <title>Solid App</title>
+        </head>
+        <body>
+          <noscript>You need to enable JavaScript to run this app.</noscript>
+          <div>
+            <MetaProvider>
+              <Router url={url}>
+                <Layout content={<Content />} />
+              </Router>
+            </MetaProvider>
+          </div>
+        </body>
+      </html>
     );
 }
 
-export default Application;
+export default View;
+
