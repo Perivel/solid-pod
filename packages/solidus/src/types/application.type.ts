@@ -30,6 +30,8 @@ import { Component } from 'solid-js';
 
 export interface ApplicationProps {
     url?: string;
+    debug: boolean;
+    port: number;
 }
 
 /**

@@ -27,6 +27,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 import { Router, useRoutes } from 'solid-app-router';
+import { createSignal, Show } from 'solid-js';
 import { MetaProvider } from 'solid-meta';
 import { ViewComponent } from '../../types/view-component.type';
 import SolidusError from '../error/SolidusError';
@@ -41,6 +42,7 @@ import { parseThemeColorHexValue, routesListContainsIndexRoute } from './view.fn
  */
 
 const View: ViewComponent = (props) => {
+
     let routes = props.routes ? props.routes : [];
     const url = props.url;
     const charset = props.charset ? props.charset : 'utf-8';
@@ -117,6 +119,16 @@ const View: ViewComponent = (props) => {
               </Router>
             </MetaProvider>
           </div>
+          <Show when={props.debug}>
+            <script
+              type="module"
+              src={`http://localhost:${props.port}/@vite/client`}
+            ></script>
+            <script
+              type="module"
+              src={`http://localhost:${props.port}/main.js`}
+            ></script>
+          </Show>
         </body>
       </html>
     );

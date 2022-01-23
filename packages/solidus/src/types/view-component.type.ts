@@ -42,6 +42,13 @@ interface ViewProps {
     charset?: string;
 
     /**
+     * debug
+     * 
+     * Determines if the application is running in debug mode.
+     */
+    debug: boolean;
+
+    /**
      * the default component to load. It is equivalent to assigning a component to the '/' route in routes.
      * If index is omitted, be sure you have a '/' route in your routes.
      */
@@ -63,11 +70,26 @@ interface ViewProps {
     layout?: LayoutComponent;
 
     /**
+     * port
+     * 
+     * the port the app is running on. This is mainly used for development.
+     */
+    
+    port: number;
+
+    /**
+     * routes
+     * 
      * Your application routes.
      */
 
     routes?: RouteDefinition[];
 
+    /**
+     * themeColor
+     * 
+     * The Theme color.
+     */
     themeColor: Color|string;
 
     /**

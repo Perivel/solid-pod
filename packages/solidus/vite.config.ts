@@ -6,5 +6,9 @@ export default defineConfig({
   build: {
     target: 'esnext',
     polyfillDynamicImport: false,
+    manifest: true,
+    rollupOptions: {
+      input: './src/index.js'
+    }
   },
 });
