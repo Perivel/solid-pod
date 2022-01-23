@@ -582,6 +582,14 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@swindle/color@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@swindle/color/-/color-1.0.0.tgz#8cefb933bda10fc9ec5e1b44cdf3ec3f1c51328b"
+  integrity sha512-fAy1UL73vvU5fGEOyh7Pja4ALex/xmmQMQJDoORJPAm/LV5wkdIc1fHmglRw7UEpUPHK68uNNL+urauCeo2wyQ==
+  dependencies:
+    "@swindle/core" "^2.1.1"
+    colors-convert "^1.4.1"
+
 "@swindle/core@^2.1.1":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@swindle/core/-/core-2.1.1.tgz#a8e91638ec87fac5dd1a7d3e9b9d960761a18555"
@@ -1223,6 +1231,13 @@ color-name@~1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.4.tgz#c2a09a87acbde69543de6f63fa3995c826c536a2"
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
+
+colors-convert@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/colors-convert/-/colors-convert-1.4.1.tgz#0cb969ce98fc68233655140a0c8199ef7ebe56f3"
+  integrity sha512-ocrpfnLi18zikmwuZ7McU66GaDp/wAdGindkYVDYX2D78cLALBZouBDpw1voMdSyjod6d/x/4vjIdyD23xYUSg==
+  dependencies:
+    lodash "^4.17.15"
 
 combined-stream@^1.0.8:
   version "1.0.8"
@@ -2717,7 +2732,7 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
-lodash@4.x, lodash@^4.7.0:
+lodash@4.x, lodash@^4.17.15, lodash@^4.7.0:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==

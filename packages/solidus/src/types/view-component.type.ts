@@ -1,14 +1,31 @@
+import { Color } from '@swindle/color';
 import { RouteDefinition } from "solid-app-router";
 import { Component, JSX } from "solid-js";
 import { LayoutComponent } from "./layout-component.type";
 
 interface ViewProps {
+
+    /**
+     * charset
+     * 
+     * The character set. Defaults to UTF-8
+     */
+
+    charset?: string;
+
     /**
      * the default component to load. It is equivalent to assigning a component to the '/' route in routes.
      * If index is omitted, be sure you have a '/' route in your routes.
      */
 
     index?: JSX.Element;
+
+    /**
+     * lang
+     * 
+     * The language to use. Defaults to 'en'
+     */
+    lang: string;
 
     /**
      * The layout of the application. If omitted, a default layout will be used.
@@ -22,6 +39,8 @@ interface ViewProps {
      */
 
     routes?: RouteDefinition[];
+
+    themeColor: Color|string;
 
     /**
      * title

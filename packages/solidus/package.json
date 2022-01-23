@@ -1,5 +1,5 @@
 {
-  "name": "vite-template-solid",
+  "name": "solidus",
   "version": "0.0.0",
   "description": "",
   "scripts": {
@@ -16,6 +16,7 @@
     "vite-plugin-solid": "^2.2.1"
   },
   "dependencies": {
+    "@swindle/color": "^1.0.0",
     "@swindle/core": "^2.1.1",
     "polka": "^0.5.2",
     "serve-static": "^1.14.2",

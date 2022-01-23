@@ -3,7 +3,7 @@ import { MetaProvider } from 'solid-meta';
 import { ViewComponent } from '../../types/view-component.type';
 import SolidusError from '../error/SolidusError';
 import DefaultLayout from '../layout/DefaultLayout';
-import { routesListContainsIndexRoute } from './view.fns';
+import { parseThemeColorHexValue, routesListContainsIndexRoute } from './view.fns';
 
 /**
  * View
@@ -15,7 +15,18 @@ import { routesListContainsIndexRoute } from './view.fns';
 const View: ViewComponent = (props) => {
     let routes = props.routes ? props.routes : [];
     const url = props.url;
-    let hasSolidusError = false;
+    const charset = props.charset ? props.charset : 'utf-8';
+    const lang = props.lang ? props.lang : 'en';
+    let themeColor: string = '';
+    let error: Error|null = null;
+
+    try {
+      themeColor = parseThemeColorHexValue(props.themeColor);
+    }
+    catch(e) {
+      // Theme color invalid.
+      error = e as Error;
+    }
 
     // resolve the routes.
     if (!routesListContainsIndexRoute(routes)) {
@@ -33,37 +44,41 @@ const View: ViewComponent = (props) => {
             // there is no index route or index component. We cannot proceed.
             // So, we display the Solidus Error page, disregarding all the other
             // routes.
-            const error = new Error('No index route defined');
-            hasSolidusError = true;
-            routes = [
-              {
-                path: "/",
-                component: () => <SolidusError error={error} />,
-              },
-            ];
+            error = new Error('No index route defined');
         }
     }
 
+    // show the error component when there is an error.
+    if (error) {
+      routes = [
+        {
+          path: "/",
+          component: () => <SolidusError error={error!} />,
+        },
+      ];
+    }
+    
+    // create the routes component.
     const Content = useRoutes(routes);
 
     // prepare the layout.
 
     // When there is a SolidusError, we revert back to the DefaultLayout regardless of whether there is a 
     // custom layout specified.
-    const Layout = (props.layout) && !hasSolidusError ? props.layout : DefaultLayout;
+    const Layout = (props.layout) && !error ? props.layout : DefaultLayout;
 
     return (
-      <html lang="en">
+      <html lang={lang}>
         <head>
           <meta charset="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <meta name="theme-color" content="#000000" />
+          <meta name="theme-color" content={themeColor} />
           <link
             rel="shortcut icon"
             type="image/ico"
             href="/src/assets/favicon.ico"
           />
-          <title>Solid App</title>
+          <title>{props.title}</title>
         </head>
         <body>
           <noscript>You need to enable JavaScript to run this app.</noscript>
