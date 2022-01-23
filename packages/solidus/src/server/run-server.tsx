@@ -24,9 +24,9 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
 */
 
+import { DateTime } from '@swindle/core';
 import Polka from 'polka';
 import serve from 'serve-static';
 import { join } from 'path';
@@ -97,6 +97,6 @@ export const runServer = (App: Application, config: Configuration): void => {
 
         // start the server.
         .listen(config.port, () => {
-            console.log(`Application running on ${config.host}:${config.port}`);
+            console.log(`[${DateTime.Now().toString()}]Application running on ${config.host}:${config.port}`);
         });
 }
