@@ -2,7 +2,9 @@
   "name": "solidus",
   "version": "0.1.0",
   "description": "",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/solidus.umd.js",
   "module": "./dist/solidus.es.js",
   "exports": {
@@ -12,11 +14,13 @@
     }
   },
   "scripts": {
-    "build": "vite build"
+    "build": "yarn clean && vite build",
+    "clean": "rimraf ./dist"
   },
   "license": "BSD",
   "devDependencies": {
     "@types/polka": "^0.5.4",
+    "rimraf": "^3.0.2",
     "typescript": "^4.5.4",
     "vite": "^2.7.10",
     "vite-plugin-solid": "^2.2.1"

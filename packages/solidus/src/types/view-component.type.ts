@@ -104,7 +104,7 @@ interface ViewProps {
      * The url of the route to load. This will be set by the server.
      */
     
-    url?: string;
+    url: string;
 }
 
 /**
