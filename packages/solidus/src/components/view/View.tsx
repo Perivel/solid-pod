@@ -119,14 +119,14 @@ const View: ViewComponent = (props) => {
               </Router>
             </MetaProvider>
           </div>
-          <Show when={props.debug}>
+          <Show when={props.serverOptions.debug}>
             <script
               type="module"
-              src={`http://localhost:${props.port}/@vite/client`}
+              src={`http://localhost:${props.serverOptions.port}/@vite/client`}
             ></script>
             <script
               type="module"
-              src={`http://localhost:${props.port}/main.js`}
+              src={`http://localhost:${props.serverOptions.port}/main.js`}
             ></script>
           </Show>
         </body>

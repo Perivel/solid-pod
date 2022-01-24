@@ -37,6 +37,7 @@ import {
 } from 'solid-js/web';
 import { Configuration } from './configuration/configuration';
 import { Application } from '../types/application.type';
+import { ServerOptions } from '../types/server-options.type';
 
 /**
  * runServer()
@@ -56,10 +57,14 @@ export const runServer = (App: Application, config: Configuration): void => {
 
         // set up the server to be used for SSR.
         .get('*', async (req, res) => {
+            const options: ServerOptions = {
+              debug: config.env === "development",
+              port: config.port
+            };
             
             if (config.ssr === 'stream') {
                 // set up streaming ssr.
-                renderToStream(() => <App url={req.url} port={config.port} debug={config.env === 'development'}/>).pipe(res);
+                renderToStream(() => <App url={req.url} serverOptions={options} />).pipe(res);
             }
             else {
                 // the SSR configuration is set to either synchonous or asynchonous SSR.
@@ -71,8 +76,7 @@ export const runServer = (App: Application, config: Configuration): void => {
                         page = await renderToStringAsync(() => (
                           <App
                             url={req.url}
-                            port={config.port}
-                            debug={config.env === "development"}
+                            serverOptions={options}
                           />
                         ));
                     }
@@ -81,8 +85,7 @@ export const runServer = (App: Application, config: Configuration): void => {
                         page = renderToString(() => (
                           <App
                             url={req.url}
-                            port={config.port}
-                            debug={config.env === "development"}
+                            serverOptions={options}
                           />
                         ));
                     }

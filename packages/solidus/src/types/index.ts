@@ -29,3 +29,4 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 export * from './application.type';
 export * from './layout-component.type';
 export * from './view-component.type';
+export * from './server-options.type';

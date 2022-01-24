@@ -26,18 +26,13 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import { Component } from 'solid-js';
-import { ServerOptions } from './server-options.type';
-
-export interface ApplicationProps {
-    url?: string;
-    serverOptions: ServerOptions
-}
-
 /**
- * Application
+ * ServerOptions
  * 
- * An Application Component is the root of every Solidus Application.
+ * Some configuration options that are passed by the server to the application.
  */
 
-export type Application = Component<ApplicationProps>;
+export interface ServerOptions {
+    debug: boolean;
+    port: number;
+}

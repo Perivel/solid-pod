@@ -30,6 +30,7 @@ import { Color } from '@swindle/color';
 import { RouteDefinition } from "solid-app-router";
 import { Component, JSX } from "solid-js";
 import { LayoutComponent } from "./layout-component.type";
+import { ServerOptions } from './server-options.type';
 
 interface ViewProps {
 
@@ -40,13 +41,6 @@ interface ViewProps {
      */
 
     charset?: string;
-
-    /**
-     * debug
-     * 
-     * Determines if the application is running in debug mode.
-     */
-    debug: boolean;
 
     /**
      * the default component to load. It is equivalent to assigning a component to the '/' route in routes.
@@ -70,14 +64,6 @@ interface ViewProps {
     layout?: LayoutComponent;
 
     /**
-     * port
-     * 
-     * the port the app is running on. This is mainly used for development.
-     */
-    
-    port: number;
-
-    /**
      * routes
      * 
      * Your application routes.
@@ -86,10 +72,19 @@ interface ViewProps {
     routes?: RouteDefinition[];
 
     /**
+     * serverOptions
+     * 
+     * Options that are passed by the server to the application.
+     */
+
+    serverOptions: ServerOptions;
+
+    /**
      * themeColor
      * 
      * The Theme color.
      */
+
     themeColor: Color|string;
 
     /**
