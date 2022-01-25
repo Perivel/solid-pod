@@ -1,7 +1,7 @@
 # SolidusJS
 ![Solidus Logo](logo.png)
 
-Solidus is a plus-and-play Server-Side Rendering solution for SolidJS.
+Solidus is a plug-and-play Server-Side Rendering solution for SolidJS.
 
 > **Note**: Solidus is still in development and not yet usable.
 
