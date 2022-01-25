@@ -61,6 +61,6 @@ import { runServer } from 'solidus';
 import MyApp from 'path/to/root/component/MyApp';
 import config from 'path/to/solidus/config';
 
-runServer(<MyApp />, config);
+runServer(MyApp, config);
 ```
 The `runServer()` function starts the application server using the `Application` component you defined, as well as a configuration object. The configuration object will specify how your server will be setup. These include which directory to use for public assets, how Server-Side Rendering will behave, and any middleware you want to define. Solidus uses [Polka](https://github.com/lukeed/polka) under the hood, which is a very performant micro-server package.

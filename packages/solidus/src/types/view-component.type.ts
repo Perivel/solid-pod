@@ -54,7 +54,7 @@ interface ViewProps {
      * 
      * The language to use. Defaults to 'en'
      */
-    lang: string;
+    lang?: string;
 
     /**
      * The layout of the application. If omitted, a default layout will be used.
@@ -85,7 +85,7 @@ interface ViewProps {
      * The Theme color.
      */
 
-    themeColor: Color|string;
+    themeColor?: Color|string;
 
     /**
      * title
@@ -99,7 +99,7 @@ interface ViewProps {
      * The url of the route to load. This will be set by the server.
      */
     
-    url: string;
+    url?: string;
 }
 
 /**
