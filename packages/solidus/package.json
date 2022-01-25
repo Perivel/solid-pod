@@ -1,7 +1,7 @@
 {
   "name": "solidus",
   "version": "0.1.0",
-  "description": "",
+  "description": "Plug and play Server-Side Rendering for SolidJS",
   "files": [
     "dist"
   ],
@@ -17,7 +17,7 @@
     "build": "yarn clean && vite build",
     "clean": "rimraf ./dist"
   },
-  "license": "BSD",
+  "license": "BSD-2",
   "devDependencies": {
     "@types/polka": "^0.5.4",
     "rimraf": "^3.0.2",

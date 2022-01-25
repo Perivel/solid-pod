@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [solidPlugin()],
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'dist/index.js'),
+      entry: path.resolve(__dirname, 'index.ts'),
       name: 'Solidus',
       fileName: (format) => `solidus.${format}.js`
     },
@@ -19,7 +19,8 @@ export default defineConfig({
         '@swindle/core',
         'polka',
         'serve-static',
-        'solid-js'
+        'solid-js',
+        'path'
       ]
     }
   },
