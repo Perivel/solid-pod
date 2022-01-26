@@ -55,6 +55,8 @@ export class RunBuildCommand extends Command {
         const fmt = new MessageFormatter();
         let ssr: SSRMode|null = null;
 
+        this.context.stdout.write(fmt.info("Preparing your application."));
+
         // load the solidus configuration.
         try {
             // load the solidus config

@@ -28,21 +28,25 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import { Cli } from 'clipanion';
 import { Process } from '@swindle/os';
-import packageJson from './package.json';
 import { commands } from './src/commands/commands';
+import pkg from './package.json';
 
-// gets the args
-const [node, app, ...args] = Process.argv;
+const main = () => {
+    // gets the args
+    const [node, app, ...args] = Process.argv;
 
-// initialize the cli.
-const solidusCli = new Cli({
-    binaryName: 'solidus',
-    binaryLabel: 'solidus',
-    binaryVersion: packageJson.version,
-});
+    // initialize the cli.
+    const solidusCli = new Cli({
+        binaryName: 'solidus',
+        binaryLabel: 'solidus',
+        binaryVersion: pkg.version,
+    });
 
-// register commands.
-commands.forEach(cmd => solidusCli.register(cmd));
+    // register commands.
+    commands.forEach(cmd => solidusCli.register(cmd));
 
-// run the cli.
-solidusCli.runExit(args, Cli.defaultContext);
+    // run the cli.
+    solidusCli.runExit(args, Cli.defaultContext);
+}
+
+main()
