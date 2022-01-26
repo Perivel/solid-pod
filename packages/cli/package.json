@@ -1,0 +1,12 @@
+{
+  "name": "@solidus/cli",
+  "version": "1.0.0",
+  "description": "The SolidusJS Cli",
+  "main": "dist/index.js",
+  "author": "Patrick Luy",
+  "license": "BSD-2",
+  "private": false,
+  "dependencies": {
+    "clipanion": "^3.2.0-rc.6"
+  }
+}
