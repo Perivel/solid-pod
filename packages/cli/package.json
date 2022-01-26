@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@types/rollup": "^0.54.0",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "rollup": "^2.66.1"
   }
 }
