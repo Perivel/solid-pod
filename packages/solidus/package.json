@@ -14,7 +14,7 @@
     }
   },
   "scripts": {
-    "build": "yarn clean && vite build",
+    "build": "yarn clean && rollup -c",
     "clean": "rimraf ./dist"
   },
   "license": "BSD-2",
