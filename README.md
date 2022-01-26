@@ -64,3 +64,11 @@ import config from 'path/to/solidus/config';
 runServer(MyApp, config);
 ```
 The `runServer()` function starts the application server using the `Application` component you defined, as well as a configuration object. The configuration object will specify how your server will be setup. These include which directory to use for public assets, how Server-Side Rendering will behave, and any middleware you want to define. Solidus uses [Polka](https://github.com/lukeed/polka) under the hood, which is a very performant micro-server package.
+
+## Converting a SolidJS App to a Solidus App.
+0. Install solidus and @solidus/cli dependencies in your SolidJS project.
+1. Wrap your App component in a Solidus View, and have that View be returned by an Application Component.
+2. Create a `solidus.config.ts` file inside your project root directory, where you can define your Solidus configuration.
+3. Create an `index.ts` file inside your project root directory and call `runServer()` from within that file.
+4. create a `public/` directory in your project root and move all your public assets to that directory.
+5. In your terminal, run `solidus dev`, `solidus build` and `solidus start`.
