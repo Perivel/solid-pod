@@ -26,23 +26,17 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import { Cli } from 'clipanion';
-import { Process } from '@swindle/os';
-import packageJson from './package.json';
-import { commands } from './src/commands/commands';
+import {
+    CommandClass,
+    BaseContext,
+    Builtins
+} from 'clipanion';
+import { RunBuildCommand } from './../commands/run-build/run-build.cmd';
 
-// gets the args
-const [node, app, ...args] = Process.argv;
+export const commands: CommandClass<BaseContext>[] = [
+    RunBuildCommand,
 
-// initialize the cli.
-const solidusCli = new Cli({
-    binaryName: 'solidus',
-    binaryLabel: 'solidus',
-    binaryVersion: packageJson.version,
-});
-
-// register commands.
-commands.forEach(cmd => solidusCli.register(cmd));
-
-// run the cli.
-solidusCli.runExit(args, Cli.defaultContext);
+    // Built-ins
+    Builtins.HelpCommand,
+    Builtins.VersionCommand,
+]

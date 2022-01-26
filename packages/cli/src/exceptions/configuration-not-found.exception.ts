@@ -26,23 +26,14 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import { Cli } from 'clipanion';
-import { Process } from '@swindle/os';
-import packageJson from './package.json';
-import { commands } from './src/commands/commands';
+import { BaseException } from '@swindle/core';
 
-// gets the args
-const [node, app, ...args] = Process.argv;
+/**
+ * ConfigurationNotFoundException
+ */
 
-// initialize the cli.
-const solidusCli = new Cli({
-    binaryName: 'solidus',
-    binaryLabel: 'solidus',
-    binaryVersion: packageJson.version,
-});
-
-// register commands.
-commands.forEach(cmd => solidusCli.register(cmd));
-
-// run the cli.
-solidusCli.runExit(args, Cli.defaultContext);
+export class ConfigurationNotFoundException extends BaseException {
+    constructor(message: string = 'Could not find soolidus.config.ts configuration file.') {
+        super(message); 
+    }
+}

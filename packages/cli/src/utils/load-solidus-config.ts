@@ -26,23 +26,34 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import { Cli } from 'clipanion';
 import { Process } from '@swindle/os';
-import packageJson from './package.json';
-import { commands } from './src/commands/commands';
+import { Path, FileSystem } from '@swindle/filesystem';
+import { Configuration } from 'solidus';
+import { ConfigurationNotFoundException } from './../exceptions/configuration-not-found.exception';
 
-// gets the args
-const [node, app, ...args] = Process.argv;
+/**
+ * loadSolidusConfiguration()
+ * 
+ * attempts to load the Solidus configuration file.
+ * @param root the root directory of the solidus application.
+ * @throws ConfigurationNotFoundException when the configuration file is not found.
+ */
 
-// initialize the cli.
-const solidusCli = new Cli({
-    binaryName: 'solidus',
-    binaryLabel: 'solidus',
-    binaryVersion: packageJson.version,
-});
+export const loadSolidusConfiguration = async (root: Path = Process.Cwd()): Promise<Configuration> => {
+    const path = Path.FromSegments(root, 'solidus.config.ts');
+    let config: Configuration|null = null;
 
-// register commands.
-commands.forEach(cmd => solidusCli.register(cmd));
+    if (await FileSystem.Contains(path)) {
+        // load the file contents.
+        const configFile = await FileSystem.Open(path);
+        const configData = await configFile.readAll();
+        await configFile.close();
+        config = JSON.parse(configData) as Configuration;
+    }
+    else {
+        // Solidus Config file is missing.
+        throw new ConfigurationNotFoundException();
+    }
 
-// run the cli.
-solidusCli.runExit(args, Cli.defaultContext);
+    return config;
+}
