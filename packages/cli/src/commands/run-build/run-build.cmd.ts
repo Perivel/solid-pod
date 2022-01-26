@@ -109,8 +109,8 @@ export class RunBuildCommand extends Command {
         // build the output.
         if (options.output) {
             if (Array.isArray(options.output)) {
-                Promise.all(options.output.map(option => {
-                    return await bundle.write(options);
+                Promise.all(options.output.map( async option => {
+                    return bundle.write(options);
                 }));
             }
             else {

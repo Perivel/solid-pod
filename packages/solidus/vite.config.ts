@@ -8,6 +8,7 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'index.ts'),
       name: 'Solidus',
+      formats: ['es', 'umd'],
       fileName: (format) => `solidus.${format}.js`
     },
     target: 'esnext',
