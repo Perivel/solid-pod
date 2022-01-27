@@ -1,7 +1,7 @@
 import typescriptPlugin from '@rollup/plugin-typescript';
 import executablePlugin from 'rollup-plugin-executable';
-import { path, resolve } from 'path';
-import { json } from '@rollup/plugin-json';
+import { resolve } from 'path';
+import json from '@rollup/plugin-json';
 
 export default {
     input: resolve(__dirname, 'index.ts'),
