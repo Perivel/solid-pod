@@ -1,7 +1,7 @@
 import typescriptPlugin from '@rollup/plugin-typescript';
-import executablePlugin from 'rollup-plugin-executable';
+import hashbangPlugin from 'rollup-plugin-hashbang'
 import { resolve } from 'path';
-import json from '@rollup/plugin-json';
+import jsonPlugin from '@rollup/plugin-json';
 
 export default {
     input: resolve(__dirname, 'index.ts'),
@@ -9,7 +9,11 @@ export default {
         file: "./dist/index.js",
         format: "cjs"
     },
-    plugins: [typescriptPlugin(), executablePlugin(), json()],
+    plugins: [
+        typescriptPlugin(), 
+        hashbangPlugin(), 
+        jsonPlugin()
+    ],
     external: [
         "@swindle/core",
         "@swindle/os",

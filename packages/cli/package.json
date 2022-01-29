@@ -25,7 +25,7 @@
     "@types/rollup": "^0.54.0",
     "rimraf": "^3.0.2",
     "rollup": "^2.66.1",
-    "rollup-plugin-executable": "^1.6.3"
+    "rollup-plugin-hashbang": "^3.0.0"
   },
   "bin": {
     "solidus": "./dist/index.js"

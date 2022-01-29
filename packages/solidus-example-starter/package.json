@@ -13,7 +13,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "solidus": "^3.2.1",
-    "@solidus/cli": "^1.0.0"
+    "@solidus/cli": "^1.0.0",
+    "solidus": "^3.2.1"
   }
 }

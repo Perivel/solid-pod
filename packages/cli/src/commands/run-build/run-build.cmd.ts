@@ -33,7 +33,7 @@ import { SSRMode } from 'solidus';
 import { loadSolidusConfiguration } from '../../utils/load-solidus-config';
 import { MessageFormatter } from '../../utils/message-formatter';
 import { CommandStatus } from '../../utils/command-status';
-import { syncConfig, asyncConfig, streamConfig } from './../../utils/rollup.templates';
+import { loadConfigurationOptions } from './../../utils/rollup.templates';
 
 /**
  * RunBuildCommand
@@ -70,19 +70,7 @@ export class RunBuildCommand extends Command {
         }
 
         // load the rollup configuration file.
-        let rollupOptions = {};
-        if (ssr === 'sync') {
-            // load sync rollup config.
-            rollupOptions = syncConfig;
-        }
-        else if (ssr === 'async') {
-            // load the async rollup config.
-            rollupOptions = asyncConfig;
-        }
-        else {
-            // load the streaming rollup config.
-            rollupOptions = streamConfig;
-        }
+        const rollupOptions = loadConfigurationOptions(ssr, Process.Cwd());
 
         // create the bundle
 
