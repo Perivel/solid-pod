@@ -14,6 +14,9 @@
       "node": "./dist/cjs/index.js"
     }
   },
+  "bin": {
+    "solidus": "./dist/cli.js"
+  },
   "scripts": {
     "build": "yarn clean && rollup -c",
     "clean": "rimraf ./dist"

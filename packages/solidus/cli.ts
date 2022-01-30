@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /*
 BSD 2-Clause License
 
@@ -27,3 +29,26 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 // This is the entrypoint of the SolidusJS CLI.
+import { Process } from '@swindle/os';
+import { runBuild } from './src/cli/commands/solidus-build';
+import { SolidusCommands } from './src/cli/utilities/solidus-commands.enum';
+
+const runCli = async (): Promise<number> => {
+   // determine which command to run.
+   const [node, app, ...args] = Process.argv;
+   const cmd = args[0];
+
+   if (cmd === SolidusCommands.build) {
+      // run the build command.
+      return await runBuild();
+   }
+   else if (cmd === SolidusCommands.dev) {
+      // run the Dev command.
+      return 1;
+   }
+   else {
+      return 1;
+   }
+}
+
+await runCli();
