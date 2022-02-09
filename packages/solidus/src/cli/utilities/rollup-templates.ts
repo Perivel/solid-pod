@@ -110,7 +110,7 @@ import styles from 'rollup-plugin-styles';
 //     return config;
 // }
 
-export const loadConfigurationOptions = (root: Path = Process.Cwd()): RollupOptions => {
+export const loadConfigurationOptions = (tsconfigOptions: object, root: Path = Process.Cwd()): RollupOptions => {
     return {
         input: Path.FromSegments(root, "index.ts").toString(),
         output: [
@@ -125,18 +125,7 @@ export const loadConfigurationOptions = (root: Path = Process.Cwd()): RollupOpti
             "solidus"
         ],
         plugins: [
-            typescript({
-                compilerOptions: {
-                    strict: true,
-                    target: "ESNext",
-                    module: "ESNext",
-                    moduleResolution: "node",
-                    allowSyntheticDefaultImports: true,
-                    esModuleInterop: true,
-                    jsx: "preserve",
-                    jsxImportSource: "solid-js"
-                }
-            }),
+            typescript(tsconfigOptions),
             styles(),
             nodeResolve({
                 preferBuiltins: true,

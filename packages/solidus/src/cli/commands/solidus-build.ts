@@ -32,6 +32,7 @@ import { loadConfigurationOptions } from "../utilities/rollup-templates";
 import loadSolidusConfiguration from "../utilities/load-solidus-config";
 import { SSRMode } from "../../server/index";
 import { CommandStatus } from "../utilities/command-status.enum";
+import { loadTsconfig } from './../utilities/load-tsconfig';
 
 /**
  * runBuild()
@@ -57,8 +58,9 @@ export const runBuild = async (): Promise<number> => {
     // }
 
     // load the rollup configuration file.
-    console.log(`Loading rollup template.`)
-    const rollupOptions = loadConfigurationOptions(Process.Cwd());
+    console.log(`Loading rollup template.`);
+    const tsconfig = await loadTsconfig(Process.Cwd());
+    const rollupOptions = loadConfigurationOptions(tsconfig, Process.Cwd());
 
     // create the bundle
 
