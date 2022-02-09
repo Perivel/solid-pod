@@ -46,9 +46,13 @@ const runCli = async (): Promise<number> => {
       // run the Dev command.
       return 1;
    }
+   else if (cmd == 'test') {
+      console.log('This is a test. \n');
+      return 1;
+   }
    else {
       return 1;
    }
 }
 
-await runCli();
+runCli();
