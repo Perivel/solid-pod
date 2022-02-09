@@ -39,21 +39,24 @@ import { ConfigurationNotFoundException } from './../exceptions/configuration-no
  * @throws ConfigurationNotFoundException when the configuration file is not found.
  */
 
-export const loadSolidusConfiguration = async (root: Path = Process.Cwd()): Promise<Configuration> => {
-    const path = Path.FromSegments(root, 'solidus.config.ts');
+const loadSolidusConfiguration = async (root: Path = Process.Cwd()): Promise<Configuration> => {
+    const path = Path.FromSegments(root, 'solidus.config.js');
     let config: Configuration | null = null;
 
     if (await FileSystem.Contains(path)) {
-        // load the file contents.
-        const configFile = await FileSystem.Open(path);
-        const configData = await configFile.readAll();
-        await configFile.close();
-        config = JSON.parse(configData) as Configuration;
+        // load file contents.
+        // const configFile = await FileSystem.Open(path);
+        // const configData = await configFile.readAll();
+        // await configFile.close();
+        // config = JSON.parse(configData.toString()) as Configuration;
+        config = await import(path.toString());
     }
     else {
         // Solidus Config file is missing.
-        throw new ConfigurationNotFoundException();
+        throw new ConfigurationNotFoundException(`Could not find solidus.config.ts file at ${path}`);
     }
 
-    return config;
+    return config!;
 }
+
+export default loadSolidusConfiguration;

@@ -29,7 +29,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import { rollup, RollupBuild, RollupOptions } from "rollup";
 import { Process } from '@swindle/os';
 import { loadConfigurationOptions } from "../utilities/rollup-templates";
-import { loadSolidusConfiguration } from "../utilities/load-solidus-config";
+import loadSolidusConfiguration from "../utilities/load-solidus-config";
 import { SSRMode } from "../../server/index";
 import { CommandStatus } from "../utilities/command-status.enum";
 
@@ -40,30 +40,36 @@ import { CommandStatus } from "../utilities/command-status.enum";
  */
 
 export const runBuild = async (): Promise<number> => {
-    let ssr: SSRMode | null = null;
+    // let ssr: SSRMode | null = null;
 
-    // load the solidus configuration.
-    try {
-        // load the solidus config
-        const config = await loadSolidusConfiguration(Process.Cwd());
-        ssr = config.ssr;
-    }
-    catch (e) {
-        // could not find the configuration.
-        return CommandStatus.Error;
-    }
+    // // load the solidus configuration.
+    // try {
+    //     // load the solidus config
+    //     console.log('Loading configuration...');
+    //     const config = await loadSolidusConfiguration(Process.Cwd());
+    //     console.log('Successfully loaded Solidus Project Configuration.');
+    //     ssr = config.ssr;
+    // }
+    // catch (e) {
+    //     // could not find the configuration.
+    //     console.log(`Error: ${(e as Error).message}\n${(e as Error).stack}`);
+    //     return CommandStatus.Error;
+    // }
 
     // load the rollup configuration file.
-    const rollupOptions = loadConfigurationOptions(ssr, Process.Cwd());
+    console.log(`Loading rollup template.`)
+    const rollupOptions = loadConfigurationOptions(Process.Cwd());
 
     // create the bundle
 
     try {
+        console.log('Creating bundle...');
         const build = await rollup(rollupOptions);
         await generateBundle(build, rollupOptions);
     }
     catch (e) {
         // failed to build the bundle.
+        console.log(`Error: ${(e as Error).message}`);
         return CommandStatus.Error;
     }
 

@@ -44,6 +44,12 @@ export default [
       "@swindle/filesystem",
       "polka",
       "serve-static",
+      "rollup",
+      "@rollup/plugin-node-resolve",
+      "@rollup/plugin-babel",
+      "@rollup/plugin-json",
+      "@rollup/plugin-typescript",
+      "rollup-plugin-styles"
     ],
     output: {
       file: "./dist/bin/solidus.js",

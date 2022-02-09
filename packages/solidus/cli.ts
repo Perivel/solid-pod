@@ -40,6 +40,7 @@ const runCli = async (): Promise<number> => {
 
    if (cmd === SolidusCommands.build) {
       // run the build command.
+      console.log('Building your application...');
       return await runBuild();
    }
    else if (cmd === SolidusCommands.dev) {
