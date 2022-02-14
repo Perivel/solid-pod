@@ -43,6 +43,7 @@
     "@swindle/core": "^2.1.1",
     "@swindle/os": "^1.0.11",
     "polka": "^0.5.2",
+    "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-styles": "^4.0.0",
     "rollup-preset-solid": "^1.2.2",
     "serve-static": "^1.14.2",

@@ -6,6 +6,7 @@ import babel from "@rollup/plugin-babel";
 import json from "@rollup/plugin-json";
 import typescript from '@rollup/plugin-typescript';
 import styles from 'rollup-plugin-styles';
+import copy from 'rollup-plugin-copy'
 
 /**
  * loadConfigurationOptions()
@@ -15,100 +16,6 @@ import styles from 'rollup-plugin-styles';
  * @param root The project root directory.
  * @returns A RollupOptions instance with the appropriate config settigs.
  */
-
-// export const loadConfigurationOptions = (mode: SSRMode, root: Path = Process.Cwd()): RollupOptions => {
-//     let config: RollupOptions = {};
-
-//     if (mode == 'async') {
-//         // load async options.
-//         config = {
-//             input: Path.FromSegments(root, "index.ts").toString(),
-//             output: [
-//                 {
-//                     dir: Path.FromSegments(root, "dist").toString(),
-//                     format: "cjs"
-//                 }
-//             ],
-//             preserveEntrySignatures: false,
-//             external: ["solid-js", "solid-js/web", "path", "express", "compression", "node-fetch"],
-//             plugins: [
-//                 nodeResolve({
-//                     preferBuiltins: true,
-//                     exportConditions: ["solid"],
-//                     extensions: [".js", ".jsx", ".ts", ".tsx"]
-//                 }),
-//                 babel({
-//                     babelHelpers: "bundled",
-//                     presets: [["solid", { generate: "ssr", hydratable: true, async: true }]]
-//                 }),
-//                 json()
-//             ]
-//         }
-//     }
-//     else if (mode === "sync") {
-//         config = {
-//             input: Path.FromSegments(root, "index.ts").toString(),
-//             output: [
-//                 {
-//                     dir: Path.FromSegments(root, 'dist').toString(),
-//                     format: "cjs"
-//                 }
-//             ],
-//             external: [
-//                 "solid-js",
-//                 "solid-js/web",
-//                 "solidus",
-//             ],
-//             plugins: [
-//                 nodeResolve({
-//                     preferBuiltins: true,
-//                     exportConditions: ["solid"],
-//                     extensions: [".js", ".jsx", ".ts", ".tsx"]
-//                 }),
-//                 babel({
-//                     babelHelpers: "bundled",
-//                     presets: [["solid", { generate: "ssr", hydratable: true }]]
-//                 }),
-//                 json()
-//             ],
-//             preserveEntrySignatures: false
-//         };
-
-//     }
-//     else {
-//         // load the stream options.
-//         config = {
-//             input: Path.FromSegments(root, "index.ts").toString(),
-//             output: [
-//                 {
-//                     dir: Path.FromSegments(root, "dist").toString(),
-//                     format: "cjs"
-//                 }
-//             ],
-//             external: [
-//                 "solid-js",
-//                 "solid-js/web",
-//                 "solidus"
-//             ],
-//             plugins: [
-//                 nodeResolve({
-//                     preferBuiltins: true,
-//                     exportConditions: ["solid"],
-//                     extensions: [".js", ".jsx", ".ts", ".tsx"]
-//                 }),
-//                 babel({
-//                     babelHelpers: "bundled",
-//                     presets: [["solid", { generate: "ssr", hydratable: true }]]
-//                 }),
-//                 json()
-//             ],
-//             preserveEntrySignatures: false
-//         };
-//     }
-
-
-//     return config;
-// }
 
 export const loadConfigurationOptions = (tsconfigOptions: object, root: Path = Process.Cwd()): RollupOptions => {
     return {
@@ -126,7 +33,6 @@ export const loadConfigurationOptions = (tsconfigOptions: object, root: Path = P
         ],
         plugins: [
             typescript(tsconfigOptions),
-            styles(),
             nodeResolve({
                 preferBuiltins: true,
                 exportConditions: ["solid"],
@@ -136,7 +42,13 @@ export const loadConfigurationOptions = (tsconfigOptions: object, root: Path = P
                 babelHelpers: "bundled",
                 presets: [["solid", { generate: "ssr", hydratable: true }]]
             }),
-            json()
+            json(),
+            styles(),
+            copy({
+                targets: [
+                    { src: 'src/assets/**/*', dest: 'dist/src/assets' }
+                ]
+            })
         ],
         preserveEntrySignatures: false
     }

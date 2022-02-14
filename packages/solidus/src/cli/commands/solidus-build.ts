@@ -29,8 +29,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import { rollup, RollupBuild, RollupOptions } from "rollup";
 import { Process } from '@swindle/os';
 import { loadConfigurationOptions } from "../utilities/rollup-templates";
-import loadSolidusConfiguration from "../utilities/load-solidus-config";
-import { SSRMode } from "../../server/index";
 import { CommandStatus } from "../utilities/command-status.enum";
 import { loadTsconfig } from './../utilities/load-tsconfig';
 
@@ -60,7 +58,7 @@ export const runBuild = async (): Promise<number> => {
     // load the rollup configuration file.
     console.log(`Loading rollup template.`);
     const tsconfig = await loadTsconfig(Process.Cwd());
-    const rollupOptions = loadConfigurationOptions(tsconfig, Process.Cwd());
+    const rollupOptions = loadConfigurationOptions(tsconfig.compilerOptions, Process.Cwd());
 
     // create the bundle
 
@@ -71,7 +69,7 @@ export const runBuild = async (): Promise<number> => {
     }
     catch (e) {
         // failed to build the bundle.
-        console.log(`Error: ${(e as Error).message}`);
+        console.log(`Error: ${(e as Error).message}\n${(e as Error).stack}`);
         return CommandStatus.Error;
     }
 

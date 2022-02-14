@@ -1,7 +1,7 @@
 import { Path, FileSystem, FileOpenFlag } from '@swindle/filesystem';
 import { Process } from '@swindle/os';
 
-const defaultConfig: object = {
+const defaultConfig: any = {
     compilerOptions: {
         strict: true,
         target: "ESNext",
@@ -22,7 +22,7 @@ const defaultConfig: object = {
  * @returns Tsconfig options.
  */
 
-export const loadTsconfig = async (root: Path = Process.Cwd()): Promise<object> => {
+export const loadTsconfig = async (root: Path = Process.Cwd()): Promise<any> => {
     const path = Path.FromSegments(root, 'tsconfig.json');
     let config = defaultConfig;
 
