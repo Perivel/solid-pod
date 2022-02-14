@@ -42,6 +42,7 @@
     "@swindle/color": "^1.0.0",
     "@swindle/core": "^2.1.1",
     "@swindle/os": "^1.0.11",
+    "@web/rollup-plugin-import-meta-assets": "^1.0.7",
     "polka": "^0.5.2",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-styles": "^4.0.0",

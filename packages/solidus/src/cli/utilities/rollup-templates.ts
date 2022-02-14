@@ -6,7 +6,8 @@ import babel from "@rollup/plugin-babel";
 import json from "@rollup/plugin-json";
 import typescript from '@rollup/plugin-typescript';
 import styles from 'rollup-plugin-styles';
-import copy from 'rollup-plugin-copy'
+import copy from 'rollup-plugin-copy';
+import { importMetaAssets } from '@web/rollup-plugin-import-meta-assets';
 
 /**
  * loadConfigurationOptions()
@@ -44,6 +45,7 @@ export const loadConfigurationOptions = (tsconfigOptions: object, root: Path = P
             }),
             json(),
             styles(),
+            importMetaAssets(),
             copy({
                 targets: [
                     { src: 'src/assets/**/*', dest: 'dist/src/assets' }
