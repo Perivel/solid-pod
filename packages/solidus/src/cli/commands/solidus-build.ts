@@ -65,6 +65,7 @@ export const runBuild = async (): Promise<number> => {
     try {
         console.log('Creating bundle...');
         const build = await rollup(rollupOptions);
+        console.log('Generating Bundle...');
         await generateBundle(build, rollupOptions);
     }
     catch (e) {

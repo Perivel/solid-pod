@@ -20,7 +20,7 @@ import { importMetaAssets } from '@web/rollup-plugin-import-meta-assets';
 
 export const loadConfigurationOptions = (tsconfigOptions: object, root: Path = Process.Cwd()): RollupOptions => {
     return {
-        input: Path.FromSegments(root, "index.ts").toString(),
+        input: Path.FromSegments(root, "src/index.ts").toString(),
         output: [
             {
                 dir: Path.FromSegments(root, "dist").toString(),
@@ -53,6 +53,6 @@ export const loadConfigurationOptions = (tsconfigOptions: object, root: Path = P
             })
         ],
         preserveEntrySignatures: false
-    }
+    };
 }
 
