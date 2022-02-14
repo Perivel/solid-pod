@@ -1,3 +1,4 @@
+/*
 BSD 2-Clause License
 
 Copyright (c) 2022, Perivel LLC
@@ -23,3 +24,39 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
+import { Process } from '@swindle/os';
+import { Path, FileSystem } from '@swindle/filesystem';
+import { Configuration } from './../../server/index';;
+import { ConfigurationNotFoundException } from './../exceptions/configuration-not-found.exception';
+
+/**
+ * loadSolidusConfiguration()
+ * 
+ * attempts to load the Solidus configuration file.
+ * @param root the root directory of the solidus application.
+ * @throws ConfigurationNotFoundException when the configuration file is not found.
+ */
+
+const loadSolidusConfiguration = async (root: Path = Process.Cwd()): Promise<Configuration> => {
+    const path = Path.FromSegments(root, 'solidus.config.js');
+    let config: Configuration | null = null;
+
+    if (await FileSystem.Contains(path)) {
+        // load file contents.
+        // const configFile = await FileSystem.Open(path);
+        // const configData = await configFile.readAll();
+        // await configFile.close();
+        // config = JSON.parse(configData.toString()) as Configuration;
+        config = await import(path.toString());
+    }
+    else {
+        // Solidus Config file is missing.
+        throw new ConfigurationNotFoundException(`Could not find solidus.config.ts file at ${path}`);
+    }
+
+    return config!;
+}
+
+export default loadSolidusConfiguration;

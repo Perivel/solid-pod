@@ -1,9 +1,9 @@
 {
-  "name": "vite-template-solid",
-  "version": "0.0.0",
+  "name": "solidus-example-starter",
+  "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "vite",
+    "start": "",
     "dev": "vite",
     "build": "solidus build",
     "serve": "vite preview"
@@ -13,7 +13,6 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@solidus/cli": "^1.0.0",
     "solidus": "^3.2.1"
   }
 }

@@ -26,17 +26,14 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import {
-    CommandClass,
-    BaseContext,
-    Builtins
-} from 'clipanion';
-import { RunBuildCommand } from './../commands/run-build/run-build.cmd';
+import { BaseException } from '@swindle/core';
 
-export const commands: CommandClass<BaseContext>[] = [
-    RunBuildCommand,
+/**
+ * ConfigurationNotFoundException
+ */
 
-    // Built-ins
-    Builtins.HelpCommand,
-    Builtins.VersionCommand,
-]
+export class ConfigurationNotFoundException extends BaseException {
+    constructor(message: string = 'Could not find soolidus.config.ts configuration file.') {
+        super(message);
+    }
+}
