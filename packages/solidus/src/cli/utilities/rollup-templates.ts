@@ -36,21 +36,21 @@ export const loadConfigurationOptions = (tsconfigOptions: object, root: Path = P
             typescript(tsconfigOptions),
             nodeResolve({
                 preferBuiltins: true,
-                exportConditions: ["solid"],
+                //exportConditions: ["solid"],
                 extensions: [".js", ".jsx", ".ts", ".tsx"]
             }),
             babel({
                 babelHelpers: "bundled",
                 presets: [["solid", { generate: "ssr", hydratable: true }]]
             }),
-            json(),
-            styles(),
-            importMetaAssets(),
             copy({
                 targets: [
                     { src: 'src/assets/**/*', dest: 'dist/src/assets' }
                 ]
-            })
+            }),
+            json(),
+            styles(),
+            importMetaAssets(),
         ],
         preserveEntrySignatures: false
     };
