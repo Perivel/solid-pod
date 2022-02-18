@@ -8,6 +8,7 @@ import typescript from '@rollup/plugin-typescript';
 import styles from 'rollup-plugin-styles';
 import copy from 'rollup-plugin-copy';
 import { importMetaAssets } from '@web/rollup-plugin-import-meta-assets';
+import nodePolyfill from 'rollup-plugin-polyfill-node';
 
 /**
  * loadConfigurationOptions()
@@ -20,7 +21,7 @@ import { importMetaAssets } from '@web/rollup-plugin-import-meta-assets';
 
 export const loadConfigurationOptions = (tsconfigOptions: object, root: Path = Process.Cwd()): RollupOptions => {
     return {
-        input: Path.FromSegments(root, "src/index.ts").toString(),
+        input: Path.FromSegments(root, "src", "index.ts").toString(),
         output: [
             {
                 dir: Path.FromSegments(root, "dist").toString(),
@@ -43,6 +44,7 @@ export const loadConfigurationOptions = (tsconfigOptions: object, root: Path = P
                 babelHelpers: "bundled",
                 presets: [["solid", { generate: "ssr", hydratable: true }]]
             }),
+            nodePolyfill(),
             json(),
             styles(),
             importMetaAssets(),
@@ -50,9 +52,9 @@ export const loadConfigurationOptions = (tsconfigOptions: object, root: Path = P
                 targets: [
                     { src: 'src/assets/**/*', dest: 'dist/src/assets' }
                 ]
-            })
+            }),
         ],
-        preserveEntrySignatures: false
+        preserveEntrySignatures: false,
     };
 }
 

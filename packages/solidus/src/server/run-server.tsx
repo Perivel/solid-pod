@@ -38,6 +38,7 @@ import {
 import { Configuration } from './configuration/configuration';
 import { Application } from '../types/application.type';
 import { ServerOptions } from '../types/server-options.type';
+import { Middleware } from './middleware/middleware';
 
 /**
  * runServer()
@@ -45,15 +46,16 @@ import { ServerOptions } from '../types/server-options.type';
  * runs the application server.
  * @param App the application component to run.
  * @param config The server configuration.
+ * @param middleware An array of Middleware to register.
  */
 
-export const runServer = (App: Application, config: Configuration): void => {
+export const runServer = (App: Application, config: Configuration, middleware: Middleware[] = []): void => {
     Polka()
         // attach the middleware.
-        .use(...config.middleware)
+        .use(...middleware)
 
         // register static assets.
-        .use(`/public`, serve(join(__dirname, config.static)))
+        .use(`/public`, serve(join(__dirname, 'assets')))
 
         // set up the server to be used for SSR.
         .get('*', async (req, res) => {
@@ -89,7 +91,7 @@ export const runServer = (App: Application, config: Configuration): void => {
                           />
                         ));
                     }
-                    res.send(page);
+                    res.status(200).send(page);
                 }
                 catch(e) {
                     console.log((e as Error).message);
@@ -100,6 +102,6 @@ export const runServer = (App: Application, config: Configuration): void => {
 
         // start the server.
         .listen(config.port, () => {
-            console.log(`[${DateTime.Now().toString()}]Application running on ${config.host}:${config.port}`);
+            console.log(`[${DateTime.Now().toString()}]: Application successfully running on ${config.host}:${config.port}`);
         });
 }

@@ -26,7 +26,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import { rollup, RollupBuild, RollupOptions } from "rollup";
+import { rollup, RollupBuild, RollupOptions, } from "rollup";
 import { Process } from '@swindle/os';
 import { loadConfigurationOptions } from "../utilities/rollup-templates";
 import { CommandStatus } from "../utilities/command-status.enum";
@@ -39,21 +39,6 @@ import { loadTsconfig } from './../utilities/load-tsconfig';
  */
 
 export const runBuild = async (): Promise<number> => {
-    // let ssr: SSRMode | null = null;
-
-    // // load the solidus configuration.
-    // try {
-    //     // load the solidus config
-    //     console.log('Loading configuration...');
-    //     const config = await loadSolidusConfiguration(Process.Cwd());
-    //     console.log('Successfully loaded Solidus Project Configuration.');
-    //     ssr = config.ssr;
-    // }
-    // catch (e) {
-    //     // could not find the configuration.
-    //     console.log(`Error: ${(e as Error).message}\n${(e as Error).stack}`);
-    //     return CommandStatus.Error;
-    // }
 
     // load the rollup configuration file.
     console.log(`Loading rollup template.`);
@@ -89,7 +74,7 @@ const generateBundle = async (bundle: RollupBuild, options: RollupOptions): Prom
     if (options.output) {
         if (Array.isArray(options.output)) {
             Promise.all(options.output.map(async option => {
-                return bundle.write(options);
+                return bundle.write(option);
             }));
         }
         else {
