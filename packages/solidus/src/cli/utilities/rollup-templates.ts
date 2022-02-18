@@ -37,7 +37,7 @@ export const loadConfigurationOptions = (tsconfigOptions: object, root: Path = P
             typescript(tsconfigOptions),
             nodeResolve({
                 preferBuiltins: true,
-                exportConditions: ["solid"],
+                //exportConditions: ["solid"],
                 extensions: [".js", ".jsx", ".ts", ".tsx"]
             }),
             babel({
