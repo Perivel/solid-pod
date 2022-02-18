@@ -4,6 +4,7 @@ import { resolve } from 'path';
 import typescriptPlugin from '@rollup/plugin-typescript';
 import hashbangPlugin from 'rollup-plugin-hashbang';
 import jsonPlugin from '@rollup/plugin-json';
+import nodePolyfillPlugin from 'rollup-plugin-polyfill-node';
 
 export default [
   solidRollupConfig({
@@ -32,6 +33,9 @@ export default [
         sourcemap: true,
         plugins: [terser()],
       },
+    ],
+    plugins: [
+      nodePolyfillPlugin()
     ]
   }),
   // The CLI
@@ -49,7 +53,9 @@ export default [
       "@rollup/plugin-babel",
       "@rollup/plugin-json",
       "@rollup/plugin-typescript",
-      "rollup-plugin-styles"
+      "rollup-plugin-styles",
+      "rollup-plugin-copy",
+      "@web/rollup-plugin-import-meta-assets"
     ],
     output: {
       file: "./dist/bin/solidus.js",
@@ -57,6 +63,7 @@ export default [
     },
     plugins: [
       typescriptPlugin(),
+      nodePolyfillPlugin(),
       jsonPlugin(),
       hashbangPlugin()
     ]

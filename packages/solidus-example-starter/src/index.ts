@@ -1,8 +1,9 @@
 import { runServer } from 'solidus';
 import configuration from './solidus.config';
-import MyApp from './solidus';
+import MyApp from './MyApp';
 
 runServer(
     MyApp,
-    configuration
+    configuration,
+    []
 );

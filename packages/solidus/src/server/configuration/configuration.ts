@@ -26,8 +26,6 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import { Middleware } from './../middleware/middleware';
-
 /**
  * ENV
  * 
@@ -82,20 +80,4 @@ export interface Configuration {
      */
 
     ssr: SSRMode;
-
-    /**
-     * middleware
-     * 
-     * the middleware to attach.
-     */
-
-    middleware: Middleware[];
-
-    /**
-     * static
-     * 
-     * path from the root directory to the static assets directory.
-     */
-    
-    static: string
 }
