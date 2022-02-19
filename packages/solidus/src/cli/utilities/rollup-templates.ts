@@ -20,7 +20,7 @@ import nodePolyfill from 'rollup-plugin-polyfill-node';
  */
 
 export const loadConfigurationOptions = (tsconfigOptions: object, root: Path = Process.Cwd()): RollupOptions => {
-    return {
+    return <RollupOptions> {
         input: Path.FromSegments(root, "src", "index.ts").toString(),
         output: [
             {
@@ -34,20 +34,28 @@ export const loadConfigurationOptions = (tsconfigOptions: object, root: Path = P
             "solidus"
         ],
         plugins: [
+            // typescript
+            // nodeResolve
+            // babel
+            // nodePolyfill
+            // json
+            // style
+            // importMetaAssets
+            // copy
             typescript(tsconfigOptions),
+            json(),
+            styles(),
+            importMetaAssets(),
             nodeResolve({
                 preferBuiltins: true,
-                //exportConditions: ["solid"],
+                exportConditions: ["solid"],
                 extensions: [".js", ".jsx", ".ts", ".tsx"]
             }),
+            nodePolyfill(),
             babel({
                 babelHelpers: "bundled",
                 presets: [["solid", { generate: "ssr", hydratable: true }]]
             }),
-            nodePolyfill(),
-            json(),
-            styles(),
-            importMetaAssets(),
             copy({
                 targets: [
                     { src: 'src/assets/**/*', dest: 'dist/src/assets' }
@@ -55,6 +63,7 @@ export const loadConfigurationOptions = (tsconfigOptions: object, root: Path = P
             }),
         ],
         preserveEntrySignatures: false,
+        treeshake: true,
     };
 }
 

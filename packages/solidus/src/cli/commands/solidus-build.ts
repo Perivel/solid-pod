@@ -46,10 +46,11 @@ export const runBuild = async (): Promise<number> => {
     const rollupOptions = loadConfigurationOptions(tsconfig.compilerOptions, Process.Cwd());
 
     // create the bundle
+    console.log("\n" + JSON.stringify(rollupOptions) + "\n");
 
     try {
         console.log('Creating bundle...');
-        const build = await rollup(rollupOptions);
+        const build = await rollup(rollupOptions); // this is the line that is failing according to my logs
         console.log('Generating Bundle...');
         await generateBundle(build, rollupOptions);
     }
@@ -74,7 +75,7 @@ const generateBundle = async (bundle: RollupBuild, options: RollupOptions): Prom
     if (options.output) {
         if (Array.isArray(options.output)) {
             Promise.all(options.output.map(async option => {
-                return bundle.write(option);
+                return await bundle.write(option);
             }));
         }
         else {
