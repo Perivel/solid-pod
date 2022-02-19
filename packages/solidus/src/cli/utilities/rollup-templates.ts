@@ -7,7 +7,6 @@ import json from "@rollup/plugin-json";
 import typescript from '@rollup/plugin-typescript';
 import styles from 'rollup-plugin-styles';
 import copy from 'rollup-plugin-copy';
-import { importMetaAssets } from '@web/rollup-plugin-import-meta-assets';
 import nodePolyfill from 'rollup-plugin-polyfill-node';
 
 /**
@@ -37,7 +36,7 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
             typescript(tsconfigOptions),
             nodeResolve({
                 preferBuiltins: true,
-                //exportConditions: ["solid"],
+                exportConditions: ["solid"],
                 extensions: [".js", ".jsx", ".ts", ".tsx"]
             }),
             nodePolyfill(),
