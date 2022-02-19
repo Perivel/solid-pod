@@ -26,11 +26,12 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import { rollup, RollupBuild, RollupOptions, } from "rollup";
+import { rollup, RollupBuild, RollupOptions, RollupError } from "rollup";
 import { Process } from '@swindle/os';
-import { loadConfigurationOptions } from "../utilities/rollup-templates";
+import { loadBuildConfigurationOptions } from "../utilities/rollup-templates";
 import { CommandStatus } from "../utilities/command-status.enum";
 import { loadTsconfig } from './../utilities/load-tsconfig';
+import { MessageFormatter } from "../utilities/message-formatter";
 
 /**
  * runBuild()
@@ -39,24 +40,25 @@ import { loadTsconfig } from './../utilities/load-tsconfig';
  */
 
 export const runBuild = async (): Promise<number> => {
+    const fmt = new MessageFormatter();
 
     // load the rollup configuration file.
-    console.log(`Loading rollup template.`);
+    console.log(fmt.message(`Loading rollup template...`));
     const tsconfig = await loadTsconfig(Process.Cwd());
-    const rollupOptions = loadConfigurationOptions(tsconfig.compilerOptions, Process.Cwd());
+    const rollupOptions = loadBuildConfigurationOptions(tsconfig.compilerOptions, Process.Cwd());
 
     // create the bundle
-    console.log("\n" + JSON.stringify(rollupOptions) + "\n");
 
     try {
-        console.log('Creating bundle...');
-        const build = await rollup(rollupOptions); // this is the line that is failing according to my logs
-        console.log('Generating Bundle...');
+        console.log(fmt.message('Creating bundle...'));
+        const build = await rollup(rollupOptions);
+        console.log(fmt.message('Generating Bundle...'));
         await generateBundle(build, rollupOptions);
     }
     catch (e) {
         // failed to build the bundle.
-        console.log(`Error: ${(e as Error).message}\n${(e as Error).stack}`);
+        const error = e as RollupError;
+        console.log(fmt.buildError(error));
         return CommandStatus.Error;
     }
 

@@ -11,15 +11,15 @@ import { importMetaAssets } from '@web/rollup-plugin-import-meta-assets';
 import nodePolyfill from 'rollup-plugin-polyfill-node';
 
 /**
- * loadConfigurationOptions()
+ * loadBuildConfigurationOptions()
  * 
- * loads the configuration options specific to the SSR settings.
+ * loads the configuration options for building the application.
  * @param mode the SSR Mode to use.
  * @param root The project root directory.
  * @returns A RollupOptions instance with the appropriate config settigs.
  */
 
-export const loadConfigurationOptions = (tsconfigOptions: object, root: Path = Process.Cwd()): RollupOptions => {
+export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Path = Process.Cwd()): RollupOptions => {
     return <RollupOptions> {
         input: Path.FromSegments(root, "src", "index.ts").toString(),
         output: [
@@ -34,28 +34,19 @@ export const loadConfigurationOptions = (tsconfigOptions: object, root: Path = P
             "solidus"
         ],
         plugins: [
-            // typescript
-            // nodeResolve
-            // babel
-            // nodePolyfill
-            // json
-            // style
-            // importMetaAssets
-            // copy
             typescript(tsconfigOptions),
-            json(),
-            styles(),
-            importMetaAssets(),
             nodeResolve({
                 preferBuiltins: true,
-                exportConditions: ["solid"],
+                //exportConditions: ["solid"],
                 extensions: [".js", ".jsx", ".ts", ".tsx"]
             }),
             nodePolyfill(),
             babel({
                 babelHelpers: "bundled",
-                presets: [["solid", { generate: "ssr", hydratable: true }]]
+                presets: [["solid", { generate: "ssr", hydratable: true }]],
             }),
+            json(),
+            styles(),
             copy({
                 targets: [
                     { src: 'src/assets/**/*', dest: 'dist/src/assets' }

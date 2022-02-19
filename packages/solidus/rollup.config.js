@@ -55,7 +55,8 @@ export default [
       "@rollup/plugin-typescript",
       "rollup-plugin-styles",
       "rollup-plugin-copy",
-      "@web/rollup-plugin-import-meta-assets"
+      "@web/rollup-plugin-import-meta-assets",
+      "rollup-plugin-polyfill-node"
     ],
     output: {
       file: "./dist/bin/solidus.js",
@@ -65,7 +66,7 @@ export default [
       typescriptPlugin(),
       nodePolyfillPlugin(),
       jsonPlugin(),
-      hashbangPlugin()
+      hashbangPlugin(),
     ]
   }
 ];
