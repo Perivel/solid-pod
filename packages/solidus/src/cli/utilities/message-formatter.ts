@@ -21,7 +21,11 @@ export class MessageFormatter extends StringFormatter {
      */
 
     public buildError(error: RollupError): string {
-        return `Error: ${error.message}\n\n${error.frame}\n\nin ${error.loc?.file} at line ${error.loc?.line}`;
+        let message = `Error: ${error.message}\n\n`;
+        if (error.code === `PARSE_ERROR`) {
+            message += `${error.frame}\n\nin ${error.loc?.file} at line ${error.loc?.line}`;
+        }
+        return message;
     }
 
     /**

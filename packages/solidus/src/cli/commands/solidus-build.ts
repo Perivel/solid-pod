@@ -57,8 +57,7 @@ export const runBuild = async (): Promise<number> => {
     }
     catch (e) {
         // failed to build the bundle.
-        const error = e as RollupError;
-        console.log(fmt.buildError(error));
+        console.log(fmt.buildError(e as RollupError));
         return CommandStatus.Error;
     }
 
