@@ -28,5 +28,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 export enum SolidusCommands {
     build = "build",
-    dev = "dev"
+    dev = "dev",
+    start = "start",
+    help = "-h",
+    version = "-v"
 }

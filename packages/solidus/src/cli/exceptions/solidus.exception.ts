@@ -29,11 +29,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import { BaseException } from '@swindle/core';
 
 /**
- * ConfigurationNotFoundException
+ * SolidusException
  */
 
-export class ConfigurationNotFoundException extends BaseException {
-    constructor(message: string = 'Could not find soolidus.config.ts configuration file.') {
+export class SolidusException extends BaseException {
+    constructor(message: string = 'Something went wrong') {
         super(message);
     }
 }

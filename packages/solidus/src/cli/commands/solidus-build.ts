@@ -28,10 +28,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import { rollup, RollupBuild, RollupOptions, RollupError } from "rollup";
 import { Process } from '@swindle/os';
+import { FileSystem, FileSystemException, Path } from '@swindle/filesystem';
 import { loadBuildConfigurationOptions } from "../utilities/rollup-templates";
 import { CommandStatus } from "../utilities/command-status.enum";
 import { loadTsconfig } from './../utilities/load-tsconfig';
 import { MessageFormatter } from "../utilities/message-formatter";
+import { SolidusException } from "../exceptions/solidus.exception";
 
 /**
  * runBuild()
@@ -39,8 +41,9 @@ import { MessageFormatter } from "../utilities/message-formatter";
  * Builds the application.
  */
 
-export const runBuild = async (): Promise<number> => {
+export const runBuild = async (): Promise<CommandStatus> => {
     const fmt = new MessageFormatter();
+    const bundlePath = Path.FromSegments(Process.Cwd(), 'dist');
 
     // load the rollup configuration file.
     console.log(fmt.message(`Loading rollup template...`));
@@ -53,11 +56,17 @@ export const runBuild = async (): Promise<number> => {
         console.log(fmt.message('Creating bundle...'));
         const build = await rollup(rollupOptions);
         console.log(fmt.message('Generating Bundle...'));
+
+        // delete the old bundle if it exists.
+        if (await FileSystem.Contains(bundlePath)) {
+            await FileSystem.Delete(bundlePath, true, true);
+        }
         await generateBundle(build, rollupOptions);
     }
     catch (e) {
         // failed to build the bundle.
-        console.log(fmt.buildError(e as RollupError));
+        const error = e instanceof FileSystemException ? new SolidusException((e as FileSystemException).message) : e as RollupError;
+        console.log(fmt.buildError(error));
         return CommandStatus.Error;
     }
 

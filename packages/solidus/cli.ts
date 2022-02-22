@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // This is the entrypoint of the SolidusJS CLI.
 import { Process } from '@swindle/os';
 import { runBuild } from './src/cli/commands/solidus-build';
+import { runStart } from './src/cli/commands/solidus-start';
 import { SolidusCommands } from './src/cli/utilities/solidus-commands.enum';
 
 const runCli = async (): Promise<number> => {
@@ -47,11 +48,12 @@ const runCli = async (): Promise<number> => {
       // run the Dev command.
       return 1;
    }
-   else if (cmd == 'test') {
-      console.log('This is a test. \n');
-      return 1;
+   else if (cmd == SolidusCommands.start) {
+      // run the app
+      return await runStart();
    }
    else {
+      // invalid command.
       return 1;
    }
 }
