@@ -36,6 +36,7 @@ import typescript from '@rollup/plugin-typescript';
 import styles from 'rollup-plugin-styles';
 import copy from 'rollup-plugin-copy';
 import nodePolyfill from 'rollup-plugin-polyfill-node';
+import image from '@rollup/plugin-image';
 
 /**
  * loadBuildConfigurationOptions()
@@ -71,9 +72,12 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
             babel({
                 babelHelpers: "bundled",
                 presets: [["solid", { generate: "ssr", hydratable: true }]],
+                exclude: "node_modules/**",
+                extensions: [".js", ".jsx", ".ts", ".tsx"],
             }),
             json(),
             styles(),
+            image(),
             copy({
                 targets: [
                     { src: 'src/assets/**/*', dest: 'dist/src/assets' }
