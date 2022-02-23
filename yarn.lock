@@ -4453,7 +4453,7 @@
     "merge-stream" "^2.0.0"
     "supports-color" "^7.0.0"
 
-"jest@^26.6.3", "jest@>=26 <27":
+"jest@>=26 <27":
   "integrity" "sha512-lGS5PXGAzR4RF7V5+XObhqz2KZIDUA1yD0DG6pBVmy10eh0ZIXQImRuzocsI/N2XZ1GrLFwTS27In2i2jlpq1Q=="
   "resolved" "https://registry.npmjs.org/jest/-/jest-26.6.3.tgz"
   "version" "26.6.3"
@@ -6644,15 +6644,15 @@
     "socket.io-client" "1.0.6"
     "socket.io-parser" "2.2.0"
 
-"solid-app-router@^0.2.0":
-  "integrity" "sha512-ENkhw3EF6MbkOuhRuCvmALtXs2x/fjvQw1ZSQP3ON7l6q6+QqTT8d0oZf6r5VYS95IIlevSSJNnAwvc1+Fx6Hw=="
-  "resolved" "https://registry.npmjs.org/solid-app-router/-/solid-app-router-0.2.1.tgz"
-  "version" "0.2.1"
+"solid-app-router@^0.3.0":
+  "integrity" "sha512-427qO9W90HH3coVq3a25xlL0B8dv+FKQcGQE3v5z5Z+8+u00svhOEQoM3Yj8W0C0xhGKSh2mKSIhpjUGQ7C68g=="
+  "resolved" "https://registry.npmjs.org/solid-app-router/-/solid-app-router-0.3.0.tgz"
+  "version" "0.3.0"
 
-"solid-js@^1.0.0", "solid-js@^1.3.0", "solid-js@^1.3.1", "solid-js@^1.3.2":
-  "integrity" "sha512-0pyHpLZIgQDI1Z+MgxXQRPY10dhXfKJdptb4UCJQ9ArQOLq2gtFA1acEsvSAtPMVdqQ8bqj68FOTXLpz6hm2Mg=="
-  "resolved" "https://registry.npmjs.org/solid-js/-/solid-js-1.3.3.tgz"
-  "version" "1.3.3"
+"solid-js@^1.0.0", "solid-js@^1.3.2", "solid-js@^1.3.5", "solid-js@^1.3.8":
+  "integrity" "sha512-cgQ7s++ccPfxcgqAzfguiHPJdnYPMM3z8flzNPH/yiZw/GpDir0fZEwINn0rbBTzzl95Q7l62K/6cjYFJwesyw=="
+  "resolved" "https://registry.npmjs.org/solid-js/-/solid-js-1.3.8.tgz"
+  "version" "1.3.8"
 
 "solid-meta@^0.27.3":
   "integrity" "sha512-XaVv0EPkoPvufzUOIMn4yOzZFnJvQPVBlpZFLc9zTFTUnb+cq/zuoWr0Sa0fEntodfVPe5j6NfvXwGE6pHQo+w=="

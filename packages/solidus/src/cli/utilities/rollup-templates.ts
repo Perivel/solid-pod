@@ -59,7 +59,7 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
         external: [
             "solid-js",
             "solid-js/web",
-            "solidus"
+            "solidus-js"
         ],
         plugins: [
             typescript(tsconfigOptions),
