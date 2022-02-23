@@ -26,37 +26,44 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import { FileSystem, Path } from '@swindle/filesystem';
 import { Process } from '@swindle/os';
-import { Path, FileSystem } from '@swindle/filesystem';
-import { Configuration } from './../../server/index';;
-import { ConfigurationNotFoundException } from './../exceptions/configuration-not-found.exception';
+import { SolidusException } from '../exceptions/solidus.exception';
+import { CommandStatus } from "../utilities/command-status.enum";
+import { MessageFormatter } from '../utilities/message-formatter';
+import { runBuild } from './solidus-build';
 
 /**
- * loadSolidusConfiguration()
+ * runStart()
  * 
- * attempts to load the Solidus configuration file.
- * @param root the root directory of the solidus application.
- * @throws ConfigurationNotFoundException when the configuration file is not found.
+ * starts the server.
  */
 
-const loadSolidusConfiguration = async (root: Path = Process.Cwd()): Promise<Configuration> => {
-    const path = Path.FromSegments(root, 'solidus.config.js');
-    let config: Configuration | null = null;
+export const runStart = async (): Promise<CommandStatus> => {
+    const executablePath = Path.FromSegments(Process.Cwd(), 'dist', 'index.js');
+    const fmt = new MessageFormatter();
 
-    if (await FileSystem.Contains(path)) {
-        // load file contents.
-        // const configFile = await FileSystem.Open(path);
-        // const configData = await configFile.readAll();
-        // await configFile.close();
-        // config = JSON.parse(configData.toString()) as Configuration;
-        config = await import(path.toString());
-    }
-    else {
-        // Solidus Config file is missing.
-        throw new ConfigurationNotFoundException(`Could not find solidus.config.ts file at ${path}`);
+    if (!await FileSystem.Contains(executablePath)) {
+        // not yet built. Build the app
+        const buildStatus = await runBuild();
+        
+        if (buildStatus === CommandStatus.Error) {
+            return buildStatus;
+        }
     }
 
-    return config!;
+    try {
+        // start the application.
+        console.log(fmt.message('Starting application...'));
+        await Process.Exec(`node ${executablePath.toString()}`, {
+            cwd: Process.Cwd().toString(),
+        });
+    }
+    catch(e) {
+        const error = new SolidusException((e as Error).message);
+        console.log(fmt.buildError(error));
+        return CommandStatus.Error;
+    }
+
+    return CommandStatus.Success;
 }
-
-export default loadSolidusConfiguration;

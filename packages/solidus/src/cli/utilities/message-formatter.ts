@@ -28,6 +28,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import { StringFormatter } from '@swindle/core';
 import { RollupError } from 'rollup';
+import { SolidusException } from '../exceptions/solidus.exception';
 
 /**
  * MessageFormatter
@@ -48,10 +49,18 @@ export class MessageFormatter extends StringFormatter {
      * @returns the formatted error message.
      */
 
-    public buildError(error: RollupError): string {
-        let message = `Error: ${error.message}\n\n`;
-        if (error.code === `PARSE_ERROR`) {
-            message += `${error.frame}\n\nin ${error.loc?.file} at line ${error.loc?.line}`;
+    public buildError(error: RollupError|SolidusException): string {
+        let message = '';
+        if (error instanceof SolidusException) {
+            // solus
+            message = `Error: ${error.message}\n\n`;
+        }
+        else {
+            // it is a Rollup error.
+            message = `Error: ${error.message}\n\n`;
+            if (error.code === `PARSE_ERROR`) {
+                message += `${error.frame}\n\nin ${error.loc?.file} at line ${error.loc?.line}`;
+            }
         }
         return message;
     }

@@ -46,7 +46,7 @@ export default [
       "@swindle/color",
       "@swindle/os",
       "@swindle/filesystem",
-      "polka",
+      "express",
       "serve-static",
       "rollup",
       "@rollup/plugin-node-resolve",
@@ -56,7 +56,8 @@ export default [
       "rollup-plugin-styles",
       "rollup-plugin-copy",
       "@web/rollup-plugin-import-meta-assets",
-      "rollup-plugin-polyfill-node"
+      "rollup-plugin-polyfill-node",
+      "@rollup/plugin-image"
     ],
     output: {
       file: "./dist/bin/solidus.js",
