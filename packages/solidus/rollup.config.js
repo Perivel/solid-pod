@@ -46,7 +46,7 @@ export default [
       "@swindle/color",
       "@swindle/os",
       "@swindle/filesystem",
-      "polka",
+      "express",
       "serve-static",
       "rollup",
       "@rollup/plugin-node-resolve",

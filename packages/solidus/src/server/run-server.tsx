@@ -27,8 +27,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 import { DateTime } from '@swindle/core';
-import Polka from 'polka';
-import serve from 'serve-static';
+import express from 'express';
 import { join } from 'path';
 import { 
     renderToString, 
@@ -50,58 +49,56 @@ import { Middleware } from './middleware/middleware';
  */
 
 export const runServer = (App: Application, config: Configuration, middleware: Middleware[] = []): void => {
-    Polka()
-        // attach the middleware.
-        .use(...middleware)
+  const app = express();
 
-        // register static assets.
-        .use(`/public`, serve(join(__dirname, 'assets')))
+  // set middleware
+  app.use(...middleware);
 
-        // set up the server to be used for SSR.
-        .get('*', async (req, res) => {
-            const options: ServerOptions = {
-              debug: config.env === "development",
-              port: config.port
-            };
-            
-            if (config.ssr === 'stream') {
-                // set up streaming ssr.
-                renderToStream(() => <App url={req.url} serverOptions={options} />).pipe(res);
-            }
-            else {
-                // the SSR configuration is set to either synchonous or asynchonous SSR.
-                try {
-                    let page: string;
+  // register static assets
+  app.use(express.static(join(__dirname, 'assets')));
 
-                    if (config.ssr === 'async') {
-                        // set up async ssr.
-                        page = await renderToStringAsync(() => (
-                          <App
-                            url={req.url}
-                            serverOptions={options}
-                          />
-                        ));
-                    }
-                    else {
-                        // set up standard ssr.
-                        page = renderToString(() => (
-                          <App
-                            url={req.url}
-                            serverOptions={options}
-                          />
-                        ));
-                    }
-                    res.status(200).send(page);
-                }
-                catch(e) {
-                    console.log((e as Error).message);
-                    res.status(500).send('Server Error');
-                }
-            }
-        })
+  // register the initial route.
+  app.get("*", async (req, res) => {
+    const options: ServerOptions = {
+      debug: config.env === "development",
+      port: config.port,
+    };
 
-        // start the server.
-        .listen(config.port, () => {
-            console.log(`[${DateTime.Now().toString()}]: Application successfully running on ${config.host}:${config.port}`);
-        });
+    if (config.ssr === "stream") {
+      // set up streaming ssr.
+      renderToStream(() => <App url={req.url} serverOptions={options} />).pipe(
+        res
+      );
+    } else {
+      // the SSR configuration is set to either synchonous or asynchonous SSR.
+      try {
+        let page: string;
+
+        if (config.ssr === "async") {
+          // set up async ssr.
+          page = await renderToStringAsync(() => (
+            <App url={req.url} serverOptions={options} />
+          ));
+        } else {
+          // set up standard ssr.
+          page = renderToString(() => (
+            <App url={req.url} serverOptions={options} />
+          ));
+        }
+        res.status(200).send(page);
+      } catch (e) {
+        console.log((e as Error).message);
+        res.status(500).send("Server Error");
+      }
+    }
+  });
+
+  // start the server.
+  app.listen(config.port, () => {
+    console.log(
+      `[${DateTime.Now().toString()}]: Application successfully running on ${
+        config.host
+      }:${config.port}`
+    );
+  });
 }

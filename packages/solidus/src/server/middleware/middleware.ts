@@ -26,7 +26,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import { Middleware as MiddlewareFn } from 'polka';
+import { Request, Response, NextFunction } from 'express';
 
 /**
  * Middleware
@@ -34,4 +34,4 @@ import { Middleware as MiddlewareFn } from 'polka';
  * Solidus Middleware.
  */
 
-export type Middleware = MiddlewareFn;
+export type Middleware = (req: Request, res: Response, next: NextFunction) => Promise<void>;
