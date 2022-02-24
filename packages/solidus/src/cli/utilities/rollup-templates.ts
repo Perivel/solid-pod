@@ -80,7 +80,8 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
             image(),
             copy({
                 targets: [
-                    { src: 'src/assets/**/*', dest: 'dist/src/assets' }
+                    //{ src: 'src/assets/**/*', dest: 'dist/src/assets' }
+                    { src: Path.FromSegments(root, 'src', 'assets').toString().concat(`${Path.Delimiter()}**${Path.Delimiter()}*`), dest: Path.FromSegments(root, 'dist', 'src', 'assets').toString()}
                 ]
             }),
         ],
