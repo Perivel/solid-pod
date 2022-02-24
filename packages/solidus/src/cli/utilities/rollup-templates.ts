@@ -53,7 +53,14 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
         output: [
             {
                 dir: Path.FromSegments(root, "dist").toString(),
-                format: "cjs"
+                format: "cjs",
+                globals: {
+                    'solid-js': 'solidjs',
+                    'solid-js/web': 'web',
+                    '@swindle/color': 'color',
+                    '@swindle/core': 'core',
+                    'express': 'express',
+                }
             }
         ],
         external: [
