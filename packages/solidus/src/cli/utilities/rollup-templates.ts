@@ -53,13 +53,21 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
         output: [
             {
                 dir: Path.FromSegments(root, "dist").toString(),
-                format: "cjs"
+                format: "cjs",
+                globals: {
+                    'solid-js': 'solidjs',
+                    'solid-js/web': 'web',
+                    '@swindle/color': 'color',
+                    '@swindle/core': 'core',
+                    'express': 'express',
+                    'solidusjs': 'solidusjs'
+                }
             }
         ],
         external: [
             "solid-js",
             "solid-js/web",
-            "solidus"
+            "solidusjs"
         ],
         plugins: [
             typescript(tsconfigOptions),
@@ -80,7 +88,8 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
             image(),
             copy({
                 targets: [
-                    { src: 'src/assets/**/*', dest: 'dist/src/assets' }
+                    //{ src: 'src/assets/**/*', dest: 'dist/src/assets' }
+                    { src: Path.FromSegments(root, 'src', 'assets').toString().concat(`${Path.Delimiter()}**${Path.Delimiter()}*`), dest: Path.FromSegments(root, 'dist', 'src', 'assets').toString()}
                 ]
             }),
         ],

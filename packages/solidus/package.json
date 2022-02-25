@@ -1,5 +1,5 @@
 {
-  "name": "solidus",
+  "name": "solidusjs",
   "version": "0.1.0",
   "description": "Plug and play Server-Side Rendering for SolidJS",
   "main": "./dist/cjs/index.js",
@@ -48,7 +48,6 @@
     "rollup-plugin-polyfill-node": "^0.8.0",
     "rollup-plugin-styles": "^4.0.0",
     "rollup-preset-solid": "^1.1.0",
-    "serve-static": "^1.14.2",
-    "solid-js": "^1.3.2"
+    "serve-static": "^1.14.2"
   }
 }
