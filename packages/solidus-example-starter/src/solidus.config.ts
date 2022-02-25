@@ -1,4 +1,4 @@
-import { Configuration } from 'solidus';
+import { Configuration } from 'solidusjs';
 
 export default <Configuration> {
     env: 'production',

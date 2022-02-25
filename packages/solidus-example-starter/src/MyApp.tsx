@@ -1,4 +1,4 @@
-import { Application, View } from 'solidus-js';
+import { Application, View } from 'solidusjs';
 import App from "./App";
 
 const MyApp: Application = (props) => {

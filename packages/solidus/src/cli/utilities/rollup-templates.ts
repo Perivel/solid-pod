@@ -60,13 +60,14 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
                     '@swindle/color': 'color',
                     '@swindle/core': 'core',
                     'express': 'express',
+                    'solidusjs': 'solidusjs'
                 }
             }
         ],
         external: [
             "solid-js",
             "solid-js/web",
-            "solidus-js"
+            "solidusjs"
         ],
         plugins: [
             typescript(tsconfigOptions),

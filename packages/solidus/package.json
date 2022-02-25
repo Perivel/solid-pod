@@ -1,5 +1,5 @@
 {
-  "name": "solidus-js",
+  "name": "solidusjs",
   "version": "0.1.0",
   "description": "Plug and play Server-Side Rendering for SolidJS",
   "main": "./dist/cjs/index.js",
