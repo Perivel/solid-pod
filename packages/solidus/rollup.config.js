@@ -8,6 +8,7 @@ import nodePolyfillPlugin from 'rollup-plugin-polyfill-node';
 import nodeResolve from '@rollup/plugin-node-resolve';
 
 export default [
+  // lib
   solidRollupConfig({
     input: resolve(__dirname, 'index.ts'),
     external: [
