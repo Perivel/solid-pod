@@ -1,4 +1,3 @@
-import solidRollupConfig from 'rollup-preset-solid';
 import { terser } from 'rollup-plugin-terser';
 import { resolve } from 'path';
 import typescriptPlugin from '@rollup/plugin-typescript';
@@ -6,10 +5,11 @@ import hashbangPlugin from 'rollup-plugin-hashbang';
 import jsonPlugin from '@rollup/plugin-json';
 import nodePolyfillPlugin from 'rollup-plugin-polyfill-node';
 import nodeResolve from '@rollup/plugin-node-resolve';
+import babel from '@rollup/plugin-babel';
 
 export default [
   // lib
-  solidRollupConfig({
+  {
     input: resolve(__dirname, 'index.ts'),
     external: [
       "@swindle/core",
@@ -63,9 +63,18 @@ export default [
     ],
     plugins: [
       nodePolyfillPlugin(),
-      nodeResolve(),
+      nodeResolve({
+        extensions: [".js", ".ts", ".tsx"]
+      }),
+      babel({
+        extensions: [".js", ".ts", ".tsx"],
+        babelHelpers: "bundled",
+        presets: ["solid", "@babel/preset-typescript"],
+        exclude: "node_modules/**"
+      })
     ]
-  }),
+  },
+  
   // CLI
   {
     input: resolve(__dirname, 'cli.ts'),
