@@ -5,14 +5,16 @@ import typescriptPlugin from '@rollup/plugin-typescript';
 import hashbangPlugin from 'rollup-plugin-hashbang';
 import jsonPlugin from '@rollup/plugin-json';
 import nodePolyfillPlugin from 'rollup-plugin-polyfill-node';
+import nodeResolve from '@rollup/plugin-node-resolve';
 
 export default [
+  // lib
   solidRollupConfig({
     input: resolve(__dirname, 'index.ts'),
     external: [
       "@swindle/core",
       "@swindle/color",
-      "express",,
+      "express", ,
       'solid-js',
       'solid-js/web'
     ],
@@ -27,6 +29,7 @@ export default [
           '@swindle/color': 'color',
           '@swindle/core': 'core',
           'express': 'express',
+          'path': 'path'
         }
       },
       {
@@ -39,6 +42,7 @@ export default [
           '@swindle/color': 'color',
           '@swindle/core': 'core',
           'express': 'express',
+          'path': 'path'
         }
       },
       {
@@ -53,14 +57,16 @@ export default [
           '@swindle/color': 'color',
           '@swindle/core': 'core',
           'express': 'express',
+          'path': 'path'
         }
       },
     ],
     plugins: [
-      nodePolyfillPlugin()
+      nodePolyfillPlugin(),
+      nodeResolve(),
     ]
   }),
-  // The CLI
+  // CLI
   {
     input: resolve(__dirname, 'cli.ts'),
     external: [
@@ -81,10 +87,15 @@ export default [
       "rollup-plugin-polyfill-node",
       "@rollup/plugin-image"
     ],
-    output: {
-      file: "./dist/bin/solidus.js",
-      format: "cjs"
-    },
+    output: [
+      {
+        file: "./dist/bin/solidus.js",
+        format: "cjs",
+        globals: {
+          // globals
+        }
+      },
+    ],
     plugins: [
       typescriptPlugin(),
       nodePolyfillPlugin(),
