@@ -11,6 +11,8 @@ export default [
   // lib
   {
     input: resolve(__dirname, 'index.ts'),
+    treeshake: false,
+    preserveEntrySignatures: false,
     external: [
       "@swindle/core",
       "@swindle/color",
@@ -94,7 +96,9 @@ export default [
       "rollup-plugin-copy",
       "@web/rollup-plugin-import-meta-assets",
       "rollup-plugin-polyfill-node",
-      "@rollup/plugin-image"
+      "@rollup/plugin-image",
+      // "solid-js",
+      // "solid-js/web"
     ],
     output: [
       {
@@ -102,6 +106,24 @@ export default [
         format: "cjs",
         globals: {
           // globals
+          // "@swindle/core": "swindleCore",
+          // "@swindle/color": "swindleColor",
+          // "@swindle/os": "swindleOS",
+          // "@swindle/filesystem": "swindleFS",
+          // "express": "express",
+          // "serve-static": "serveStatic",
+          // "rollup": "rollup",
+          // "@rollup/plugin-node-resolve": "resolve",
+          // "@rollup/plugin-babel": "babelPlugin",
+          // "@rollup/plugin-json": "jsonPlugin",
+          // "@rollup/plugin-typescript": "typescriptPlugin",
+          // "rollup-plugin-styles": "stylesPlugin",
+          // "rollup-plugin-copy": "copyPlugin",
+          // "@web/rollup-plugin-import-meta-assets": "assetsPlugin",
+          // "rollup-plugin-polyfill-node": "polyfills",
+          // "@rollup/plugin-image": "imagePlugin",
+          // "solid-js": "solid",
+          // "solid-js/web": "web"
         }
       },
     ],
