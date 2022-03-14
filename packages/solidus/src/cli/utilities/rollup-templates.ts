@@ -52,8 +52,20 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
         input: Path.FromSegments(root, "src", "index.ts").toString(),
         output: [
             {
-                dir: Path.FromSegments(root, "dist").toString(),
+                dir: Path.FromSegments(root, "dist/cjs").toString(),
                 format: "cjs",
+                globals: {
+                    'solid-js': 'solid',
+                    'solid-js/web': 'web',
+                    '@swindle/color': 'color',
+                    '@swindle/core': 'core',
+                    'express': 'express',
+                    'solidusjs': 'solidusjs'
+                }
+            },
+            {
+                dir: Path.FromSegments(root, 'dist/esm').toString(),
+                format: 'es',
                 globals: {
                     'solid-js': 'solid',
                     'solid-js/web': 'web',

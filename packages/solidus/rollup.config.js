@@ -1,24 +1,26 @@
-import { terser } from 'rollup-plugin-terser';
-import { resolve } from 'path';
-import typescriptPlugin from '@rollup/plugin-typescript';
-import hashbangPlugin from 'rollup-plugin-hashbang';
-import jsonPlugin from '@rollup/plugin-json';
-import nodePolyfillPlugin from 'rollup-plugin-polyfill-node';
-import nodeResolve from '@rollup/plugin-node-resolve';
-import babel from '@rollup/plugin-babel';
+import { terser } from "rollup-plugin-terser";
+import { resolve } from "path";
+import typescriptPlugin from "@rollup/plugin-typescript";
+import hashbangPlugin from "rollup-plugin-hashbang";
+import jsonPlugin from "@rollup/plugin-json";
+import nodePolyfillPlugin from "rollup-plugin-polyfill-node";
+import nodeResolve from "@rollup/plugin-node-resolve";
+import babel from "@rollup/plugin-babel";
+import commonjs from '@rollup/plugin-commonjs';
 
 export default [
   // lib
   {
-    input: resolve(__dirname, 'index.ts'),
+    input: resolve(__dirname, "index.ts"),
     treeshake: false,
     preserveEntrySignatures: false,
     external: [
       "@swindle/core",
       "@swindle/color",
-      "express", ,
-      'solid-js',
-      'solid-js/web'
+      "express",
+      ,
+      "solid-js",
+      "solid-js/web",
     ],
     output: [
       {
@@ -26,26 +28,26 @@ export default [
         dir: resolve("dist/cjs"),
         sourcemap: true,
         globals: {
-          'solid-js': 'solidjs',
-          'solid-js/web': 'web',
-          '@swindle/color': 'color',
-          '@swindle/core': 'core',
-          'express': 'express',
-          'path': 'path'
-        }
+          "solid-js": "Solid",
+          "solid-js/web": "SolidWeb",
+          "@swindle/color": "Color",
+          "@swindle/core": "Core",
+          express: "Express",
+          path: "Path",
+        },
       },
       {
         format: "esm",
         dir: resolve("dist/esm"),
         sourcemap: true,
         globals: {
-          'solid-js': 'solidjs',
-          'solid-js/web': 'web',
-          '@swindle/color': 'color',
-          '@swindle/core': 'core',
-          'express': 'express',
-          'path': 'path'
-        }
+          "solid-js": "Solid",
+          "solid-js/web": "SolidWeb",
+          "@swindle/color": "Color",
+          "@swindle/core": "Core",
+          express: "Express",
+          path: "Path",
+        },
       },
       {
         name: "solidus",
@@ -54,32 +56,35 @@ export default [
         sourcemap: true,
         plugins: [terser()],
         globals: {
-          'solid-js': 'solidjs',
-          'solid-js/web': 'web',
-          '@swindle/color': 'color',
-          '@swindle/core': 'core',
-          'express': 'express',
-          'path': 'path'
-        }
+          "solid-js": "Solid",
+          "solid-js/web": "SolidWeb",
+          "@swindle/color": "Color",
+          "@swindle/core": "Core",
+          express: "Express",
+          path: "Path",
+        },
       },
     ],
     plugins: [
       nodePolyfillPlugin(),
+      commonjs(),
       nodeResolve({
-        extensions: [".js", ".ts", ".tsx"]
+        extensions: [".js", ".ts", ".tsx"],
+        ignoreGlobals: false,
+        include: ['node_modules/**']
       }),
       babel({
         extensions: [".js", ".ts", ".tsx"],
         babelHelpers: "bundled",
         presets: ["solid", "@babel/preset-typescript"],
-        exclude: "node_modules/**"
-      })
-    ]
+        exclude: "node_modules/**",
+      }),
+    ],
   },
-  
+
   // CLI
   {
-    input: resolve(__dirname, 'cli.ts'),
+    input: resolve(__dirname, "cli.ts"),
     external: [
       "@swindle/core",
       "@swindle/color",
@@ -124,7 +129,7 @@ export default [
           // "@rollup/plugin-image": "imagePlugin",
           // "solid-js": "solid",
           // "solid-js/web": "web"
-        }
+        },
       },
     ],
     plugins: [
@@ -133,5 +138,5 @@ export default [
       jsonPlugin(),
       hashbangPlugin(),
     ],
-  }
+  },
 ];

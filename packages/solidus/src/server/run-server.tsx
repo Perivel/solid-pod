@@ -32,7 +32,7 @@ import { join } from 'path';
 import { 
     renderToString, 
     renderToStringAsync, 
-    renderToStream
+    renderToStream,
 } from 'solid-js/web';
 import { Configuration } from './configuration/configuration';
 import { Application } from '../types/application.type';

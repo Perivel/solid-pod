@@ -40,7 +40,7 @@ import { runBuild } from './solidus-build';
  */
 
 export const runStart = async (): Promise<CommandStatus> => {
-    const executablePath = Path.FromSegments(Process.Cwd(), 'dist', 'index.js');
+    const executablePath = Path.FromSegments(Process.Cwd(), 'dist', 'cjs/index.js');
     const fmt = new MessageFormatter();
 
     if (!await FileSystem.Contains(executablePath)) {
