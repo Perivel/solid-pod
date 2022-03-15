@@ -18,7 +18,6 @@ export default [
       "@swindle/core",
       "@swindle/color",
       "express",
-      ,
       "solid-js",
       "solid-js/web",
     ],
@@ -108,28 +107,7 @@ export default [
     output: [
       {
         file: "./dist/bin/solidus.js",
-        format: "cjs",
-        globals: {
-          // globals
-          // "@swindle/core": "swindleCore",
-          // "@swindle/color": "swindleColor",
-          // "@swindle/os": "swindleOS",
-          // "@swindle/filesystem": "swindleFS",
-          // "express": "express",
-          // "serve-static": "serveStatic",
-          // "rollup": "rollup",
-          // "@rollup/plugin-node-resolve": "resolve",
-          // "@rollup/plugin-babel": "babelPlugin",
-          // "@rollup/plugin-json": "jsonPlugin",
-          // "@rollup/plugin-typescript": "typescriptPlugin",
-          // "rollup-plugin-styles": "stylesPlugin",
-          // "rollup-plugin-copy": "copyPlugin",
-          // "@web/rollup-plugin-import-meta-assets": "assetsPlugin",
-          // "rollup-plugin-polyfill-node": "polyfills",
-          // "@rollup/plugin-image": "imagePlugin",
-          // "solid-js": "solid",
-          // "solid-js/web": "web"
-        },
+        format: "esm",
       },
     ],
     plugins: [
