@@ -54,14 +54,21 @@ export const runBuild = async (): Promise<CommandStatus> => {
 
     try {
         console.log(fmt.message('Creating bundle...'));
-        const build = await rollup(rollupOptions);
+        const builds = await Promise.all(rollupOptions.map(async option => {
+            return await rollup(option);
+        }));
         console.log(fmt.message('Generating Bundle...'));
 
         // delete the old bundle if it exists.
         if (await FileSystem.Contains(bundlePath)) {
             await FileSystem.Delete(bundlePath, true, true);
         }
-        await generateBundle(build, rollupOptions);
+        
+        const len = builds.length;
+        for (let i = 0; i < len; i++) {
+            await generateBundle(builds[i], rollupOptions[i]);
+        }
+
     }
     catch (e) {
         // failed to build the bundle.
