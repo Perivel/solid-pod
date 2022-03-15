@@ -29,3 +29,4 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 export * from './configuration/configuration';
 export * from './middleware/middleware';
 export * from './run-server';
+export * from './run-client';
