@@ -53,7 +53,7 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
         input: Path.FromSegments(root, "src/server.ts").toString(),
         output: [
             {
-                dir: Path.FromSegments(root, 'dist').toString(),
+                file: Path.FromSegments(root, 'dist/index.js').toString(),
                 format: 'es',
                 globals: {
                     'solid-js': 'solid',
@@ -106,7 +106,7 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
         input: Path.FromSegments(root, "src/client.ts").toString(),
         output: [
             {
-                dir: Path.FromSegments(root, 'dist/esm').toString(),
+                file: Path.FromSegments(root, 'dist/public/js/index.js').toString(),
                 format: 'es',
                 globals: {
                     'solid-js': 'solid',
