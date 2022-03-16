@@ -30,13 +30,14 @@ import { RollupOptions } from 'rollup';
 import { Process } from '@swindle/os';
 import { Path } from '@swindle/filesystem';
 import nodeResolve from "@rollup/plugin-node-resolve";
-import babel from "@rollup/plugin-babel";
+import { babel } from "@rollup/plugin-babel";
 import json from "@rollup/plugin-json";
 import typescript from '@rollup/plugin-typescript';
 import styles from 'rollup-plugin-styles';
 import copy from 'rollup-plugin-copy';
 import nodePolyfill from 'rollup-plugin-polyfill-node';
 import image from '@rollup/plugin-image';
+import commonjs from '@rollup/plugin-commonjs';
 
 /**
  * loadBuildConfigurationOptions()
@@ -71,6 +72,9 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
             "express"
         ],
         plugins: [
+            commonjs({
+                include: 'node_modules/**',
+            }),
             typescript(tsconfigOptions),
             nodeResolve({
                 preferBuiltins: true,
@@ -121,6 +125,9 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
             "express"
         ],
         plugins: [
+            commonjs({
+                include: 'node_modules/**',
+            }),
             typescript(tsconfigOptions),
             nodeResolve({
                 preferBuiltins: true,

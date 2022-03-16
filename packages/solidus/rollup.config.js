@@ -8,45 +8,48 @@ import nodeResolve from "@rollup/plugin-node-resolve";
 import babel from "@rollup/plugin-babel";
 import commonjs from '@rollup/plugin-commonjs';
 
+// core library external dependencies.
+const libExternals = [
+  "@swindle/core",
+  "@swindle/color",
+  "express",
+  "solid-js",
+  "solid-js/web",
+];
+
+// core library globals.
+const libGlobals = {
+  "solid-js": "Solid",
+  "solid-js/web": "SolidWeb",
+  "@swindle/color": "Color",
+  "@swindle/core": "Core",
+  "express": "Express",
+  "path": "Path",
+};
+
+/**
+ * The configuration object.
+ */
+
 export default [
   // lib
   {
     input: resolve(__dirname, "index.ts"),
     treeshake: false,
     preserveEntrySignatures: false,
-    external: [
-      "@swindle/core",
-      "@swindle/color",
-      "express",
-      "solid-js",
-      "solid-js/web",
-    ],
+    external: libExternals,
     output: [
       {
         format: "cjs",
         dir: resolve("dist/cjs"),
         sourcemap: true,
-        globals: {
-          "solid-js": "Solid",
-          "solid-js/web": "SolidWeb",
-          "@swindle/color": "Color",
-          "@swindle/core": "Core",
-          express: "Express",
-          path: "Path",
-        },
+        globals: libGlobals,
       },
       {
         format: "esm",
         dir: resolve("dist/esm"),
         sourcemap: true,
-        globals: {
-          "solid-js": "Solid",
-          "solid-js/web": "SolidWeb",
-          "@swindle/color": "Color",
-          "@swindle/core": "Core",
-          express: "Express",
-          path: "Path",
-        },
+        globals: libGlobals,
       },
       {
         name: "solidus",
@@ -54,14 +57,7 @@ export default [
         dir: resolve("dist/umd"),
         sourcemap: true,
         plugins: [terser()],
-        globals: {
-          "solid-js": "Solid",
-          "solid-js/web": "SolidWeb",
-          "@swindle/color": "Color",
-          "@swindle/core": "Core",
-          express: "Express",
-          path: "Path",
-        },
+        globals: libGlobals,
       },
     ],
     plugins: [
@@ -101,8 +97,9 @@ export default [
       "@web/rollup-plugin-import-meta-assets",
       "rollup-plugin-polyfill-node",
       "@rollup/plugin-image",
-      // "solid-js",
-      // "solid-js/web"
+      "babel-preset-solid",
+      "rollup-plugin-copy",
+      "@rollup/plugin-commonjs"
     ],
     output: [
       {

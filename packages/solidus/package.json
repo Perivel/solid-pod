@@ -27,9 +27,6 @@
   },
   "license": "BSD-2",
   "devDependencies": {
-    "@babel/core": "^7.17.5",
-    "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-typescript": "^8.3.0",
     "rimraf": "^3.0.2",
     "rollup-plugin-hashbang": "^3.0.0",
     "rollup-plugin-terser": "^7.0.2",
@@ -54,6 +51,9 @@
     "serve-static": "^1.14.2",
     "solid-app-router": "^0.3.1",
     "solid-js": "^1.3.12",
-    "solid-meta": "^0.27.3"
+    "solid-meta": "^0.27.3",
+    "@babel/core": "^7.17.5",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-typescript": "^8.3.0"
   }
 }
