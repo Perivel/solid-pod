@@ -31,6 +31,7 @@ import { Process } from '@swindle/os';
 import { FileSystem, FileSystemException, Path } from '@swindle/filesystem';
 import { loadBuildConfigurationOptions } from "../utilities/rollup-templates";
 import { CommandStatus } from "../utilities/command-status.enum";
+import container from './../utilities/container';
 import { loadTsconfig } from './../utilities/load-tsconfig';
 import { MessageFormatter } from "../utilities/message-formatter";
 import { SolidusException } from "../exceptions/solidus.exception";
@@ -42,7 +43,7 @@ import { SolidusException } from "../exceptions/solidus.exception";
  */
 
 export const runBuild = async (): Promise<CommandStatus> => {
-    const fmt = new MessageFormatter();
+    const fmt = container.get(MessageFormatter);
     const bundlePath = Path.FromSegments(Process.Cwd(), 'dist');
 
     // load the rollup configuration file.

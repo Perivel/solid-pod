@@ -14,6 +14,7 @@ const externals = [
   "@swindle/color",
   "@swindle/os",
   "@swindle/filesystem",
+  "@swindle/container",
   "express",
   "serve-static",
   "solid-js",
@@ -36,7 +37,7 @@ const externals = [
 ];
 
 // core library globals.
-const libGlobals = {
+const globals = {
   "solid-js": "Solid",
   "solid-js/web": "SolidWeb",
   "@swindle/color": "Color",
@@ -44,7 +45,8 @@ const libGlobals = {
   "express": "Express",
   "path": "Path",
   "solid-app-router": "router",
-  "solid-meta": "meta"
+  "solid-meta": "meta",
+  "@swindle/container": "Container"
 };
 
 /**
@@ -63,21 +65,21 @@ export default [
         format: "cjs",
         dir: resolve("dist/cjs"),
         sourcemap: true,
-        globals: libGlobals,
+        globals: globals,
       },
       {
         format: "esm",
         dir: resolve("dist/esm"),
         sourcemap: true,
-        globals: libGlobals,
+        globals: globals,
       },
       {
         name: "solidus",
         format: "umd",
         dir: resolve("dist/umd"),
         sourcemap: true,
-        plugins: [terser()],
-        globals: libGlobals,
+        //plugins: [terser()],
+        globals: globals,
       },
     ],
     plugins: [
@@ -86,7 +88,7 @@ export default [
       nodeResolve({
         extensions: [".js", ".ts", ".tsx"],
         ignoreGlobals: false,
-        include: ['node_modules/**']
+        exclude: ['node_modules/**']
       }),
       babel({
         extensions: [".js", ".ts", ".tsx"],
@@ -94,6 +96,7 @@ export default [
         presets: ["solid", "@babel/preset-typescript"],
         exclude: "node_modules/**",
       }),
+      terser(),
     ],
   },
 
@@ -105,6 +108,7 @@ export default [
       {
         file: "./dist/bin/solidus.js",
         format: "esm",
+        globals: globals,
       },
     ],
     plugins: [
@@ -112,6 +116,7 @@ export default [
       nodePolyfillPlugin(),
       jsonPlugin(),
       hashbangPlugin(),
+      terser(),
     ],
   },
 ];
