@@ -9,12 +9,30 @@ import babel from "@rollup/plugin-babel";
 import commonjs from '@rollup/plugin-commonjs';
 
 // core library external dependencies.
-const libExternals = [
+const externals = [
   "@swindle/core",
   "@swindle/color",
+  "@swindle/os",
+  "@swindle/filesystem",
   "express",
+  "serve-static",
   "solid-js",
   "solid-js/web",
+  "solid-app-router",
+  "solid-meta",
+  "rollup",
+  "@rollup/plugin-node-resolve",
+  "@rollup/plugin-babel",
+  "@rollup/plugin-json",
+  "@rollup/plugin-typescript",
+  "rollup-plugin-styles",
+  "rollup-plugin-copy",
+  "@web/rollup-plugin-import-meta-assets",
+  "rollup-plugin-polyfill-node",
+  "@rollup/plugin-image",
+  "babel-preset-solid",
+  "rollup-plugin-copy",
+  "@rollup/plugin-commonjs"
 ];
 
 // core library globals.
@@ -25,6 +43,8 @@ const libGlobals = {
   "@swindle/core": "Core",
   "express": "Express",
   "path": "Path",
+  "solid-app-router": "router",
+  "solid-meta": "meta"
 };
 
 /**
@@ -37,7 +57,7 @@ export default [
     input: resolve(__dirname, "index.ts"),
     treeshake: false,
     preserveEntrySignatures: false,
-    external: libExternals,
+    external: externals,
     output: [
       {
         format: "cjs",
@@ -80,27 +100,7 @@ export default [
   // CLI
   {
     input: resolve(__dirname, "cli.ts"),
-    external: [
-      "@swindle/core",
-      "@swindle/color",
-      "@swindle/os",
-      "@swindle/filesystem",
-      "express",
-      "serve-static",
-      "rollup",
-      "@rollup/plugin-node-resolve",
-      "@rollup/plugin-babel",
-      "@rollup/plugin-json",
-      "@rollup/plugin-typescript",
-      "rollup-plugin-styles",
-      "rollup-plugin-copy",
-      "@web/rollup-plugin-import-meta-assets",
-      "rollup-plugin-polyfill-node",
-      "@rollup/plugin-image",
-      "babel-preset-solid",
-      "rollup-plugin-copy",
-      "@rollup/plugin-commonjs"
-    ],
+    external: externals,
     output: [
       {
         file: "./dist/bin/solidus.js",
