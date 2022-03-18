@@ -92,7 +92,7 @@ const generateBundle = async (bundle: RollupBuild, options: RollupOptions): Prom
     // build the output.
     if (options.output) {
         if (Array.isArray(options.output)) {
-            Promise.all(options.output.map(async option => {
+            await Promise.all(options.output.map(async option => {
                 return await bundle.write(option);
             }));
         }
