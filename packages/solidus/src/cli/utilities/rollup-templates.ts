@@ -49,28 +49,34 @@ import commonjs from '@rollup/plugin-commonjs';
  */
 
 export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Path = Process.Cwd()): RollupOptions[] => {
+    const externals = [
+        "solid-js",
+        "solid-js/web",
+        "solid-app-router",
+        "solidusjs",
+        "express"
+    ];
+
+    const globals = {
+        'solid-js': 'solid',
+        'solid-js/web': 'web',
+        'solid-app-router': 'router',
+        '@swindle/color': 'color',
+        '@swindle/core': 'core',
+        'express': 'express',
+        'solidusjs': 'solidusjs'
+    }
+
     const serverConfig = <RollupOptions> {
         input: Path.FromSegments(root, "src/server.ts").toString(),
         output: [
             {
                 file: Path.FromSegments(root, 'dist/index.js').toString(),
                 format: 'es',
-                globals: {
-                    'solid-js': 'solid',
-                    'solid-js/web': 'web',
-                    '@swindle/color': 'color',
-                    '@swindle/core': 'core',
-                    'express': 'express',
-                    'solidusjs': 'solidusjs'
-                }
+                globals: globals
             }
         ],
-        external: [
-            "solid-js",
-            "solid-js/web",
-            "solidusjs",
-            "express"
-        ],
+        external: externals,
         plugins: [
             commonjs({
                 include: 'node_modules/**',
@@ -108,22 +114,10 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
             {
                 file: Path.FromSegments(root, 'dist/public/js/index.js').toString(),
                 format: 'es',
-                globals: {
-                    'solid-js': 'solid',
-                    'solid-js/web': 'web',
-                    '@swindle/color': 'color',
-                    '@swindle/core': 'core',
-                    'express': 'express',
-                    'solidusjs': 'solidusjs'
-                }
+                globals: globals
             }
         ],
-        external: [
-            "solid-js",
-            "solid-js/web",
-            "solidusjs",
-            "express"
-        ],
+        external: externals,
         plugins: [
             commonjs({
                 include: 'node_modules/**',
