@@ -31,8 +31,8 @@ import express from 'express';
 import { join } from 'path';
 import { 
     renderToString, 
-    renderToStringAsync, 
-    renderToStream
+    renderToStringAsync,
+    renderToStream,
 } from 'solid-js/web';
 import { Configuration } from './configuration/configuration';
 import { Application } from '../types/application.type';

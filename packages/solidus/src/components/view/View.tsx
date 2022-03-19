@@ -110,7 +110,7 @@ const View: ViewComponent = (props) => {
           <title>{props.title}</title>
         </head>
         <body>
-          <noscript>You need to enable JavaScript to run this app.</noscript>
+          <noscript>JavaScript is required to run this app.</noscript>
           <div>
             <MetaProvider>
               <Router url={url}>

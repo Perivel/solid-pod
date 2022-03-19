@@ -26,45 +26,23 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import { FileSystem, Path } from '@swindle/filesystem';
-import { Process } from '@swindle/os';
-import { SolidusException } from '../exceptions/solidus.exception';
-import { CommandStatus } from "../utilities/command-status.enum";
-import { MessageFormatter } from '../utilities/message-formatter';
-import { runBuild } from './solidus-build';
-import container from './../utilities/container';
+import { hydrate } from 'solid-js/web';
+import { Configuration } from './configuration/configuration';
+import { Application, ServerOptions } from './../types/index';
 
 /**
- * runStart()
+ * runClient()
  * 
- * starts the server.
+ * Renders the application on the client.
+ * @param App The application to render.
+ * @param config The configuration object.
  */
 
-export const runStart = async (): Promise<CommandStatus> => {
-    const executablePath = Path.FromSegments(Process.Cwd(), 'dist/index.js');
-    const fmt = container.get(MessageFormatter);
-
-    if (!await FileSystem.Contains(executablePath)) {
-        // not yet built. Build the app
-        const buildStatus = await runBuild();
-        
-        if (buildStatus === CommandStatus.Error) {
-            return buildStatus;
-        }
-    }
-
-    try {
-        // start the application.
-        console.log(fmt.message('Starting application...'));
-        await Process.Exec(`node ${executablePath.toString()}`, {
-            cwd: Process.Cwd().toString(),
-        });
-    }
-    catch(e) {
-        const error = new SolidusException((e as Error).message);
-        console.log(fmt.buildError(error));
-        return CommandStatus.Error;
-    }
-
-    return CommandStatus.Success;
+export const runClient = (App: Application, config: Configuration): () => void => {
+    const url = '/';
+    const options: ServerOptions = {
+        port: config.port,
+        debug: config.env === 'development'
+    };
+    return hydrate(() => <App url={url} serverOptions={options}/>, document);
 }

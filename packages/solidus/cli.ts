@@ -32,12 +32,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import { Process } from '@swindle/os';
 import { runBuild } from './src/cli/commands/solidus-build';
 import { runStart } from './src/cli/commands/solidus-start';
+import { runDev } from './src/cli/commands/solidus-dev';
 import { SolidusCommands } from './src/cli/utilities/solidus-commands.enum';
+import container from './src/cli/utilities/container';
+import { MessageFormatter } from './src/cli/utilities/message-formatter';
 
 const runCli = async (): Promise<number> => {
    // determine which command to run.
    const [node, app, ...args] = Process.argv;
    const cmd = args[0];
+   const fmt = container.get(MessageFormatter);
 
    if (cmd === SolidusCommands.build) {
       // run the build command.
@@ -46,7 +50,7 @@ const runCli = async (): Promise<number> => {
    }
    else if (cmd === SolidusCommands.dev) {
       // run the Dev command.
-      return 1;
+      return await runDev();
    }
    else if (cmd == SolidusCommands.start) {
       // run the app
@@ -54,7 +58,8 @@ const runCli = async (): Promise<number> => {
    }
    else {
       // invalid command.
-      return 1;
+      console.log(fmt.message("Invalid Command"));
+      return 0;
    }
 }
 

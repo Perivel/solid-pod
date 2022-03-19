@@ -25,3 +25,23 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+
+import { CommandStatus } from "../utilities/command-status.enum";
+import { MessageFormatter } from "../utilities/message-formatter";
+import container from './../utilities/container';
+
+/**
+ * runDev()
+ * 
+ * Runs the application in development mode.
+ * @returns the command status
+ */
+
+export const runDev = async (): Promise<CommandStatus> => {
+   const fmt = container.get(MessageFormatter);
+
+   // define  command ere.
+   console.log(fmt.message('Command not defined'));
+   
+   return CommandStatus.Success;
+}

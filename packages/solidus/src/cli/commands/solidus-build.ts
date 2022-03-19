@@ -31,6 +31,7 @@ import { Process } from '@swindle/os';
 import { FileSystem, FileSystemException, Path } from '@swindle/filesystem';
 import { loadBuildConfigurationOptions } from "../utilities/rollup-templates";
 import { CommandStatus } from "../utilities/command-status.enum";
+import container from './../utilities/container';
 import { loadTsconfig } from './../utilities/load-tsconfig';
 import { MessageFormatter } from "../utilities/message-formatter";
 import { SolidusException } from "../exceptions/solidus.exception";
@@ -42,7 +43,7 @@ import { SolidusException } from "../exceptions/solidus.exception";
  */
 
 export const runBuild = async (): Promise<CommandStatus> => {
-    const fmt = new MessageFormatter();
+    const fmt = container.get(MessageFormatter);
     const bundlePath = Path.FromSegments(Process.Cwd(), 'dist');
 
     // load the rollup configuration file.
@@ -54,14 +55,21 @@ export const runBuild = async (): Promise<CommandStatus> => {
 
     try {
         console.log(fmt.message('Creating bundle...'));
-        const build = await rollup(rollupOptions);
+        const builds = await Promise.all(rollupOptions.map(async option => {
+            return await rollup(option);
+        }));
         console.log(fmt.message('Generating Bundle...'));
 
         // delete the old bundle if it exists.
         if (await FileSystem.Contains(bundlePath)) {
             await FileSystem.Delete(bundlePath, true, true);
         }
-        await generateBundle(build, rollupOptions);
+        
+        const len = builds.length;
+        for (let i = 0; i < len; i++) {
+            await generateBundle(builds[i], rollupOptions[i]);
+        }
+
     }
     catch (e) {
         // failed to build the bundle.
@@ -84,7 +92,7 @@ const generateBundle = async (bundle: RollupBuild, options: RollupOptions): Prom
     // build the output.
     if (options.output) {
         if (Array.isArray(options.output)) {
-            Promise.all(options.output.map(async option => {
+            await Promise.all(options.output.map(async option => {
                 return await bundle.write(option);
             }));
         }

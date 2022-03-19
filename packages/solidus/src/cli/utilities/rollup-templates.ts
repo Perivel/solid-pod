@@ -30,13 +30,14 @@ import { RollupOptions } from 'rollup';
 import { Process } from '@swindle/os';
 import { Path } from '@swindle/filesystem';
 import nodeResolve from "@rollup/plugin-node-resolve";
-import babel from "@rollup/plugin-babel";
+import { babel } from "@rollup/plugin-babel";
 import json from "@rollup/plugin-json";
 import typescript from '@rollup/plugin-typescript';
 import styles from 'rollup-plugin-styles';
 import copy from 'rollup-plugin-copy';
 import nodePolyfill from 'rollup-plugin-polyfill-node';
 import image from '@rollup/plugin-image';
+import commonjs from '@rollup/plugin-commonjs';
 
 /**
  * loadBuildConfigurationOptions()
@@ -47,30 +48,39 @@ import image from '@rollup/plugin-image';
  * @returns A RollupOptions instance with the appropriate config settigs.
  */
 
-export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Path = Process.Cwd()): RollupOptions => {
-    return <RollupOptions> {
-        input: Path.FromSegments(root, "src", "index.ts").toString(),
+export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Path = Process.Cwd()): RollupOptions[] => {
+    const externals = [
+        "solid-js",
+        "solid-js/web",
+        "solid-app-router",
+        "solidusjs",
+        "express"
+    ];
+
+    const globals = {
+        'solid-js': 'solid',
+        'solid-js/web': 'web',
+        'solid-app-router': 'router',
+        '@swindle/color': 'color',
+        '@swindle/core': 'core',
+        'express': 'express',
+        'solidusjs': 'solidusjs'
+    }
+
+    const serverConfig = <RollupOptions> {
+        input: Path.FromSegments(root, "src/server.ts").toString(),
         output: [
             {
-                dir: Path.FromSegments(root, "dist").toString(),
-                format: "cjs",
-                globals: {
-                    'solid-js': 'solid',
-                    'solid-js/web': 'web',
-                    '@swindle/color': 'color',
-                    '@swindle/core': 'core',
-                    'express': 'express',
-                    'solidusjs': 'solidusjs'
-                }
+                file: Path.FromSegments(root, 'dist/index.js').toString(),
+                format: 'es',
+                globals: globals
             }
         ],
-        external: [
-            "solid-js",
-            "solid-js/web",
-            "solidusjs",
-            "express"
-        ],
+        external: externals,
         plugins: [
+            commonjs({
+                include: 'node_modules/**',
+            }),
             typescript(tsconfigOptions),
             nodeResolve({
                 preferBuiltins: true,
@@ -97,5 +107,48 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
         preserveEntrySignatures: false,
         treeshake: true,
     };
+
+    const clientConfig = <RollupOptions> {
+        input: Path.FromSegments(root, "src/client.ts").toString(),
+        output: [
+            {
+                file: Path.FromSegments(root, 'dist/public/js/index.js').toString(),
+                format: 'es',
+                globals: globals
+            }
+        ],
+        external: externals,
+        plugins: [
+            commonjs({
+                include: 'node_modules/**',
+            }),
+            typescript(tsconfigOptions),
+            nodeResolve({
+                preferBuiltins: true,
+                exportConditions: ["solid"],
+                extensions: [".js", ".jsx", ".ts", ".tsx"]
+            }),
+            nodePolyfill(),
+            babel({
+                babelHelpers: "bundled",
+                presets: [["solid", { generate: "dom", hydratable: true }]],
+                exclude: "node_modules/**",
+                extensions: [".js", ".jsx", ".ts", ".tsx"],
+            }),
+            json(),
+            styles(),
+            image(),
+            copy({
+                targets: [
+                    //{ src: 'src/assets/**/*', dest: 'dist/src/assets' }
+                    { src: Path.FromSegments(root, 'src', 'assets', "**", "*").toString().concat(`${Path.Delimiter()}**${Path.Delimiter()}*`), dest: Path.FromSegments(root, 'dist', 'src', 'assets').toString()}
+                ]
+            }),
+        ],
+        preserveEntrySignatures: false,
+        treeshake: true,
+    };
+
+    return [clientConfig, serverConfig];
 }
 
