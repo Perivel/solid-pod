@@ -41,7 +41,7 @@ import container from './../utilities/container';
  */
 
 export const runStart = async (): Promise<CommandStatus> => {
-    const executablePath = Path.FromSegments(Process.Cwd(), 'dist/index.js');
+    const executablePath = Path.FromSegments(Process.Cwd(), 'dist/server/index.js');
     const fmt = container.get(MessageFormatter);
 
     if (!await FileSystem.Contains(executablePath)) {

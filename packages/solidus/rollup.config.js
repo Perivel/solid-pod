@@ -78,17 +78,18 @@ export default [
         format: "umd",
         dir: resolve("dist/umd"),
         sourcemap: true,
-        //plugins: [terser()],
         globals: globals,
       },
     ],
     plugins: [
       nodePolyfillPlugin(),
-      commonjs(),
       nodeResolve({
         extensions: [".js", ".ts", ".tsx"],
         ignoreGlobals: false,
         exclude: ['node_modules/**']
+      }),
+      commonjs({
+        include: 'node_modules/**',
       }),
       babel({
         extensions: [".js", ".ts", ".tsx"],

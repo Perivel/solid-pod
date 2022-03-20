@@ -71,23 +71,23 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
         input: Path.FromSegments(root, "src/server.ts").toString(),
         output: [
             {
-                file: Path.FromSegments(root, 'dist/index.js').toString(),
+                file: Path.FromSegments(root, 'dist/server/index.js').toString(),
                 format: 'es',
                 globals: globals
             }
         ],
         external: externals,
         plugins: [
-            commonjs({
-                include: 'node_modules/**',
-            }),
             typescript(tsconfigOptions),
+            nodePolyfill(),
             nodeResolve({
                 preferBuiltins: true,
                 exportConditions: ["solid"],
                 extensions: [".js", ".jsx", ".ts", ".tsx"]
             }),
-            nodePolyfill(),
+            commonjs({
+                include: 'node_modules/**',
+            }),
             babel({
                 babelHelpers: "bundled",
                 presets: [["solid", { generate: "ssr", hydratable: true }]],
@@ -100,7 +100,7 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
             copy({
                 targets: [
                     //{ src: 'src/assets/**/*', dest: 'dist/src/assets' }
-                    { src: Path.FromSegments(root, 'src', 'assets', "**", "*").toString().concat(`${Path.Delimiter()}**${Path.Delimiter()}*`), dest: Path.FromSegments(root, 'dist', 'src', 'assets').toString()}
+                    { src: Path.FromSegments(root, 'src/assets/**/*').toString(), dest: Path.FromSegments(root, 'dist/server/assets').toString()}
                 ]
             }),
         ],
@@ -112,16 +112,13 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
         input: Path.FromSegments(root, "src/client.ts").toString(),
         output: [
             {
-                file: Path.FromSegments(root, 'dist/public/js/index.js').toString(),
+                file: Path.FromSegments(root, 'dist/client/index.js').toString(),
                 format: 'es',
                 globals: globals
             }
         ],
         external: externals,
         plugins: [
-            commonjs({
-                include: 'node_modules/**',
-            }),
             typescript(tsconfigOptions),
             nodeResolve({
                 preferBuiltins: true,
@@ -129,6 +126,9 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
                 extensions: [".js", ".jsx", ".ts", ".tsx"]
             }),
             nodePolyfill(),
+            commonjs({
+                include: 'node_modules/**',
+            }),
             babel({
                 babelHelpers: "bundled",
                 presets: [["solid", { generate: "dom", hydratable: true }]],
@@ -141,7 +141,7 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
             copy({
                 targets: [
                     //{ src: 'src/assets/**/*', dest: 'dist/src/assets' }
-                    { src: Path.FromSegments(root, 'src', 'assets', "**", "*").toString().concat(`${Path.Delimiter()}**${Path.Delimiter()}*`), dest: Path.FromSegments(root, 'dist', 'src', 'assets').toString()}
+                    { src: Path.FromSegments(root, 'src/assets/**/*').toString(), dest: Path.FromSegments(root, 'dist/client/assets').toString()}
                 ]
             }),
         ],
