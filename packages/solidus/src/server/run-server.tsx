@@ -35,8 +35,7 @@ import {
     renderToStream,
 } from 'solid-js/web';
 import { Configuration } from './configuration/configuration';
-import { Application } from '../types/application.type';
-import { ServerOptions } from '../types/server-options.type';
+import { Application, ServerOptions, RenderContext } from '../types/index';
 import { Middleware } from './middleware/middleware';
 
 /**
@@ -59,14 +58,17 @@ export const runServer = (App: Application, config: Configuration, middleware: M
 
   // register the initial route.
   app.get("*", async (req, res) => {
-    const options: ServerOptions = {
-      debug: config.env === "development",
-      port: config.port,
+    const context: RenderContext = {
+      server: {
+        debug: config.env === "development",
+        port: config.port,
+        url: req.url,
+      },
     };
 
     if (config.ssr === "stream") {
       // set up streaming ssr.
-      renderToStream(() => <App url={req.url} serverOptions={options} />).pipe(
+      renderToStream(() => <App context={context} />).pipe(
         res
       );
     } else {
@@ -77,23 +79,23 @@ export const runServer = (App: Application, config: Configuration, middleware: M
         if (config.ssr === "async") {
           // set up async ssr.
           page = await renderToStringAsync(() => (
-            <App url={req.url} serverOptions={options} />
+            <App context={context} />
           ));
         } else {
           // set up standard ssr.
           page = renderToString(() => (
-            <App url={req.url} serverOptions={options} />
+            <App context={context} />
           ));
         }
         res.status(200).send(page);
       } catch (e) {
-        console.log((e as Error).message);
         res.status(500).send("Server Error");
       }
     }
   });
 
   // start the server.
+  console.log("Starting app");
   app.listen(config.port, () => {
     console.log(
       `[${DateTime.Now().toString()}]: Application successfully running on ${

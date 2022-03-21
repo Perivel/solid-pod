@@ -45,7 +45,7 @@ import {
 
 const View: ViewComponent = (props) => {
   let routes = props.routes ? props.routes : [];
-  const url = props.url;
+  const url = props.context.server.url;
   const charset = props.charset ? props.charset : "utf-8";
   const lang = props.lang ? props.lang : "en";
   let themeColor: string = "";
@@ -101,7 +101,7 @@ const View: ViewComponent = (props) => {
       <Router url={url}>
         <html lang={lang}>
           <head>
-            <meta charset={props.charset ? props.charset : "utf-8"} />
+            <meta charset={charset} />
             <meta
               name="viewport"
               content="width=device-width, initial-scale=1"
@@ -110,7 +110,7 @@ const View: ViewComponent = (props) => {
             <link
               rel="shortcut icon"
               type="image/ico"
-              href="/src/assets/favicon.ico"
+              href="/assets/favicon.ico"
             />
             <title>{props.title}</title>
           </head>
