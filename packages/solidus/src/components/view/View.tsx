@@ -26,102 +26,105 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import { Router, useRoutes } from 'solid-app-router';
-import { MetaProvider } from 'solid-meta';
-import { ViewComponent } from '../../types/view-component.type';
-import SolidusError from '../error/SolidusError';
-import DefaultLayout from '../layout/DefaultLayout';
-import { parseThemeColorHexValue, routesListContainsIndexRoute } from './view.fns';
+import { Router, useRoutes } from "solid-app-router";
+import { MetaProvider } from "solid-meta";
+import { ViewComponent } from "../../types/view-component.type";
+import SolidusError from "../error/SolidusError";
+import DefaultLayout from "../layout/DefaultLayout";
+import {
+  parseThemeColorHexValue,
+  routesListContainsIndexRoute,
+} from "./view.fns";
 
 /**
  * View
- * 
+ *
  * A solidus component that automatically sets up routing and a default template.
  * @note Using lazy() in the routes array seems to cause the route to not be defined. Need to fix this bug.
  */
 
 const View: ViewComponent = (props) => {
+  let routes = props.routes ? props.routes : [];
+  const url = props.url;
+  const charset = props.charset ? props.charset : "utf-8";
+  const lang = props.lang ? props.lang : "en";
+  let themeColor: string = "";
+  let error: Error | null = null;
 
-    let routes = props.routes ? props.routes : [];
-    const url = props.url;
-    const charset = props.charset ? props.charset : 'utf-8';
-    const lang = props.lang ? props.lang : 'en';
-    let themeColor: string = '';
-    let error: Error|null = null;
+  try {
+    themeColor = parseThemeColorHexValue(props.themeColor);
+  } catch (e) {
+    // Theme color invalid.
+    error = e as Error;
+  }
 
-    try {
-      themeColor = parseThemeColorHexValue(props.themeColor);
+  // resolve the routes.
+  if (!routesListContainsIndexRoute(routes)) {
+    // there is no index path in the routes array. So, we need to check if
+    // the index prop is set so we can use that as the index route.
+
+    if (props.index) {
+      // there is an index component. So, we can assign that as the index route.
+      routes.push({
+        path: "/",
+        component: () => props.index,
+      });
+    } else {
+      // there is no index route or index component. We cannot proceed.
+      // So, we display the Solidus Error page, disregarding all the other
+      // routes.
+      error = new Error("No index route defined");
     }
-    catch(e) {
-      // Theme color invalid.
-      error = e as Error;
-    }
+  }
 
-    // resolve the routes.
-    if (!routesListContainsIndexRoute(routes)) {
-        // there is no index path in the routes array. So, we need to check if 
-        // the index prop is set so we can use that as the index route.
+  // show the error component when there is an error.
+  if (error) {
+    routes = [
+      {
+        path: "/",
+        component: () => <SolidusError error={error!} />,
+      },
+    ];
+  }
 
-        if (props.index) {
-            // there is an index component. So, we can assign that as the index route.
-            routes.push({
-                path: '/',
-                component: () => props.index,
-            });
-        }
-        else {
-            // there is no index route or index component. We cannot proceed.
-            // So, we display the Solidus Error page, disregarding all the other
-            // routes.
-            error = new Error('No index route defined');
-        }
-    }
+  // create the routes component.
+  const Content = useRoutes(routes);
 
-    // show the error component when there is an error.
-    if (error) {
-      routes = [
-        {
-          path: "/",
-          component: () => <SolidusError error={error!} />,
-        },
-      ];
-    }
-    
-    // create the routes component.
-    const Content = useRoutes(routes);
+  // prepare the layout.
 
-    // prepare the layout.
+  // When there is a SolidusError, we revert back to the DefaultLayout regardless of whether there is a
+  // custom layout specified.
+  const Layout = props.layout && !error ? props.layout : DefaultLayout;
 
-    // When there is a SolidusError, we revert back to the DefaultLayout regardless of whether there is a 
-    // custom layout specified.
-    const Layout = (props.layout) && !error ? props.layout : DefaultLayout;
-
-    return (
-      <html lang={lang}>
-        <head>
-          <meta charset={props.charset ? props.charset : 'utf-8'} />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <meta name="theme-color" content={themeColor} />
-          <link
-            rel="shortcut icon"
-            type="image/ico"
-            href="/src/assets/favicon.ico"
-          />
-          <title>{props.title}</title>
-        </head>
-        <body>
-          <noscript>JavaScript is required to run this app.</noscript>
-          <div>
-            <MetaProvider>
-              <Router url={url}>
-                <Layout content={<Content />} />
-              </Router>
-            </MetaProvider>
-          </div>
-        </body>
-      </html>
-    );
-}
+  return (
+    <MetaProvider>
+      <Router url={url}>
+        <html lang={lang}>
+          <head>
+            <meta charset={props.charset ? props.charset : "utf-8"} />
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1"
+            />
+            <meta name="theme-color" content={themeColor} />
+            <link
+              rel="shortcut icon"
+              type="image/ico"
+              href="/src/assets/favicon.ico"
+            />
+            <title>{props.title}</title>
+          </head>
+          <body>
+            <noscript>JavaScript is required to run this app.</noscript>
+            <div>
+              <Layout content={<Content />} />
+            </div>
+            <script type="module" src="js/index.js" async></script>
+          </body>
+        </html>
+      </Router>
+    </MetaProvider>
+  );
+};
 
 export default View;
-
