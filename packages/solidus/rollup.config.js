@@ -86,11 +86,11 @@ export default [
       nodeResolve({
         extensions: [".js", "jsx", ".ts", ".tsx"],
         ignoreGlobals: false,
-        //exclude: ['node_modules/**'],
+        exclude: ['node_modules/**'],
         exportConditions: ["solid"]
       }),
       commonjs({
-        include: 'node_modules/**',
+        include: ['node_modules/**'],
       }),
       babel({
         extensions: [".js", 'jsx', ".ts", ".tsx"],
