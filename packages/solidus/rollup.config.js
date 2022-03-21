@@ -84,18 +84,19 @@ export default [
     plugins: [
       nodePolyfillPlugin(),
       nodeResolve({
-        extensions: [".js", ".ts", ".tsx"],
+        extensions: [".js", "jsx", ".ts", ".tsx"],
         ignoreGlobals: false,
-        exclude: ['node_modules/**']
+        //exclude: ['node_modules/**'],
+        exportConditions: ["solid"]
       }),
       commonjs({
         include: 'node_modules/**',
       }),
       babel({
-        extensions: [".js", ".ts", ".tsx"],
+        extensions: [".js", 'jsx', ".ts", ".tsx"],
         babelHelpers: "bundled",
         presets: ["solid", "@babel/preset-typescript"],
-        exclude: "node_modules/**",
+        exclude: ["node_modules/**"],
       }),
       terser(),
     ],
