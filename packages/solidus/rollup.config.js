@@ -54,7 +54,7 @@ const globals = {
  */
 
 export default [
-  // lib
+  // client library
   {
     input: resolve(__dirname, "index.ts"),
     treeshake: false,
@@ -62,21 +62,14 @@ export default [
     external: externals,
     output: [
       {
-        format: "cjs",
-        dir: resolve("dist/cjs"),
-        sourcemap: true,
-        globals: globals,
-      },
-      {
         format: "esm",
-        dir: resolve("dist/esm"),
+        dir: resolve("dist/client/esm"),
         sourcemap: true,
         globals: globals,
       },
       {
-        name: "solidus",
-        format: "umd",
-        dir: resolve("dist/umd"),
+        format: "cjs",
+        dir: resolve("dist/client/cjs"),
         sourcemap: true,
         globals: globals,
       },
@@ -95,7 +88,48 @@ export default [
       babel({
         extensions: [".js", 'jsx', ".ts", ".tsx"],
         babelHelpers: "bundled",
-        presets: ["solid", "@babel/preset-typescript"],
+        presets: [["solid", { generate: "dom", hydratable: true }], "@babel/preset-typescript"],
+        exclude: ["node_modules/**"],
+      }),
+      terser(),
+    ],
+  },
+
+  // server library
+  {
+    input: resolve(__dirname, "index.ts"),
+    treeshake: false,
+    preserveEntrySignatures: false,
+    external: externals,
+    output: [
+      {
+        format: "esm",
+        dir: resolve("dist/server/esm"),
+        sourcemap: true,
+        globals: globals,
+      },
+      {
+        format: "cjs",
+        dir: resolve("dist/server/cjs"),
+        sourcemap: true,
+        globals: globals,
+      },
+    ],
+    plugins: [
+      nodePolyfillPlugin(),
+      nodeResolve({
+        extensions: [".js", "jsx", ".ts", ".tsx"],
+        ignoreGlobals: false,
+        exclude: ['node_modules/**'],
+        exportConditions: ["solid"]
+      }),
+      commonjs({
+        include: ['node_modules/**'],
+      }),
+      babel({
+        extensions: [".js", 'jsx', ".ts", ".tsx"],
+        babelHelpers: "bundled",
+        presets: [["solid", { generate: "ssr", hydratable: true }], "@babel/preset-typescript"],
         exclude: ["node_modules/**"],
       }),
       terser(),

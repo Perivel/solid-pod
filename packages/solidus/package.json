@@ -12,15 +12,15 @@
   "exports": {
     ".": {
       "browser": {
-        "import": "./dist/esm/index.js",
-        "require": "./dist/cjs/index.js"
+        "import": "./dist/client/esm/index.js",
+        "require": "./dist/client/cjs/index.js"
       },
       "node": {
-        "import": "./dist/esm/index.js",
-        "require": "./dist/cjs/index.js"
+        "import": "./dist/server/esm/index.js",
+        "require": "./dist/server/cjs/index.js"
       },
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js"
+      "import": "./dist/client/esm/index.js",
+      "require": "./dist/client/cjs/index.js"
     }
   },
   "bin": {
