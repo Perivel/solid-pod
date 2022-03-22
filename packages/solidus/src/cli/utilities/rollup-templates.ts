@@ -72,7 +72,7 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
         output: [
             {
                 file: Path.FromSegments(root, 'dist/index.js').toString(),
-                format: 'es',
+                format: 'umd',
                 globals: globals
             }
         ],
@@ -113,9 +113,9 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
         output: [
             {
                 file: Path.FromSegments(root, 'dist/public/js/index.js').toString(),
-                format: 'es',
+                format: 'umd',
                 globals: globals
-            }
+            },
         ],
         external: externals,
         plugins: [

@@ -62,14 +62,9 @@ export default [
     external: externals,
     output: [
       {
-        format: "esm",
-        dir: resolve("dist/client/esm"),
-        sourcemap: true,
-        globals: globals,
-      },
-      {
-        format: "cjs",
-        dir: resolve("dist/client/cjs"),
+        name: 'solidusjs',
+        format: "umd",
+        file: resolve("dist/browser.js"),
         sourcemap: true,
         globals: globals,
       },
@@ -77,7 +72,7 @@ export default [
     plugins: [
       nodePolyfillPlugin(),
       nodeResolve({
-        extensions: [".js", "jsx", ".ts", ".tsx"],
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
         ignoreGlobals: false,
         exclude: ['node_modules/**'],
         exportConditions: ["solid"]
@@ -86,7 +81,7 @@ export default [
         include: ['node_modules/**'],
       }),
       babel({
-        extensions: [".js", 'jsx', ".ts", ".tsx"],
+        extensions: [".js", '.jsx', ".ts", ".tsx"],
         babelHelpers: "bundled",
         presets: [["solid", { generate: "dom", hydratable: true }], "@babel/preset-typescript"],
         exclude: ["node_modules/**"],
@@ -103,14 +98,9 @@ export default [
     external: externals,
     output: [
       {
-        format: "esm",
-        dir: resolve("dist/server/esm"),
-        sourcemap: true,
-        globals: globals,
-      },
-      {
-        format: "cjs",
-        dir: resolve("dist/server/cjs"),
+        name: 'solidusjs',
+        format: "umd",
+        file: resolve("dist/server.js"),
         sourcemap: true,
         globals: globals,
       },
@@ -118,7 +108,7 @@ export default [
     plugins: [
       nodePolyfillPlugin(),
       nodeResolve({
-        extensions: [".js", "jsx", ".ts", ".tsx"],
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
         ignoreGlobals: false,
         exclude: ['node_modules/**'],
         exportConditions: ["solid"]
@@ -127,9 +117,9 @@ export default [
         include: ['node_modules/**'],
       }),
       babel({
-        extensions: [".js", 'jsx', ".ts", ".tsx"],
+        extensions: [".js", '.jsx', ".ts", ".tsx"],
         babelHelpers: "bundled",
-        presets: [["solid", { generate: "ssr", hydratable: true }], "@babel/preset-typescript"],
+        presets: [["solid", { generate: "ssr", hydratable: true, async: true }], "@babel/preset-typescript"],
         exclude: ["node_modules/**"],
       }),
       terser(),

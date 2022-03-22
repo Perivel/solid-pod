@@ -2,7 +2,6 @@
   "name": "solidusjs",
   "version": "0.1.0",
   "description": "Plug and play Server-Side Rendering for SolidJS",
-  "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "type": "module",
   "files": [
@@ -12,15 +11,15 @@
   "exports": {
     ".": {
       "browser": {
-        "import": "./dist/client/esm/index.js",
-        "require": "./dist/client/cjs/index.js"
+        "import": "./dist/browser.js",
+        "require": "./dist/browser.js"
       },
       "node": {
-        "import": "./dist/server/esm/index.js",
-        "require": "./dist/server/cjs/index.js"
+        "import": "./dist/server.js",
+        "require": "./dist/server.js"
       },
-      "import": "./dist/client/esm/index.js",
-      "require": "./dist/client/cjs/index.js"
+      "import": "./dist/server.js",
+      "require": "./dist/server.js"
     }
   },
   "bin": {
