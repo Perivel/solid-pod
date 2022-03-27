@@ -114,7 +114,7 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
             {
                 file: Path.FromSegments(root, 'dist/public/js/index.js').toString(),
                 format: 'umd',
-                globals: globals
+                globals: globals,
             },
         ],
         external: externals,

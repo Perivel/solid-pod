@@ -86,7 +86,7 @@ export default [
         presets: [["solid", { generate: "dom", hydratable: true }], "@babel/preset-typescript"],
         exclude: ["node_modules/**"],
       }),
-      terser(),
+      //terser(),
     ],
     treeshake: false
   },
@@ -122,8 +122,9 @@ export default [
         babelHelpers: "bundled",
         presets: [["solid", { generate: "ssr", hydratable: true, async: true }], "@babel/preset-typescript"],
         exclude: ["node_modules/**"],
+        
       }),
-      terser(),
+      //terser(),
     ],
     treeshake: false
   },
