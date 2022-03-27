@@ -88,6 +88,7 @@ export default [
       }),
       terser(),
     ],
+    treeshake: false
   },
 
   // server library
@@ -124,6 +125,7 @@ export default [
       }),
       terser(),
     ],
+    treeshake: false
   },
 
   // CLI
