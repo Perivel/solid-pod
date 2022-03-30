@@ -64,7 +64,7 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
         '@swindle/color': 'color',
         '@swindle/core': 'core',
         'express': 'express',
-        'solidusjs': 'solidusjs'
+        'solidusjs': 'solidus'
     }
 
     const serverConfig = <RollupOptions> {
@@ -73,7 +73,7 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
             {
                 file: Path.FromSegments(root, 'dist/index.js').toString(),
                 format: 'umd',
-                globals: globals
+                globals: globals,
             }
         ],
         external: externals,
@@ -83,11 +83,11 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
             nodeResolve({
                 preferBuiltins: true,
                 exportConditions: ["solid"],
-                extensions: [".js", ".jsx", ".ts", ".tsx"]
+                extensions: [".js", ".jsx", ".ts", ".tsx"],
+                mainFields: ['main', 'module', 'browser', 'exports'],
+                
             }),
-            commonjs({
-                include: 'node_modules/**',
-            }),
+            commonjs(),
             babel({
                 babelHelpers: "bundled",
                 presets: [["solid", { generate: "ssr", hydratable: true }]],
@@ -140,8 +140,8 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Pat
             image(),
             copy({
                 targets: [
-                    //{ src: 'src/assets/**/*', dest: 'dist/src/assets' }
-                    { src: Path.FromSegments(root, 'src/assets/**/*').toString(), dest: Path.FromSegments(root, 'dist/client/assets').toString()}
+                    { src: 'src/assets/**/*', dest: 'dist/src/assets' }
+                    //{ src: Path.FromSegments(root, 'src/assets/**/*').toString(), dest: Path.FromSegments(root, 'dist/client/assets').toString()}
                 ]
             }),
         ],
