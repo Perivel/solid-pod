@@ -29,6 +29,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import { RollupOptions } from 'rollup';
 import { Process } from '@swindle/os';
 import { Path } from '@swindle/filesystem';
+import { StringFormatter } from '@swindle/core';
 import nodeResolve from "@rollup/plugin-node-resolve";
 import { babel } from "@rollup/plugin-babel";
 import json from "@rollup/plugin-json";
@@ -38,34 +39,26 @@ import copy from 'rollup-plugin-copy';
 import nodePolyfill from 'rollup-plugin-polyfill-node';
 import image from '@rollup/plugin-image';
 import commonjs from '@rollup/plugin-commonjs';
+import container from './container';
 
 /**
  * loadBuildConfigurationOptions()
  * 
  * loads the configuration options for building the application.
- * @param mode the SSR Mode to use.
+ * @param deps the project dependencies.
+ * @param devDeps the development dependencies.
  * @param root The project root directory.
  * @returns A RollupOptions instance with the appropriate config settigs.
  */
 
-export const loadBuildConfigurationOptions = (tsconfigOptions: object, root: Path = Process.Cwd()): RollupOptions[] => {
-    const externals = [
-        "solid-js",
-        "solid-js/web",
-        "solid-app-router",
-        "solidusjs",
-        "express"
-    ];
+export const loadBuildConfigurationOptions = (tsconfigOptions: object, deps: string[], devDeps: string[], root: Path = Process.Cwd()): RollupOptions[] => {
+    const externals = [...deps, ...devDeps];
+    const fmt = container.get(StringFormatter);
 
-    const globals = {
-        'solid-js': 'solid',
-        'solid-js/web': 'web',
-        'solid-app-router': 'router',
-        '@swindle/color': 'color',
-        '@swindle/core': 'core',
-        'express': 'express',
-        'solidusjs': 'solidus'
-    }
+    const globals = {};
+    deps.forEach(dep => Object.defineProperty(globals, dep, {
+        value: fmt.camelCase(dep)
+    }))
 
     const serverConfig = <RollupOptions> {
         input: Path.FromSegments(root, "src/server.ts").toString(),

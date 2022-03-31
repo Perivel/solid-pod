@@ -51,7 +51,7 @@ const defaultConfig: any = {
  */
 
 export const loadTsconfig = async (root: Path = Process.Cwd()): Promise<any> => {
-    const path = Path.FromSegments(root, 'src', 'tsconfig.json');
+    const path = Path.FromSegments(root, 'tsconfig.json');
     let config = defaultConfig;
 
     if (await FileSystem.Contains(path)) {

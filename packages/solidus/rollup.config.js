@@ -1,5 +1,6 @@
 import { terser } from "rollup-plugin-terser";
 import { resolve } from "path";
+import { StringFormatter } from '@swindle/core';
 import typescriptPlugin from "@rollup/plugin-typescript";
 import hashbangPlugin from "rollup-plugin-hashbang";
 import jsonPlugin from "@rollup/plugin-json";
@@ -8,46 +9,20 @@ import nodeResolve from "@rollup/plugin-node-resolve";
 import babel from "@rollup/plugin-babel";
 import commonjs from '@rollup/plugin-commonjs';
 
+import { dependencies, devDependencies } from './package.json';
+
+const deps = Object.keys(dependencies);
+
 // core library external dependencies.
 const externals = [
-  "@swindle/core",
-  "@swindle/color",
-  "@swindle/os",
-  "@swindle/filesystem",
-  "@swindle/container",
-  "express",
-  "serve-static",
-  "solid-js",
-  "solid-js/web",
-  "solid-app-router",
-  "solid-meta",
-  "rollup",
-  "@rollup/plugin-node-resolve",
-  "@rollup/plugin-babel",
-  "@rollup/plugin-json",
-  "@rollup/plugin-typescript",
-  "rollup-plugin-styles",
-  "rollup-plugin-copy",
-  "@web/rollup-plugin-import-meta-assets",
-  "rollup-plugin-polyfill-node",
-  "@rollup/plugin-image",
-  "babel-preset-solid",
-  "rollup-plugin-copy",
-  "@rollup/plugin-commonjs"
+  ...deps,
+  ...Object.keys(devDependencies),
 ];
 
 // core library globals.
-const globals = {
-  "solid-js": "Solid",
-  "solid-js/web": "SolidWeb",
-  "@swindle/color": "Color",
-  "@swindle/core": "Core",
-  "express": "Express",
-  "path": "Path",
-  "solid-app-router": "router",
-  "solid-meta": "meta",
-  "@swindle/container": "Container"
-};
+const fmt = new StringFormatter();
+const globals = {};
+deps.forEach(dep => globals[dep] = fmt.camelCase(dep));
 
 /**
  * The configuration object.
@@ -67,6 +42,7 @@ export default [
         file: resolve("dist/browser.js"),
         sourcemap: true,
         globals: globals,
+        name: 'solidusjsclient'
       },
     ],
     plugins: [
@@ -104,6 +80,7 @@ export default [
         file: resolve("dist/server.js"),
         sourcemap: true,
         globals: globals,
+        name: 'solidusjsserver'
       },
     ],
     plugins: [

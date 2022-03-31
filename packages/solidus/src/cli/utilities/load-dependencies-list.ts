@@ -26,8 +26,38 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-export * from './application.type';
-export * from './layout-component.type';
-export * from './view-component.type';
-export * from './server-options.type';
-export * from './render-context.type';
+import { Path, FileSystem, FileOpenFlag } from '@swindle/filesystem';
+import { Process } from '@swindle/os';
+import { SolidusException } from '../exceptions/solidus.exception';
+
+export interface PackageDependenciesInterface {
+    dependencies: object,
+    devDependencies: object
+}
+
+/**
+ * loadDependenciesList()
+ * 
+ * loads the dependencies list
+ * @param root the project root directory.
+ * @returns Tsconfig options.
+ * @throws SolidusException when the package.json file cannot be found.
+ */
+
+ export const loadDependenciesList = async (root: Path = Process.Cwd()): Promise<{ deps: string[], dev: string[]}> => {
+    const path = Path.FromSegments(root, 'package.json');
+    let depsList = { deps: [] as string[], dev: [] as string[] };
+
+    if (await FileSystem.Contains(path)) {
+        const file = await FileSystem.Open(path, FileOpenFlag.READ);
+        const data = await file.readAll();
+        await file.close();
+        const pkg: PackageDependenciesInterface = JSON.parse(data);
+        depsList.deps = Object.keys(pkg.dependencies);
+        depsList.dev = Object.keys(pkg.devDependencies);
+    }
+    else {
+        throw new SolidusException('Cannot find package.json file.');
+    }
+    return depsList;
+}

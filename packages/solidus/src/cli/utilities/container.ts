@@ -27,9 +27,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 import { Container } from '@swindle/container';
+import { StringFormatter } from '@swindle/core';
 import { MessageFormatter } from './message-formatter';
 
 const container = new Container();
 container.bind(MessageFormatter, _ => new MessageFormatter());
+container.bind(StringFormatter, _ => new StringFormatter());
 
 export default container;

@@ -35,6 +35,7 @@ import container from './../utilities/container';
 import { loadTsconfig } from './../utilities/load-tsconfig';
 import { MessageFormatter } from "../utilities/message-formatter";
 import { SolidusException } from "../exceptions/solidus.exception";
+import { loadDependenciesList } from "../utilities/load-dependencies-list";
 
 /**
  * runBuild()
@@ -49,7 +50,8 @@ export const runBuild = async (): Promise<CommandStatus> => {
     // load the rollup configuration file.
     console.log(fmt.message(`Loading rollup template...`));
     const tsconfig = await loadTsconfig(Process.Cwd());
-    const rollupOptions = loadBuildConfigurationOptions(tsconfig.compilerOptions, Process.Cwd());
+    const deps = await loadDependenciesList(Process.Cwd());
+    const rollupOptions = loadBuildConfigurationOptions(tsconfig.compilerOptions, deps.deps, deps.dev, Process.Cwd());
 
     // create the bundle
 
