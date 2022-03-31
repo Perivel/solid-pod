@@ -27,11 +27,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 import { Component } from 'solid-js';
-import { ServerOptions } from './server-options.type';
+import { RenderContext } from './render-context.type';
 
 export interface ApplicationProps {
-    url?: string;
-    serverOptions: ServerOptions
+    context: RenderContext
 }
 
 /**

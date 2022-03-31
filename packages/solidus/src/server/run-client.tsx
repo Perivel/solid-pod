@@ -28,7 +28,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import { hydrate } from 'solid-js/web';
 import { Configuration } from './configuration/configuration';
-import { Application, ServerOptions } from './../types/index';
+import { Application, RenderContext } from './../types/index';
 
 /**
  * runClient()
@@ -39,10 +39,12 @@ import { Application, ServerOptions } from './../types/index';
  */
 
 export const runClient = (App: Application, config: Configuration): () => void => {
-    const url = '/';
-    const options: ServerOptions = {
+    const context: RenderContext = {
+      server: {
         port: config.port,
-        debug: config.env === 'development'
+        debug: config.env === "development",
+        url: '/'
+      },
     };
-    return hydrate(() => <App url={url} serverOptions={options}/>, document);
+    return hydrate(() => <App context={context} />, document);
 }

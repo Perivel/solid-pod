@@ -36,39 +36,47 @@ const MyApp: Application = (props) => {
                     component: About
                 }
             ]}
-            url={props.url}
-            serverOptions={props.serverOptions}
+            context={props.context}
         />
     );
 }
 
 export default MyApp;
 ```
-Notice that our SolidJS app is wrapped in a Solidus `View` component, which is returned by a Solidus `Appliation` component. As mentioned earlier, `Views` are responsible for setting up how our application behaves. One of these responsibilities is setting up routing. Solidus routes are just regular SolidJS `RouteDefinition` instances. So, you can quickly and easily import your SolidJS routes array and pass it to your `View` component. 
+Notice that our SolidJS app is wrapped in a Solidus `View` component, which is returned by a Solidus `Appliation` component. As mentioned earlier, `View`s are responsible for setting up how our application behaves. One of these responsibilities is setting up routing. Solidus routes are just regular SolidJS `RouteDefinition` instances. So, you can quickly and easily import your SolidJS routes array and pass it to your `View` component. 
 
-The second responsiblity of Solidus `View` components is to render our application using the specified layout. In the above example, we explicitly specified the `DefaultLayout` in the to illustrate how layouts are set. However, if the `layout` prop is omitted, Solidus will fall back on the `DefaultLayout`. You may want to rely on the `DefaultLayout` if, say, your existing SolidJS App component defines its own common layout.
+The second responsiblity of Solidus `View` components is to render our application using the specified layout. In the above example, we explicitly specified the `DefaultLayout` in order to illustrate how layouts are set. However, if the `layout` prop is omitted, Solidus will fall back on the `DefaultLayout`. You may want to rely on the `DefaultLayout` if, say, your existing SolidJS App component defines its own common layout.
 
-Lastly, notice that we pass a `url` and a `serverOptions` prop to our `View` component. These are special props which are passed to our `Application` by the Solidus server. These properties should be passed directly to the `View` component without modification.
+Lastly, notice that we pass a `context` prop to our `View` component. This is a special prop called a `RenderContext` which is passed to our `Application` by the Solidus server, which contains some information about the current request. The `context` should be passed directly to the `View` component without modification.
 
 That is pretty much all you need to do to set up Server Side Rendering with Solidus. All that is left is to run the server.
 
 ## Running your Solidus application.
-In order to run your application, you need to define a server entrypoint.
+In order to run your application, you need to define a server entrypoint and a client entrypoint. There are two special files Solidus will look for in order to run your application.
+
+### Server Entry Point
+Solidus expects your server entry point to be contained in `src/server.ts`. Below is an example of a typical Solidus server entrypoint file.
 
 ```ts
-// your server entry ts file.
+// src/server.ts
 import { runServer } from 'solidus';
 import MyApp from 'path/to/root/component/MyApp';
 import config from 'path/to/solidus/config';
 
-runServer(MyApp, config);
+runServer(MyApp, config, []);
 ```
-The `runServer()` function starts the application server using the `Application` component you defined, as well as a configuration object. The configuration object will specify how your server will be setup. These include which directory to use for public assets, how Server-Side Rendering will behave, and any middleware you want to define. Solidus uses [Polka](https://github.com/lukeed/polka) under the hood, which is a very performant micro-server package.
+The `runServer()` function starts the application server using the `Application` component you defined, as well as a configuration object and an array of middleware to run for every request to the server. The configuration object will specify how your server will be setup. These include how Server-Side Rendering will behave, and things like which port to listen for requests on.
 
-## Converting a SolidJS App to a Solidus App.
-0. Install solidus and @solidus/cli dependencies in your SolidJS project.
-1. Wrap your App component in a Solidus View, and have that View be returned by an Application Component.
-2. Create a `solidus.config.ts` file inside your project root directory, where you can define your Solidus configuration.
-3. Create an `index.ts` file inside your project root directory and call `runServer()` from within that file.
-4. create a `public/` directory in your project root and move all your public assets to that directory.
-5. In your terminal, run `solidus dev`, `solidus build` and `solidus start`.
+### Client Entry Point
+Solidus expects your client entry point to be contained in `src/client.ts`. Below is an example of a typical Solidus client entry point file.
+
+```ts
+import { runClient } from 'solidusjs';
+import MyApp from './MyApp';
+import config from './solidus.config';
+
+runClient(MyApp, config);
+```
+The client entry point is very similar to the server entry point. The `runClient()` function renders your application on the client side, similar to a regular SolidJS application.
+
+With the client and server entry points defined, we can now run our application by running `solidus start`. The built-in `solidus start` command will build and run our Solidus application, using the configuation settings you provided.

@@ -58,13 +58,15 @@ export const runBuild = async (): Promise<CommandStatus> => {
         const builds = await Promise.all(rollupOptions.map(async option => {
             return await rollup(option);
         }));
-        console.log(fmt.message('Generating Bundle...'));
 
         // delete the old bundle if it exists.
         if (await FileSystem.Contains(bundlePath)) {
+            console.log(fmt.message('Deleting previous build...'));
             await FileSystem.Delete(bundlePath, true, true);
+            console.log(fmt.message('Successfully deleted previous build.'));
         }
         
+        console.log(fmt.message('Generating Bundle...'));
         const len = builds.length;
         for (let i = 0; i < len; i++) {
             await generateBundle(builds[i], rollupOptions[i]);

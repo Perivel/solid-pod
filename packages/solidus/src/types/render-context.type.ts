@@ -26,8 +26,8 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-export * from './application.type';
-export * from './layout-component.type';
-export * from './view-component.type';
-export * from './server-options.type';
-export * from './/render-context.type';
+import { ServerOptions } from './server-options.type';
+
+export interface RenderContext {
+    server: ServerOptions;
+}

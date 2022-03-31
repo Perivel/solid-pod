@@ -3,9 +3,8 @@ import App from "./App";
 
 const MyApp: Application = (props) => {
     return <View 
-        index={<App />}
-        url={props.url}
-        serverOptions={props.serverOptions}
+        context={props.context}
+        index={<App />} 
     />;
 }
 

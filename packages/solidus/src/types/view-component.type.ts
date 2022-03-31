@@ -29,8 +29,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import { Color } from '@swindle/color';
 import { RouteDefinition } from "solid-app-router";
 import { Component, JSX } from "solid-js";
-import { LayoutComponent } from "./layout-component.type";
-import { ServerOptions } from './server-options.type';
+import { LayoutComponent, RenderContext } from './../types/index';
 
 interface ViewProps {
 
@@ -43,6 +42,16 @@ interface ViewProps {
     charset?: string;
 
     /**
+     * context
+     * 
+     * the render context to use to create the application.
+     */
+    
+    context: RenderContext,
+
+    /**
+     * index
+     * 
      * the default component to load. It is equivalent to assigning a component to the '/' route in routes.
      * If index is omitted, be sure you have a '/' route in your routes.
      */
@@ -54,6 +63,7 @@ interface ViewProps {
      * 
      * The language to use. Defaults to 'en'
      */
+
     lang?: string;
 
     /**
@@ -72,14 +82,6 @@ interface ViewProps {
     routes?: RouteDefinition[];
 
     /**
-     * serverOptions
-     * 
-     * Options that are passed by the server to the application.
-     */
-
-    serverOptions: ServerOptions;
-
-    /**
      * themeColor
      * 
      * The Theme color.
@@ -94,12 +96,6 @@ interface ViewProps {
      */
 
     title?: string;
-
-    /**
-     * The url of the route to load. This will be set by the server.
-     */
-    
-    url?: string;
 }
 
 /**

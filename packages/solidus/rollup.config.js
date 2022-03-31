@@ -54,7 +54,7 @@ const globals = {
  */
 
 export default [
-  // lib
+  // client library
   {
     input: resolve(__dirname, "index.ts"),
     treeshake: false,
@@ -62,42 +62,71 @@ export default [
     external: externals,
     output: [
       {
-        format: "cjs",
-        dir: resolve("dist/cjs"),
-        sourcemap: true,
-        globals: globals,
-      },
-      {
-        format: "esm",
-        dir: resolve("dist/esm"),
-        sourcemap: true,
-        globals: globals,
-      },
-      {
-        name: "solidus",
+        name: 'solidusjs',
         format: "umd",
-        dir: resolve("dist/umd"),
+        file: resolve("dist/browser.js"),
         sourcemap: true,
-        //plugins: [terser()],
         globals: globals,
       },
     ],
     plugins: [
       nodePolyfillPlugin(),
-      commonjs(),
       nodeResolve({
-        extensions: [".js", ".ts", ".tsx"],
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
         ignoreGlobals: false,
-        exclude: ['node_modules/**']
+        exclude: ['node_modules/**'],
+        exportConditions: ["solid"]
+      }),
+      commonjs({
+        include: ['node_modules/**'],
       }),
       babel({
-        extensions: [".js", ".ts", ".tsx"],
+        extensions: [".js", '.jsx', ".ts", ".tsx"],
         babelHelpers: "bundled",
-        presets: ["solid", "@babel/preset-typescript"],
-        exclude: "node_modules/**",
+        presets: [["solid", { generate: "dom", hydratable: true }], "@babel/preset-typescript"],
+        exclude: ["node_modules/**"],
       }),
-      terser(),
+      //terser(),
     ],
+    treeshake: false
+  },
+
+  // server library
+  {
+    input: resolve(__dirname, "index.ts"),
+    treeshake: false,
+    preserveEntrySignatures: false,
+    external: externals,
+    output: [
+      {
+        name: 'solidusjs',
+        format: "umd",
+        file: resolve("dist/server.js"),
+        sourcemap: true,
+        globals: globals,
+      },
+    ],
+    plugins: [
+      nodePolyfillPlugin(),
+      nodeResolve({
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
+        ignoreGlobals: false,
+        exclude: ['node_modules/**'],
+        exportConditions: ["solid"]
+      }),
+      commonjs({
+        include: ['node_modules/**'],
+      }),
+      babel({
+        extensions: [".js", '.jsx', ".ts", ".tsx"],
+        babelHelpers: "bundled",
+        presets: [["solid", { generate: "ssr", hydratable: true, async: true }], "@babel/preset-typescript"],
+        exclude: ["node_modules/**"],
+        
+      }),
+      //terser(),
+    ],
+    treeshake: false
   },
 
   // CLI

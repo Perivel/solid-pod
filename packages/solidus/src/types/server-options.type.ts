@@ -35,4 +35,5 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 export interface ServerOptions {
     debug: boolean;
     port: number;
+    url: string;
 }
