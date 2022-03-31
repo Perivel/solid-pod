@@ -104,4 +104,9 @@ interface ViewProps {
  * The Application Component is the root of of any Solidus application compoent tree.
  */
 
-export type ViewComponent = Component<ViewProps>;
+type ViewComponent = Component<ViewProps>;
+
+export {
+    ViewComponent,
+    ViewProps
+};

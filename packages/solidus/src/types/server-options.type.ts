@@ -32,8 +32,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * Some configuration options that are passed by the server to the application.
  */
 
-export interface ServerOptions {
+interface ServerOptions {
     debug: boolean;
     port: number;
     url: string;
 }
+
+export { ServerOptions }

@@ -26,6 +26,44 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-export * from './src/components/index';
-export * from './src/server/index';
-export * from './src/types/index';
+import { 
+   DefaultLayout, 
+   SolidusError, 
+   View 
+} from './src/components/index';
+import { 
+   Configuration, 
+   ENV,
+   Middleware, 
+   SSRMode, 
+   runClient, 
+   runServer 
+} from './src/server/index';
+import { 
+   Application, 
+   ApplicationProps, 
+   LayoutComponent, 
+   LayoutProps, 
+   RenderContext, 
+   ServerOptions, 
+   ViewComponent 
+} from './src/types/index';
+
+export {
+   Application,
+   ApplicationProps,
+   Configuration,
+   DefaultLayout,
+   ENV,
+   LayoutComponent,
+   LayoutProps,
+   Middleware,
+   RenderContext,
+   runClient,
+   runServer,
+   ServerOptions,
+   SolidusError,
+   SSRMode,
+   View,
+   ViewComponent
+};

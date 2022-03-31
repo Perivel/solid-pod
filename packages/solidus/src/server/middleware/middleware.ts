@@ -34,4 +34,6 @@ import { Request, Response, NextFunction } from 'express';
  * Solidus Middleware.
  */
 
-export type Middleware = (req: Request, res: Response, next: NextFunction) => Promise<void>;
+type Middleware = (req: Request, res: Response, next: NextFunction) => Promise<void>;
+
+export { Middleware };

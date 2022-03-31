@@ -38,7 +38,7 @@ import { Application, RenderContext } from './../types/index';
  * @param config The configuration object.
  */
 
-export const runClient = (App: Application, config: Configuration): () => void => {
+const runClient = (App: Application, config: Configuration): () => void => {
     const context: RenderContext = {
       server: {
         port: config.port,
@@ -48,3 +48,5 @@ export const runClient = (App: Application, config: Configuration): () => void =
     };
     return hydrate(() => <App context={context} />, document);
 }
+
+export { runClient };
