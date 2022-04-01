@@ -33,7 +33,7 @@ import { StringFormatter } from '@swindle/core';
 import nodeResolve from "@rollup/plugin-node-resolve";
 import { babel } from "@rollup/plugin-babel";
 import json from "@rollup/plugin-json";
-import typescript from '@rollup/plugin-typescript';
+import typescript from 'rollup-plugin-typescript2';
 import styles from 'rollup-plugin-styles';
 import copy from 'rollup-plugin-copy';
 import nodePolyfill from 'rollup-plugin-polyfill-node';
@@ -58,7 +58,24 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, deps: str
     const globals = {};
     deps.forEach(dep => Object.defineProperty(globals, dep, {
         value: fmt.camelCase(dep)
-    }))
+    }));
+
+    const tsConfigOverrides = {
+        declaration: true,
+        declarationDir: Path.FromSegments(root, '/dist/types').toString()
+    }
+
+    const tsPluginOptions = {
+        tsconfig: Path.FromSegments(root, 'tsconfig.json').toString(),
+        check: true,
+        clean: true,
+        abortOnError: true,
+        rollupCommonJSResolveHack: false,
+        useTsconfigDeclarationDir: true,
+        cwd: root.toString(),
+        tsconfigOverride: tsConfigOverrides,
+    };
+
 
     const serverConfig = <RollupOptions> {
         input: Path.FromSegments(root, "src/server.ts").toString(),
@@ -71,7 +88,6 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, deps: str
         ],
         external: externals,
         plugins: [
-            typescript(tsconfigOptions),
             nodePolyfill(),
             nodeResolve({
                 preferBuiltins: true,
@@ -80,6 +96,7 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, deps: str
                 mainFields: ['main', 'module', 'browser', 'exports'],
                 
             }),
+            typescript(tsPluginOptions),
             commonjs(),
             babel({
                 babelHelpers: "bundled",
@@ -112,7 +129,7 @@ export const loadBuildConfigurationOptions = (tsconfigOptions: object, deps: str
         ],
         external: externals,
         plugins: [
-            typescript(tsconfigOptions),
+            typescript(tsPluginOptions),
             nodeResolve({
                 preferBuiltins: true,
                 exportConditions: ["solid"],

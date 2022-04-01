@@ -1,7 +1,7 @@
 import { terser } from "rollup-plugin-terser";
 import { resolve } from "path";
 import { StringFormatter } from '@swindle/core';
-import typescriptPlugin from "@rollup/plugin-typescript";
+import typescriptPlugin from "rollup-plugin-typescript2";
 import hashbangPlugin from "rollup-plugin-hashbang";
 import jsonPlugin from "@rollup/plugin-json";
 import nodePolyfillPlugin from "rollup-plugin-polyfill-node";
@@ -24,17 +24,15 @@ const fmt = new StringFormatter();
 const globals = {};
 deps.forEach(dep => globals[dep] = fmt.camelCase(dep));
 
-// default tsconfig
-const tsconfig = {
-  strict: true,
-  target: "ESNext",
-  module: "ESNext",
-  moduleResolution: "node",
-  allowSyntheticDefaultImports: true,
-  esModuleInterop: true,
-  jsx: "preserve",
-  jsxImportSource: "solid-js",
+const tsPluginOptions = {
+  tsconfig: './tsconfig.json',
+  check: true,
+  clean: true,
+  abortOnError: true,
+  rollupCommonJSResolveHack: false,
+  useTsconfigDeclarationDir: true,
 };
+
 
 /**
  * The configuration object.
@@ -58,7 +56,6 @@ export default [
       },
     ],
     plugins: [
-      typescriptPlugin(tsconfig),
       nodePolyfillPlugin(),
       nodeResolve({
         extensions: [".js", ".jsx", ".ts", ".tsx"],
@@ -66,6 +63,7 @@ export default [
         exclude: ['node_modules/**'],
         exportConditions: ["solid"]
       }),
+      typescriptPlugin(tsPluginOptions),
       commonjs({
         include: ['node_modules/**'],
       }),
@@ -75,7 +73,6 @@ export default [
         presets: [["solid", { generate: "dom", hydratable: true } ], "@babel/preset-typescript"],
         exclude: ["node_modules/**"],
       }),
-      //terser(),
     ],
     treeshake: false
   },
@@ -98,7 +95,6 @@ export default [
       },
     ],
     plugins: [
-      typescriptPlugin(tsconfig),
       nodePolyfillPlugin(),
       nodeResolve({
         extensions: [".js", ".jsx", ".ts", ".tsx"],
@@ -106,6 +102,7 @@ export default [
         exclude: ['node_modules/**'],
         exportConditions: ["solid"]
       }),
+      typescriptPlugin(tsPluginOptions),
       commonjs({
         include: ['node_modules/**'],
       }),
@@ -133,8 +130,8 @@ export default [
       },
     ],
     plugins: [
-      typescriptPlugin(tsconfig),
       nodePolyfillPlugin(),
+      typescriptPlugin(tsPluginOptions),
       jsonPlugin(),
       hashbangPlugin(),
       terser(),
