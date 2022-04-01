@@ -47,12 +47,10 @@ export default [
     external: externals,
     output: [
       {
-        name: 'solidusjs',
-        format: "umd",
+        format: "esm",
         file: resolve("dist/browser.js"),
         sourcemap: true,
         globals: globals,
-        name: 'solidusjsclient',
       },
     ],
     plugins: [
@@ -85,13 +83,9 @@ export default [
     external: externals,
     output: [
       {
-        name: 'solidusjs',
-        format: "umd",
+        format: "esm",
         file: resolve("dist/server.js"),
-        sourcemap: true,
         globals: globals,
-        name: 'solidusjsserver',
-        exports: 'named'
       },
     ],
     plugins: [
