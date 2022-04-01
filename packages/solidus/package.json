@@ -1,6 +1,6 @@
 {
   "name": "solidusjs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Plug and play Server-Side Rendering for SolidJS",
   "info": "An easy plug and play solution for incorporating Server-Side Rendering to any existing SolidJS application with minimal refactoring of your codebase.",
   "types": "./dist/types/index.d.ts",
