@@ -2,11 +2,32 @@
   "name": "solidusjs",
   "version": "0.1.0",
   "description": "Plug and play Server-Side Rendering for SolidJS",
+  "info": "An easy plug and play solution for incorporating Server-Side Rendering to any existing SolidJS application with minimal refactoring of your codebase.",
   "types": "./dist/types/index.d.ts",
+  "homepage": "https://github.com/Perivel/solidus.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Perivel/solidus.js"
+  },
+  "contributors": [
+    {
+      "name": "Patrick Luy",
+      "email": "pluy@perivel.com",
+      "url": "https://patrickluy.com"
+    }
+  ],
   "type": "module",
   "files": [
     "dist",
     "cli"
+  ],
+  "keywords": [
+    "solidhack",
+    "best_ecosystem",
+    "server side rendering",
+    "ssr",
+    "solid-js",
+    "solid"
   ],
   "exports": {
     ".": {

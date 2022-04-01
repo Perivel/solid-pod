@@ -1,9 +1,19 @@
 # SolidusJS
 ![Solidus Logo](logo.png)
 
-Solidus is a plug-and-play Server-Side Rendering solution for SolidJS.
+Solidus is a plug-and-play Server-Side Rendering solution for SolidJS. With Solidus, you can easily add Server-Side Rendering to any existing SolidJS application with minimal effort.
 
-> **Note**: Solidus is still in development and not yet usable.
+> **Note**: Solidus is still in development and not yet ready for production. Use at your own risk.
+
+## Installation
+To install Solidus, add the dependency with NPM:
+```
+npm i solidusjs
+```
+or with Yarn:
+```
+yarn add solidusjs
+```
 
 ## Concepts
 Solidus is made up of three concepts: Applications, Views, and Layouts. 
