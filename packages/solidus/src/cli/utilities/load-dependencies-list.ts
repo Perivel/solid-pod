@@ -26,27 +26,38 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import { hydrate } from 'solid-js/web';
-import { Configuration } from './configuration/configuration';
-import { Application, RenderContext } from './../types/index';
+import { Path, FileSystem, FileOpenFlag } from '@swindle/filesystem';
+import { Process } from '@swindle/os';
+import { SolidusException } from '../exceptions/solidus.exception';
 
-/**
- * runClient()
- * 
- * Renders the application on the client.
- * @param App The application to render.
- * @param config The configuration object.
- */
-
-const runClient = (App: Application, config: Configuration): () => void => {
-    const context: RenderContext = {
-      server: {
-        port: config.port,
-        debug: config.env === "development",
-        url: '/'
-      },
-    };
-    return hydrate(() => <App context={context} />, document);
+export interface PackageDependenciesInterface {
+    dependencies: object,
+    devDependencies: object
 }
 
-export { runClient };
+/**
+ * loadDependenciesList()
+ * 
+ * loads the dependencies list
+ * @param root the project root directory.
+ * @returns Tsconfig options.
+ * @throws SolidusException when the package.json file cannot be found.
+ */
+
+ export const loadDependenciesList = async (root: Path = Process.Cwd()): Promise<{ deps: string[], dev: string[]}> => {
+    const path = Path.FromSegments(root, 'package.json');
+    let depsList = { deps: [] as string[], dev: [] as string[] };
+
+    if (await FileSystem.Contains(path)) {
+        const file = await FileSystem.Open(path, FileOpenFlag.READ);
+        const data = await file.readAll();
+        await file.close();
+        const pkg: PackageDependenciesInterface = JSON.parse(data);
+        depsList.deps = Object.keys(pkg.dependencies);
+        depsList.dev = Object.keys(pkg.devDependencies);
+    }
+    else {
+        throw new SolidusException('Cannot find package.json file.');
+    }
+    return depsList;
+}

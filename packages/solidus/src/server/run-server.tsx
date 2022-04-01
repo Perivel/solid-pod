@@ -47,7 +47,7 @@ import { Middleware } from './middleware/middleware';
  * @param middleware An array of Middleware to register.
  */
 
-export const runServer = (App: Application, config: Configuration, middleware: Middleware[] = []): void => {
+const runServer = (App: Application, config: Configuration, middleware: Middleware[] = []): void => {
   const app = express();
 
   // set middleware
@@ -104,3 +104,5 @@ export const runServer = (App: Application, config: Configuration, middleware: M
     );
   });
 }
+
+export { runServer };
