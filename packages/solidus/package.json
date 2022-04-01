@@ -27,7 +27,8 @@
   },
   "scripts": {
     "build": "yarn clean && rollup -c",
-    "clean": "rimraf ./dist"
+    "clean": "rimraf ./dist",
+    "inspect:circular": "npx madge --circular --extensions ts ./"
   },
   "license": "BSD-2",
   "devDependencies": {

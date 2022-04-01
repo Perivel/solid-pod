@@ -29,7 +29,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import { Color } from '@swindle/color';
 import { RouteDefinition } from "solid-app-router";
 import { Component, JSX } from "solid-js";
-import { LayoutComponent, RenderContext } from './../types/index';
+import { LayoutComponent } from './layout-component.type';
+import { RenderContext } from './render-context.type';
 
 interface ViewProps {
 

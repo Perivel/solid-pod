@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * ENV values
 */
 
-type ENV = 'development' | 'production';
+export type ENV = 'development' | 'production';
 
 /**
  * SSRMode
@@ -40,7 +40,7 @@ type ENV = 'development' | 'production';
  * The SSR mode to use.
  */
 
-type SSRMode = 'sync' | 'stream' | 'async';
+export type SSRMode = 'sync' | 'stream' | 'async';
 
 /**
  * Configuration
@@ -48,7 +48,7 @@ type SSRMode = 'sync' | 'stream' | 'async';
  * The Server Configuration.
  */
 
-interface Configuration {
+export interface Configuration {
     /**
      * host
      * 
@@ -80,10 +80,4 @@ interface Configuration {
      */
 
     ssr: SSRMode;
-}
-
-export {
-    Configuration,
-    SSRMode,
-    ENV
 }

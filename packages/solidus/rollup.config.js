@@ -24,6 +24,18 @@ const fmt = new StringFormatter();
 const globals = {};
 deps.forEach(dep => globals[dep] = fmt.camelCase(dep));
 
+// default tsconfig
+const tsconfig = {
+  strict: true,
+  target: "ESNext",
+  module: "ESNext",
+  moduleResolution: "node",
+  allowSyntheticDefaultImports: true,
+  esModuleInterop: true,
+  jsx: "preserve",
+  jsxImportSource: "solid-js",
+};
+
 /**
  * The configuration object.
  */
@@ -42,10 +54,11 @@ export default [
         file: resolve("dist/browser.js"),
         sourcemap: true,
         globals: globals,
-        name: 'solidusjsclient'
+        name: 'solidusjsclient',
       },
     ],
     plugins: [
+      typescriptPlugin(tsconfig),
       nodePolyfillPlugin(),
       nodeResolve({
         extensions: [".js", ".jsx", ".ts", ".tsx"],
@@ -59,7 +72,7 @@ export default [
       babel({
         extensions: [".js", '.jsx', ".ts", ".tsx"],
         babelHelpers: "bundled",
-        presets: [["solid", { generate: "dom", hydratable: true }], "@babel/preset-typescript"],
+        presets: [["solid", { generate: "dom", hydratable: true } ], "@babel/preset-typescript"],
         exclude: ["node_modules/**"],
       }),
       //terser(),
@@ -80,10 +93,12 @@ export default [
         file: resolve("dist/server.js"),
         sourcemap: true,
         globals: globals,
-        name: 'solidusjsserver'
+        name: 'solidusjsserver',
+        exports: 'named'
       },
     ],
     plugins: [
+      typescriptPlugin(tsconfig),
       nodePolyfillPlugin(),
       nodeResolve({
         extensions: [".js", ".jsx", ".ts", ".tsx"],
@@ -118,7 +133,7 @@ export default [
       },
     ],
     plugins: [
-      typescriptPlugin(),
+      typescriptPlugin(tsconfig),
       nodePolyfillPlugin(),
       jsonPlugin(),
       hashbangPlugin(),
