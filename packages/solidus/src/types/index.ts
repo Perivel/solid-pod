@@ -26,18 +26,11 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import { Application, ApplicationProps } from './application.type';
-import { LayoutComponent, LayoutProps } from './layout-component.type';
-import { ViewComponent } from './view-component.type';
-import { ServerOptions } from './server-options.type';
-import { RenderContext } from './render-context.type';
+// types module
 
-export {
-   Application,
-   ApplicationProps,
-   LayoutComponent,
-   LayoutProps,
-   ViewComponent,
-   ServerOptions,
-   RenderContext
-};
+export * from './application.type';
+export * from './layout-component.type';
+export * from './view-component.type';
+export * from './server-options.type';
+export * from './render-context.type';
+export * from './configuration/configuration';

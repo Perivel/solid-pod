@@ -29,7 +29,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import { Component } from 'solid-js';
 import { RenderContext } from './render-context.type';
 
-interface ApplicationProps {
+export interface ApplicationProps {
     context: RenderContext
 }
 
@@ -39,9 +39,4 @@ interface ApplicationProps {
  * An Application Component is the root of every Solidus Application.
  */
 
-type Application = Component<ApplicationProps>;
-
-export {
-    Application,
-    ApplicationProps
-}
+export type Application = Component<ApplicationProps>;

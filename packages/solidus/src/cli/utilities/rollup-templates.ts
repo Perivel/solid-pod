@@ -52,13 +52,17 @@ import container from './container';
  */
 
 export const loadBuildConfigurationOptions = (tsconfigOptions: object, deps: string[], devDeps: string[], root: Path = Process.Cwd()): RollupOptions[] => {
-    const externals = [...deps, ...devDeps];
+    const externals = [...deps, ...devDeps].filter(dep => dep !== 'solid-app-router');
     const fmt = container.get(StringFormatter);
 
     const globals = {};
-    deps.forEach(dep => Object.defineProperty(globals, dep, {
-        value: fmt.camelCase(dep)
-    }));
+    deps.forEach(dep => {
+        if (dep !== 'solid-app-router') {
+            Object.defineProperty(globals, dep, {
+                value: fmt.camelCase(dep)
+            })
+        }
+    });
 
     const tsConfigOverrides = {
         declaration: true,

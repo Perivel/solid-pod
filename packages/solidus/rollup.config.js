@@ -8,7 +8,6 @@ import nodePolyfillPlugin from "rollup-plugin-polyfill-node";
 import nodeResolve from "@rollup/plugin-node-resolve";
 import babel from "@rollup/plugin-babel";
 import commonjs from '@rollup/plugin-commonjs';
-
 import { dependencies, devDependencies } from './package.json';
 
 const deps = Object.keys(dependencies);
@@ -17,12 +16,18 @@ const deps = Object.keys(dependencies);
 const externals = [
   ...deps,
   ...Object.keys(devDependencies),
-];
+].filter(dep => dep !== 'solid-app-router');
 
 // core library globals.
 const fmt = new StringFormatter();
 const globals = {};
-deps.forEach(dep => globals[dep] = fmt.camelCase(dep));
+deps.forEach(dep => {
+  if (dep !== 'solid-app-router') {
+    Object.defineProperty(globals, dep, {
+      value: fmt.camelCase(dep)
+    });
+  }
+});
 
 const tsPluginOptions = {
   tsconfig: './tsconfig.json',
@@ -41,7 +46,7 @@ const tsPluginOptions = {
 export default [
   // client library
   {
-    input: resolve(__dirname, "index.ts"),
+    input: resolve(__dirname, "client-main.ts"),
     treeshake: false,
     preserveEntrySignatures: false,
     external: externals,
@@ -77,7 +82,7 @@ export default [
 
   // server library
   {
-    input: resolve(__dirname, "index.ts"),
+    input: resolve(__dirname, "server-main.ts"),
     treeshake: false,
     preserveEntrySignatures: false,
     external: externals,

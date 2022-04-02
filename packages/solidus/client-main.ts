@@ -26,27 +26,8 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import { hydrate } from 'solid-js/web';
-import { Configuration } from './configuration/configuration';
-import { Application, RenderContext } from './../types/index';
+// The client entry point
 
-/**
- * runClient()
- * 
- * Renders the application on the client.
- * @param App The application to render.
- * @param config The configuration object.
- */
-
-const runClient = (App: Application, config: Configuration): () => void => {
-    const context: RenderContext = {
-      server: {
-        port: config.port,
-        debug: config.env === "development",
-        url: '/'
-      },
-    };
-    return hydrate(() => <App context={context} />, document);
-}
-
-export { runClient };
+export * from './src/components/index';
+export * from './src/types/index';
+export * from './src/client/index';

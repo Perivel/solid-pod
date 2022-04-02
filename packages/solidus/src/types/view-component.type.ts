@@ -32,7 +32,7 @@ import { Component, JSX } from "solid-js";
 import { LayoutComponent } from './layout-component.type';
 import { RenderContext } from './render-context.type';
 
-interface ViewProps {
+export interface ViewProps {
 
     /**
      * charset
@@ -105,9 +105,4 @@ interface ViewProps {
  * The Application Component is the root of of any Solidus application compoent tree.
  */
 
-type ViewComponent = Component<ViewProps>;
-
-export {
-    ViewComponent,
-    ViewProps
-};
+export type ViewComponent = Component<ViewProps>;

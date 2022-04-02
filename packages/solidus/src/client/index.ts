@@ -26,7 +26,5 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-// The components module.
-export { default as SolidusError } from "./error/SolidusError";
-export { default as DefaultLayout } from "./layout/DefaultLayout";
-export { default as View } from "./view/View";
+// the client module
+export * from './run-client';

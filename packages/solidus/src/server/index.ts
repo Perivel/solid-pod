@@ -26,17 +26,5 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import { Configuration, ENV, SSRMode } from './configuration/configuration';
-import { Middleware } from './middleware/middleware';
-import { runServer } from './run-server';
-import { runClient } from './run-client';
-
-export {
-   Configuration,
-   ENV,
-   Middleware,
-   runClient,
-   runServer,
-   SSRMode,
-
-}
+export * from './middleware/middleware';
+export * from './run-server';

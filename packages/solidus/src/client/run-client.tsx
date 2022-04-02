@@ -26,7 +26,24 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-// The components module.
-export { default as SolidusError } from "./error/SolidusError";
-export { default as DefaultLayout } from "./layout/DefaultLayout";
-export { default as View } from "./view/View";
+import { hydrate } from 'solid-js/web';
+import { Application, Configuration, RenderContext } from '../types/index';
+
+/**
+ * runClient()
+ * 
+ * Renders the application on the client.
+ * @param App The application to render.
+ * @param config The configuration object.
+ */
+
+export const runClient = (App: Application, config: Configuration): () => void => {
+    const context: RenderContext = {
+      server: {
+        port: config.port,
+        debug: config.env === "development",
+        url: '/'
+      },
+    };
+    return hydrate(() => <App context={context} />, document);
+}

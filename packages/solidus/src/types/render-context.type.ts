@@ -28,8 +28,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import { ServerOptions } from './server-options.type';
 
-interface RenderContext {
+export interface RenderContext {
     server: ServerOptions;
 }
-
-export { RenderContext };

@@ -34,8 +34,7 @@ import {
     renderToStringAsync,
     renderToStream,
 } from 'solid-js/web';
-import { Configuration } from './configuration/configuration';
-import { Application, ServerOptions, RenderContext } from '../types/index';
+import { Application, Configuration, RenderContext } from '../types/index';
 import { Middleware } from './middleware/middleware';
 
 /**
@@ -47,7 +46,7 @@ import { Middleware } from './middleware/middleware';
  * @param middleware An array of Middleware to register.
  */
 
-const runServer = (App: Application, config: Configuration, middleware: Middleware[] = []): void => {
+export const runServer = (App: Application, config: Configuration, middleware: Middleware[] = []): void => {
   const app = express();
 
   // set middleware
@@ -104,5 +103,3 @@ const runServer = (App: Application, config: Configuration, middleware: Middlewa
     );
   });
 }
-
-export { runServer };

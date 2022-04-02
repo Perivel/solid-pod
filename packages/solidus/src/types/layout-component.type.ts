@@ -34,7 +34,7 @@ import { Component, JSX } from 'solid-js';
  * Props of a Solidus Layout component. This interface should be extended when creating your own custom layouts.
  */
 
-interface LayoutProps {
+export interface LayoutProps {
     content: JSX.Element;
 }
 
@@ -44,9 +44,4 @@ interface LayoutProps {
  * A Layout Component type. 
  */
 
-type LayoutComponent = Component<LayoutProps>
-
-export {
-    LayoutComponent,
-    LayoutProps,
-}
+export type LayoutComponent = Component<LayoutProps>
