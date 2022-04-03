@@ -46,7 +46,6 @@
   "dependencies": {
     "@swindle/color": "^1.0.0",
     "@swindle/core": "^2.1.1",
-    "rollup": "^2.70.1",
     "solid-app-router": "^0.3.2",
     "solid-js": "^1.3.13",
     "solid-meta": "^0.27.3"
@@ -54,6 +53,7 @@
   "devDependencies": {
     "@babel/core": "^7.17.8",
     "@babel/preset-typescript": "^7.16.7",
+    "rollup": "^2.70.1",
     "@rollup/plugin-babel": "^5.3.1",
     "@rollup/plugin-commonjs": "^21.0.3",
     "@rollup/plugin-json": "^4.1.0",
