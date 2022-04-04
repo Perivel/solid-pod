@@ -14,5 +14,6 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
+    "@solidusjs/core": "^1.0.1"
   }
 }

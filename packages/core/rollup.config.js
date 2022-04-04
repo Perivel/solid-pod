@@ -62,8 +62,8 @@ export default [
             nodeResolve({
                 extensions: [".js", ".jsx", ".ts", ".tsx"],
                 ignoreGlobals: false,
+                exportConditions: ["solid"],
                 exclude: ['node_modules/**'],
-                exportConditions: ["solid"]
             }),
             typescriptPlugin(tsPluginOptions),
             commonjs({
@@ -73,7 +73,6 @@ export default [
                 extensions: [".js", '.jsx', ".ts", ".tsx"],
                 babelHelpers: "bundled",
                 presets: [["solid", { generate: "dom", hydratable: true }], "@babel/preset-typescript"],
-                exclude: ["node_modules/**"],
             }),
             jsonPlugin(),
             terser({
@@ -114,8 +113,6 @@ export default [
                 extensions: [".js", '.jsx', ".ts", ".tsx"],
                 babelHelpers: "bundled",
                 presets: [["solid", { generate: "ssr", hydratable: true, async: true }], "@babel/preset-typescript"],
-                exclude: ["node_modules/**"],
-
             }),
             jsonPlugin(),
             terser({

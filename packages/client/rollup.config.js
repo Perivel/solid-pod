@@ -15,8 +15,8 @@ const deps = Object.keys(dependencies);
 const externals = [
     ...deps,
     ...Object.keys(devDependencies),
-]
-externals.push('solid-js/web');
+    'solid-js/web'
+];
 
 // core library globals.
 const fmt = new StringFormatter();
