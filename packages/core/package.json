@@ -43,6 +43,9 @@
       "require": "./dist/server.js"
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@swindle/color": "^1.0.0",
     "@swindle/core": "^2.1.1",
