@@ -15,16 +15,14 @@ const deps = Object.keys(dependencies);
 const externals = [
     ...deps,
     ...Object.keys(devDependencies),
-].filter(dep => dep !== 'solid-app-router')
-.push('solid-js/web');
+]
+externals.push('solid-js/web');
 
 // core library globals.
 const fmt = new StringFormatter();
 const globals = {};
 deps.forEach(dep => {
-    if (dep !== 'solid-app-router') {
-        globals[dep] = fmt.camelCase(dep)
-    }
+    globals[dep] = fmt.camelCase(dep);
 });
 globals['solid-js/web'] = fmt.camelCase('solid-js/web');
 
@@ -65,7 +63,7 @@ export default [
             }),
             typescriptPlugin(tsPluginOptions),
             commonjs({
-                include: ['node_modules/**'],
+                //include: ['node_modules/**'],
             }),
             babel({
                 extensions: [".js", '.jsx', ".ts", ".tsx"],
