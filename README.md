@@ -6,14 +6,15 @@ Solidus is a plug-and-play Server-Side Rendering solution for SolidJS. With Soli
 > **Note**: Solidus is still in development and not yet ready for production. Use at your own risk.
 
 ## Installation
-To install Solidus, add the dependency with NPM:
+To install Solidus, add the dependencies with NPM:
 ```
-npm i solidusjs
+npm i @solidusjs/core @solidusjs/client @solidusjs/server
 ```
 or with Yarn:
 ```
-yarn add solidusjs
+yarn add @solidusjs/core @solidusjs/client @solidusjs/server
 ```
+SolidusJS consists of three major components. @solidusjs/core consists of the core functionalities of the primary functionalities of the library. @solidusjs/client consists of the client-specific functionalities. And, finally, @solidusjs/server contains the server-side functionalities. As of v1, these capabilities are split into separate packages. This may change in a future version.
 
 ## Concepts
 Solidus is made up of three concepts: Applications, Views, and Layouts. 
@@ -31,7 +32,7 @@ Layouts are special components that define how content is presented in your appl
 Solidus applications are just ordinary SolidJS applications wrapped in an `Application` component. Because of this, it is very straightforward to convert an existing SolidJS application to a Solidus application. 
 ```tsx
 // In your root application component file.
-import { Application, DefaultLayout, View } from 'solidus';
+import { Application, DefaultLayout, View } from '@solidusjs/core';
 import App from 'path/to/solid/App';
 import About from 'path/to/About';
 
@@ -69,7 +70,7 @@ Solidus expects your server entry point to be contained in `src/server.ts`. Belo
 
 ```ts
 // src/server.ts
-import { runServer } from 'solidus';
+import { runServer } from '@solidusjs/server';
 import MyApp from 'path/to/root/component/MyApp';
 import config from 'path/to/solidus/config';
 
@@ -81,7 +82,7 @@ The `runServer()` function starts the application server using the `Application`
 Solidus expects your client entry point to be contained in `src/client.ts`. Below is an example of a typical Solidus client entry point file.
 
 ```ts
-import { runClient } from 'solidusjs';
+import { runClient } from '@solidusjs/client';
 import MyApp from './MyApp';
 import config from './solidus.config';
 
