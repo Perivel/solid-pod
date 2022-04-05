@@ -470,7 +470,7 @@
 
 "@rollup/plugin-image@^2.1.1":
   version "2.1.1"
-  resolved "https://registry.npmjs.org/@rollup/plugin-image/-/plugin-image-2.1.1.tgz"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-image/-/plugin-image-2.1.1.tgz#898d6b59ac0025d7971ef45640ab330cb0663b0c"
   integrity sha512-AgP4U85zuQJdUopLUCM+hTf45RepgXeTb8EJsleExVy99dIoYpt3ZlDYJdKmAc2KLkNntCDg6BPJvgJU3uGF+g==
   dependencies:
     "@rollup/pluginutils" "^3.1.0"
@@ -576,7 +576,7 @@
 
 "@swindle/os@^1.0.11":
   version "1.0.11"
-  resolved "https://registry.npmjs.org/@swindle/os/-/os-1.0.11.tgz"
+  resolved "https://registry.yarnpkg.com/@swindle/os/-/os-1.0.11.tgz#afb96aeff25642deabeaeae8a5636a91a7626669"
   integrity sha512-5UzJ8zYSwt8E0UKXnw6AxBBeBq+w7tszDBVr8mA4Jg1Tj+FxBuc91fKPfH1V8noYGsQOLEJ6cW5mp+dVZagDNQ==
   dependencies:
     "@swindle/core" "^2.1.1"
@@ -2712,7 +2712,7 @@ rimraf@^3.0.0, rimraf@^3.0.2:
 
 rollup-plugin-copy@^3.4.0:
   version "3.4.0"
-  resolved "https://registry.npmjs.org/rollup-plugin-copy/-/rollup-plugin-copy-3.4.0.tgz"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-copy/-/rollup-plugin-copy-3.4.0.tgz#f1228a3ffb66ffad8606e2f3fb7ff23141ed3286"
   integrity sha512-rGUmYYsYsceRJRqLVlE9FivJMxJ7X6jDlP79fmFkL8sJs7VVMSVyA2yfyL+PGyO/vJs4A87hwhgVfz61njI+uQ==
   dependencies:
     "@types/fs-extra" "^8.0.1"
@@ -2751,7 +2751,7 @@ rollup-plugin-polyfill-node@^0.9.0:
 
 rollup-plugin-styles@^4.0.0:
   version "4.0.0"
-  resolved "https://registry.npmjs.org/rollup-plugin-styles/-/rollup-plugin-styles-4.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-styles/-/rollup-plugin-styles-4.0.0.tgz#472f104d33edda27fb089b63a315e31531611826"
   integrity sha512-A2K2sao84OsTmDxXG83JTCdXWrmgvQkkI38XDat46rdtpGMRm9tSYqeCdlwwGDJF4kKIafhV1mUidqu8MxUGig==
   dependencies:
     "@rollup/pluginutils" "^4.1.2"
