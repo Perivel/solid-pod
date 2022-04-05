@@ -26,6 +26,13 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+/**
+ * build-app.ts
+ * 
+ * This file contains functionalities necessary for building a standard SolidusJS app.
+ */
+
+
 import { VoidAsyncFn } from '@swindle/core';
 import { Process } from '@swindle/os';
 import { 
@@ -75,6 +82,9 @@ export interface BuildOptions {
     // the client entry point file path
     clientEntryPoint?: Path,
 
+    // The path to the assets directory.
+    assetsDir?: Path,
+
     // executed before the bundle is generated.
     onBeforeRollup?: VoidAsyncFn,
 
@@ -93,6 +103,7 @@ const defaultBuildOptions: BuildOptions = {
     outputDir: Path.FromSegments(Process.Cwd(), 'dist'),
     clientEntryPoint: Path.FromSegments(Process.Cwd(), 'src/client.ts'),
     serverEntryPoint: Path.FromSegments(Process.Cwd(), 'src/server.ts'),
+    assetsDir: Path.FromSegments(Process.Cwd(), 'src/assets/**/**'),
     onBeforeRollup: async () => {},
     onRollup: async () => {},
     onBeforeGenerate: async () => {},
@@ -112,6 +123,7 @@ const resolveBuildOptions = (options: BuildOptions): BuildOptions => {
         outputDir: options.outputDir || defaultBuildOptions.outputDir,
         clientEntryPoint: options.clientEntryPoint || defaultBuildOptions.clientEntryPoint,
         serverEntryPoint: options.serverEntryPoint || defaultBuildOptions.serverEntryPoint,
+        assetsDir: options.assetsDir || defaultBuildOptions.assetsDir,
         onBeforeRollup: options.onBeforeRollup || defaultBuildOptions.onBeforeRollup,
         onRollup: options.onRollup || defaultBuildOptions.onRollup,
         onBeforeGenerate: options.onBeforeGenerate || defaultBuildOptions.onBeforeGenerate,
@@ -212,6 +224,7 @@ export const loadBuildConfigurationOptions = (
     outputDir: Path,
     serverEntryFilePath: Path,
     clientEntryFilePath: Path,
+    assetsFilePath: Path,
 ): RollupOptions[] => {
     const externals = [...deps, ...devDeps];
     const fmt = container.get(StringFormatter);
@@ -272,8 +285,7 @@ export const loadBuildConfigurationOptions = (
             image(),
             copy({
                 targets: [
-                    //{ src: 'src/assets/**/*', dest: 'dist/src/assets' }
-                    { src: Path.FromSegments(root, 'src/assets/**/*').toString(), dest: Path.FromSegments(root, 'dist/server/assets').toString() }
+                    { src: assetsFilePath.toString(), dest: 'dist/public' }
                 ]
             }),
         ],
@@ -313,8 +325,7 @@ export const loadBuildConfigurationOptions = (
             image(),
             copy({
                 targets: [
-                    { src: 'src/assets/**/*', dest: 'dist/src/assets' }
-                    //{ src: Path.FromSegments(root, 'src/assets/**/*').toString(), dest: Path.FromSegments(root, 'dist/client/assets').toString()}
+                    { src: assetsFilePath.toString(), dest: 'dist/public' }
                 ]
             }),
         ],
@@ -365,7 +376,8 @@ export const buildApp = async (options: BuildOptions = {}): Promise<void> => {
         buildOptions.root!, 
         buildOptions.outputDir!, 
         buildOptions.serverEntryPoint!, 
-        buildOptions.clientEntryPoint!
+        buildOptions.clientEntryPoint!,
+        buildOptions.assetsDir!
     );
 
     try {

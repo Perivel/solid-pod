@@ -5,7 +5,6 @@ import typescriptPlugin from "rollup-plugin-typescript2";
 import jsonPlugin from "@rollup/plugin-json";
 import nodePolyfillPlugin from "rollup-plugin-polyfill-node";
 import nodeResolve from "@rollup/plugin-node-resolve";
-import babel from "@rollup/plugin-babel";
 import commonjs from '@rollup/plugin-commonjs';
 import { dependencies, devDependencies } from './package.json';
 
@@ -15,7 +14,6 @@ const deps = Object.keys(dependencies);
 const externals = [
     ...deps,
     ...Object.keys(devDependencies),
-    'solid-js/web'
 ];
 
 // core library globals.
@@ -24,7 +22,6 @@ const globals = {};
 deps.forEach(dep => {
     globals[dep] = fmt.camelCase(dep);
 });
-globals['solid-js/web'] = fmt.camelCase('solid-js/web');
 
 const tsPluginOptions = {
     tsconfig: './tsconfig.json',
@@ -41,7 +38,6 @@ const tsPluginOptions = {
  */
 
 export default [
-    // client library
     {
         input: resolve(__dirname, "index.ts"),
         treeshake: false,
@@ -50,7 +46,7 @@ export default [
         output: [
             {
                 format: "esm",
-                file: resolve("dist/browser.js"),
+                file: resolve("dist/index.js"),
                 globals: globals,
             },
         ],
@@ -65,12 +61,6 @@ export default [
             typescriptPlugin(tsPluginOptions),
             commonjs({
                 include: ['node_modules/**'],
-            }),
-            babel({
-                extensions: [".js", '.jsx', ".ts", ".tsx"],
-                babelHelpers: "bundled",
-                presets: [["solid", { generate: "dom", hydratable: true }], "@babel/preset-typescript"],
-                exclude: ["node_modules/**"],
             }),
             jsonPlugin(),
             terser({
