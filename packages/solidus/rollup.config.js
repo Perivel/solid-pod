@@ -6,6 +6,7 @@ import jsonPlugin from "@rollup/plugin-json";
 import nodePolyfillPlugin from "rollup-plugin-polyfill-node";
 import nodeResolve from "@rollup/plugin-node-resolve";
 import commonjs from '@rollup/plugin-commonjs';
+import hashbangPlugin from "rollup-plugin-hashbang";
 import { dependencies, devDependencies } from './package.json';
 
 const deps = Object.keys(dependencies);
@@ -38,6 +39,7 @@ const tsPluginOptions = {
  */
 
 export default [
+    // library
     {
         input: resolve(__dirname, "index.ts"),
         treeshake: false,
@@ -62,12 +64,28 @@ export default [
             commonjs({
                 include: ['node_modules/**'],
             }),
+            terser(),
+        ],
+        treeshake: false
+    },
+    // CLI
+    {
+        input: resolve(__dirname, "cli.ts"),
+        external: externals,
+        output: [
+            {
+                file: "./dist/bin/solidus.js",
+                format: "esm",
+                globals: globals,
+            },
+        ],
+        plugins: [
+            nodePolyfillPlugin(),
+            typescriptPlugin(tsPluginOptions),
+            commonjs(),
             jsonPlugin(),
-            terser({
-                format: {
-                    comments: false
-                }
-            })
+            hashbangPlugin(),
+            terser(),
         ],
     },
 ];

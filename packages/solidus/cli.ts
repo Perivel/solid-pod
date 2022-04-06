@@ -60,7 +60,7 @@ const runCli = async (): Promise<number> => {
         return await runHelp();
     }
     else {
-        DIContainer.get(Logger).error('Error: Invalid command.');
+        DIContainer.get(Logger).error('Invalid command.');
         return CommandStatus.Error;
     }
 }

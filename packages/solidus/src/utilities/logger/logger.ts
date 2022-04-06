@@ -56,7 +56,7 @@ export class Logger implements LoggerInterface {
      */
 
     public error(message: string): void {
-        const msg = this.formatMessage(message);
+        const msg = this.formatMessage(`Error: ${message}`);
         console.log(chalk.red(msg));
     }
 
