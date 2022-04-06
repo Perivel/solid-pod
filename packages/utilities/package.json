@@ -56,7 +56,9 @@
     "rollup-plugin-styles": "^4.0.0",
     "rollup-plugin-typescript2": "^0.31.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "rollup-plugin-delete": "^2.0.0"
+  },
   "scripts": {
     "build": "rollup -c",
     "inspect:circular": "npx madge --circular --extensions ts ./"

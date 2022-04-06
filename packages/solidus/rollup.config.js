@@ -7,6 +7,7 @@ import nodePolyfillPlugin from "rollup-plugin-polyfill-node";
 import nodeResolve from "@rollup/plugin-node-resolve";
 import commonjs from '@rollup/plugin-commonjs';
 import hashbangPlugin from "rollup-plugin-hashbang";
+import del from 'rollup-plugin-delete';
 import { dependencies, devDependencies } from './package.json';
 
 const deps = Object.keys(dependencies);
@@ -53,6 +54,9 @@ export default [
             },
         ],
         plugins: [
+            del({
+                targets: ['./dist/*']
+            }),
             nodePolyfillPlugin(),
             nodeResolve({
                 extensions: [".js", ".jsx", ".ts", ".tsx"],
