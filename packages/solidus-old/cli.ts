@@ -28,41 +28,39 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+// This is the entrypoint of the SolidusJS CLI.
 import { Process } from '@swindle/os';
-import {
-    CommandArgs,
-    CommandStatus,
-    DIContainer,
-    Logger,
-} from './src/utilities/index';
-import {
-    runBuild,
-    runHelp
-} from './src/commands/index';
+import { runBuild } from './src/cli/commands/solidus-build';
+import { runStart } from './src/cli/commands/solidus-start';
+import { runDev } from './src/cli/commands/solidus-dev';
+import { SolidusCommands } from './src/cli/utilities/solidus-commands.enum';
+import container from './src/cli/utilities/container';
+import { MessageFormatter } from './src/cli/utilities/message-formatter';
 
 const runCli = async (): Promise<number> => {
-    // determine which command to run.
-    const [node, app, ...args] = Process.argv;
-    const cmd = args[0];
+   // determine which command to run.
+   const [node, app, ...args] = Process.argv;
+   const cmd = args[0];
+   const fmt = container.get(MessageFormatter);
 
-    if (cmd === CommandArgs.build) {
-        return await runBuild();
-    }
-    else if (cmd === CommandArgs.dev) {
-        // run the Dev command.
-        return 1;
-    }
-    else if (cmd == CommandArgs.start) {
-        // run the app
-        return 1;
-    }
-    else if ((cmd == CommandArgs.help) || (cmd == '')) {
-        return await runHelp();
-    }
-    else {
-        DIContainer.get(Logger).error('Error: Invalid command.');
-        return CommandStatus.Error;
-    }
+   if (cmd === SolidusCommands.build) {
+      // run the build command.
+      console.log('Building your application...');
+      return await runBuild();
+   }
+   else if (cmd === SolidusCommands.dev) {
+      // run the Dev command.
+      return await runDev();
+   }
+   else if (cmd == SolidusCommands.start) {
+      // run the app
+      return await runStart();
+   }
+   else {
+      // invalid command.
+      console.log(fmt.message("Invalid Command"));
+      return 0;
+   }
 }
 
 runCli();

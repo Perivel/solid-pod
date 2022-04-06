@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
 BSD 2-Clause License
 
@@ -28,41 +26,10 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import { Process } from '@swindle/os';
-import {
-    CommandArgs,
-    CommandStatus,
-    DIContainer,
-    Logger,
-} from './src/utilities/index';
-import {
-    runBuild,
-    runHelp
-} from './src/commands/index';
+import { Container } from '@swindle/container';
+import { Logger } from './logger/logger';
 
-const runCli = async (): Promise<number> => {
-    // determine which command to run.
-    const [node, app, ...args] = Process.argv;
-    const cmd = args[0];
+const container = new Container();
+container.bind(Logger, _ => new Logger());
 
-    if (cmd === CommandArgs.build) {
-        return await runBuild();
-    }
-    else if (cmd === CommandArgs.dev) {
-        // run the Dev command.
-        return 1;
-    }
-    else if (cmd == CommandArgs.start) {
-        // run the app
-        return 1;
-    }
-    else if ((cmd == CommandArgs.help) || (cmd == '')) {
-        return await runHelp();
-    }
-    else {
-        DIContainer.get(Logger).error('Error: Invalid command.');
-        return CommandStatus.Error;
-    }
-}
-
-runCli();
+export default container;

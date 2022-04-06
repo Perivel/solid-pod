@@ -1,5 +1,5 @@
-# Solidusjs
-The Solidusjs Library
+# SolidusJS Utilities
+Utilities for SolidusJS, including build utilities.
 
-# About
-This package is the primary library for the [SolidusJS](https://github.com/Perivel/solidus.js) Library. You can learn more about the project [here](https://github.com/Perivel/solidus.js).
+# License
+SolidusJS is provided under the [BSD-2](https://github.com/Perivel/solidus.js/blob/master/LICENSE) License.

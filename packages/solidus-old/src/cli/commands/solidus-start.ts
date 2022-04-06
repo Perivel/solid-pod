@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
 BSD 2-Clause License
 
@@ -28,41 +26,45 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import { FileSystem, Path } from '@swindle/filesystem';
 import { Process } from '@swindle/os';
-import {
-    CommandArgs,
-    CommandStatus,
-    DIContainer,
-    Logger,
-} from './src/utilities/index';
-import {
-    runBuild,
-    runHelp
-} from './src/commands/index';
+import { SolidusException } from '../exceptions/solidus.exception';
+import { CommandStatus } from "../utilities/command-status.enum";
+import { MessageFormatter } from '../utilities/message-formatter';
+import { runBuild } from './solidus-build';
+import container from '../utilities/container';
 
-const runCli = async (): Promise<number> => {
-    // determine which command to run.
-    const [node, app, ...args] = Process.argv;
-    const cmd = args[0];
+/**
+ * runStart()
+ * 
+ * starts the server.
+ */
 
-    if (cmd === CommandArgs.build) {
-        return await runBuild();
+export const runStart = async (): Promise<CommandStatus> => {
+    const executablePath = Path.FromSegments(Process.Cwd(), 'dist/index.js');
+    const fmt = container.get(MessageFormatter);
+
+    if (!await FileSystem.Contains(executablePath)) {
+        // not yet built. Build the app
+        const buildStatus = await runBuild();
+        
+        if (buildStatus === CommandStatus.Error) {
+            return buildStatus;
+        }
     }
-    else if (cmd === CommandArgs.dev) {
-        // run the Dev command.
-        return 1;
+
+    try {
+        // start the application.
+        console.log(fmt.message('Starting application...'));
+        await Process.Exec(`node ${executablePath.toString()}`, {
+            cwd: Process.Cwd().toString(),
+        });
     }
-    else if (cmd == CommandArgs.start) {
-        // run the app
-        return 1;
-    }
-    else if ((cmd == CommandArgs.help) || (cmd == '')) {
-        return await runHelp();
-    }
-    else {
-        DIContainer.get(Logger).error('Error: Invalid command.');
+    catch(e) {
+        const error = new SolidusException((e as Error).message);
+        console.log(fmt.buildError(error));
         return CommandStatus.Error;
     }
-}
 
-runCli();
+    return CommandStatus.Success;
+}

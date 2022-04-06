@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
 BSD 2-Clause License
 
@@ -28,41 +26,40 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import { Process } from '@swindle/os';
+import { DateTime } from '@swindle/core';
 import {
-    CommandArgs,
-    CommandStatus,
-    DIContainer,
-    Logger,
-} from './src/utilities/index';
-import {
-    runBuild,
-    runHelp
-} from './src/commands/index';
+   CommandType,
+   CommandStatus,
+   DIContainer,
+   Logger,
+} from './../utilities/index';
 
-const runCli = async (): Promise<number> => {
-    // determine which command to run.
-    const [node, app, ...args] = Process.argv;
-    const cmd = args[0];
+/**
+ * runHelp()
+ * 
+ * Executes the help command.
+ * @returns CommandStatus that represents the command status.
+ */
 
-    if (cmd === CommandArgs.build) {
-        return await runBuild();
-    }
-    else if (cmd === CommandArgs.dev) {
-        // run the Dev command.
-        return 1;
-    }
-    else if (cmd == CommandArgs.start) {
-        // run the app
-        return 1;
-    }
-    else if ((cmd == CommandArgs.help) || (cmd == '')) {
-        return await runHelp();
-    }
-    else {
-        DIContainer.get(Logger).error('Error: Invalid command.');
-        return CommandStatus.Error;
-    }
+export const runHelp: CommandType = async () => {
+   const logger = DIContainer.get(Logger);
+
+   const helpMessage = `
+   
+      SolidusJS CLI
+      Usage:               solidus <command>
+      -v                   Displays the current version of SolidusJS being run.
+      -h                   Shows this help message.
+
+      Commands
+         build             Builds the application for production.
+         dev               Starts the application in Development Mode.
+         start             Starts the application in production.
+      
+      © ${DateTime.Now().year()} Perivel LLC. All rights reserved.
+
+   `;
+
+   logger.info(helpMessage);
+   return CommandStatus.Success;
 }
-
-runCli();

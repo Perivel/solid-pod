@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
 BSD 2-Clause License
 
@@ -28,41 +26,48 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+/**
+ * The runBuild command runs the application build process.
+ */
+
+import { buildApp } from '@solidusjs/utilities';
 import { Process } from '@swindle/os';
+import { Path } from '@swindle/filesystem';
 import {
-    CommandArgs,
-    CommandStatus,
     DIContainer,
     Logger,
-} from './src/utilities/index';
-import {
-    runBuild,
-    runHelp
-} from './src/commands/index';
+    CommandStatus,
+    CommandType
+} from './../utilities/index';
 
-const runCli = async (): Promise<number> => {
-    // determine which command to run.
-    const [node, app, ...args] = Process.argv;
-    const cmd = args[0];
+/**
+ * runBuild()
+ * 
+ * Runs the application build process.
+ */
 
-    if (cmd === CommandArgs.build) {
-        return await runBuild();
+export const runBuild: CommandType = async () => {
+    const root = Process.Cwd();
+    const logger = DIContainer.get(Logger);
+    try {
+        await buildApp({
+            root: root,
+            assetsDir: Path.FromSegments(root, 'src/assets/**/**'),
+            clientEntryPoint: Path.FromSegments(root, 'src/client.ts'),
+            outputDir: Path.FromSegments(root, 'dist'),
+            serverEntryPoint: Path.FromSegments(root, 'src/server.ts'),
+            onBeforeRollup: async () => {
+                logger.info('Building your application bundle.')
+            },
+            onGenerate: async () => {
+                logger.info('Successfully created your application bundle.');
+            }
+        });
+        return CommandStatus.Success;
     }
-    else if (cmd === CommandArgs.dev) {
-        // run the Dev command.
-        return 1;
-    }
-    else if (cmd == CommandArgs.start) {
-        // run the app
-        return 1;
-    }
-    else if ((cmd == CommandArgs.help) || (cmd == '')) {
-        return await runHelp();
-    }
-    else {
-        DIContainer.get(Logger).error('Error: Invalid command.');
+    catch(e) {
+        const error = e as Error;
+        logger.error(error.message);
         return CommandStatus.Error;
     }
 }
-
-runCli();

@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
 BSD 2-Clause License
 
@@ -28,41 +26,54 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import { Process } from '@swindle/os';
-import {
-    CommandArgs,
-    CommandStatus,
-    DIContainer,
-    Logger,
-} from './src/utilities/index';
-import {
-    runBuild,
-    runHelp
-} from './src/commands/index';
+import { DateTime } from '@swindle/core';
+import chalk from 'chalk';
+import { LoggerInterface } from './logger.interface';
 
-const runCli = async (): Promise<number> => {
-    // determine which command to run.
-    const [node, app, ...args] = Process.argv;
-    const cmd = args[0];
+export class Logger implements LoggerInterface {
 
-    if (cmd === CommandArgs.build) {
-        return await runBuild();
+    constructor() {
+        //
     }
-    else if (cmd === CommandArgs.dev) {
-        // run the Dev command.
-        return 1;
+
+    /**
+     * info()
+     * 
+     * logs an info message.
+     * @param message the message to log.
+     */
+
+    public info(message: string): void {
+        const msg = this.formatMessage(message);
+        console.log(chalk.green(msg));
     }
-    else if (cmd == CommandArgs.start) {
-        // run the app
-        return 1;
+
+    /**
+     * error()
+     * 
+     * logs an error.
+     * @param message the message to post.
+     */
+
+    public error(message: string): void {
+        const msg = this.formatMessage(message);
+        console.log(chalk.red(msg));
     }
-    else if ((cmd == CommandArgs.help) || (cmd == '')) {
-        return await runHelp();
+
+    /**
+     * warn()
+     * 
+     * logs a warning.
+     * @param message the message to log.
+     */
+
+    public warn(message: string): void {
+        const msg = this.formatMessage(message);
+        console.log(chalk.yellow(msg));
     }
-    else {
-        DIContainer.get(Logger).error('Error: Invalid command.');
-        return CommandStatus.Error;
+
+    private formatMessage(message: string): string {
+        const now = DateTime.Now();
+        return `[${now.year()}-${now.month()}-${now.day()}] ${message.trim()}`;
     }
 }
-
-runCli();
