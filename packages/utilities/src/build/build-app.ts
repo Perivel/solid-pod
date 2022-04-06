@@ -226,7 +226,14 @@ export const loadBuildConfigurationOptions = (
     clientEntryFilePath: Path,
     assetsFilePath: Path,
 ): RollupOptions[] => {
-    const externals = [...deps, ...devDeps];
+    const externals = [
+        ...deps, 
+        ...devDeps,
+        '@solidusjs/core',
+        '@solidusjs/client',
+        '@solidusjs/server',
+        '@solidusjs/utilities'
+    ];
     const fmt = container.get(StringFormatter);
 
     const globals = {};

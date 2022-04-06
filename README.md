@@ -8,13 +8,12 @@ Solidus is a plug-and-play Server-Side Rendering solution for SolidJS. With Soli
 ## Installation
 To install Solidus, add the dependencies with NPM:
 ```
-npm i @solidusjs/core @solidusjs/client @solidusjs/server
+npm i @solidusjs/solidus
 ```
 or with Yarn:
 ```
-yarn add @solidusjs/core @solidusjs/client @solidusjs/server
+yarn add @solidusjs/solidus
 ```
-SolidusJS consists of three major components. @solidusjs/core consists of the core functionalities of the primary functionalities of the library. @solidusjs/client consists of the client-specific functionalities. And, finally, @solidusjs/server contains the server-side functionalities. As of v1, these capabilities are split into separate packages. This may change in a future version.
 
 ## Concepts
 Solidus is made up of three concepts: Applications, Views, and Layouts. 
