@@ -42,10 +42,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@solidusjs/client": "^1.0.3",
-    "@solidusjs/core": "^1.0.2",
-    "@solidusjs/server": "^1.0.3",
-    "@solidusjs/utilities": "^1.0.0",
+    "@solidusjs/client": "^1.0.4",
+    "@solidusjs/core": "^1.0.3",
+    "@solidusjs/server": "^1.0.4",
+    "@solidusjs/utilities": "^1.0.1",
     "@swindle/container": "^1.0.1",
     "@swindle/core": "^2.1.1",
     "@swindle/filesystem": "^1.0.8",
