@@ -32,11 +32,11 @@
   "exports": {
     ".": {
       "browser": {
-        "import": "./dist/browser.js",
-        "require": "./dist/browser.js"
+        "import": "./dist/index.js",
+        "require": "./dist/index.js"
       },
-      "import": "./dist/browser.js",
-      "require": "./dist/browser.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
     }
   },
   "publishConfig": {

@@ -1,0 +1,1 @@
+import{hydrate as e,createComponent as o}from"solid-js/web";const t=(t,r)=>{const n={server:{port:r.port,debug:"development"===r.env,url:"/"}};return e((()=>o(t,{context:n})),document)};export{t as runClient};

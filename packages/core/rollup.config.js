@@ -48,19 +48,18 @@ export default [
     {
         input: resolve(__dirname, "index.ts"),
         treeshake: false,
-        preserveEntrySignatures: false,
+        preserveEntrySignatures: true,
         external: externals,
         output: [
             {
                 format: "esm",
                 file: resolve("dist/browser.js"),
-                sourcemap: true,
                 globals: globals,
             },
         ],
         plugins: [
             del({
-                targets: ['./dist/*']
+                targets: ['./dist']
             }),
             nodePolyfillPlugin(),
             nodeResolve({
@@ -70,9 +69,7 @@ export default [
                 exclude: ['node_modules/**'],
             }),
             typescriptPlugin(tsPluginOptions),
-            commonjs({
-                include: ['node_modules/**'],
-            }),
+            commonjs(),
             babel({
                 extensions: [".js", '.jsx', ".ts", ".tsx"],
                 babelHelpers: "bundled",
@@ -92,7 +89,7 @@ export default [
     {
         input: resolve(__dirname, "index.ts"),
         treeshake: false,
-        preserveEntrySignatures: false,
+        preserveEntrySignatures: true,
         external: externals,
         output: [
             {
@@ -110,9 +107,7 @@ export default [
                 exportConditions: ["solid"]
             }),
             typescriptPlugin(tsPluginOptions),
-            commonjs({
-                include: ['node_modules/**'],
-            }),
+            commonjs(),
             babel({
                 extensions: [".js", '.jsx', ".ts", ".tsx"],
                 babelHelpers: "bundled",

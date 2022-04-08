@@ -32,11 +32,11 @@
   "exports": {
     ".": {
       "node": {
-        "import": "./dist/server.js",
-        "require": "./dist/server.js"
+        "import": "./dist/index.js",
+        "require": "./dist/index.js"
       },
-      "import": "./dist/server.js",
-      "require": "./dist/server.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
     }
   },
   "publishConfig": {

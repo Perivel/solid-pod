@@ -8,6 +8,7 @@ import nodeResolve from "@rollup/plugin-node-resolve";
 import babel from "@rollup/plugin-babel";
 import commonjs from '@rollup/plugin-commonjs';
 import { dependencies, devDependencies } from './package.json';
+import del from 'rollup-plugin-delete';
 
 const deps = Object.keys(dependencies);
 
@@ -45,16 +46,19 @@ export default [
     {
         input: resolve(__dirname, "index.ts"),
         treeshake: false,
-        preserveEntrySignatures: false,
+        preserveEntrySignatures: true,
         external: externals,
         output: [
             {
                 format: "esm",
-                file: resolve("dist/browser.js"),
+                file: resolve("dist/index.js"),
                 globals: globals,
             },
         ],
         plugins: [
+            del({
+                targets: ['dist']
+            }),
             nodePolyfillPlugin(),
             nodeResolve({
                 extensions: [".js", ".jsx", ".ts", ".tsx"],
@@ -63,13 +67,14 @@ export default [
                 exportConditions: ["solid"]
             }),
             typescriptPlugin(tsPluginOptions),
-            commonjs({
-                include: ['node_modules/**'],
-            }),
+            commonjs(),
             babel({
                 extensions: [".js", '.jsx', ".ts", ".tsx"],
                 babelHelpers: "bundled",
-                presets: [["solid", { generate: "dom", hydratable: true }], "@babel/preset-typescript"],
+                presets: [
+                    ["solid", { generate: "dom", hydratable: true }], 
+                    "@babel/preset-typescript"
+                ],
                 exclude: ["node_modules/**"],
             }),
             jsonPlugin(),

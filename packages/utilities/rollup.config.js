@@ -42,7 +42,7 @@ export default [
     {
         input: resolve(__dirname, "index.ts"),
         treeshake: false,
-        preserveEntrySignatures: false,
+        preserveEntrySignatures: true,
         external: externals,
         output: [
             {
@@ -53,19 +53,16 @@ export default [
         ],
         plugins: [
             del({
-                targets: ['./dist/*']
+                targets: ['./dist']
             }),
             nodePolyfillPlugin(),
             nodeResolve({
                 extensions: [".js", ".jsx", ".ts", ".tsx"],
                 ignoreGlobals: false,
                 exclude: ['node_modules/**'],
-                exportConditions: ["solid"]
             }),
             typescriptPlugin(tsPluginOptions),
-            commonjs({
-                include: ['node_modules/**'],
-            }),
+            commonjs(),
             jsonPlugin(),
             terser({
                 format: {
