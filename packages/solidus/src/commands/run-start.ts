@@ -26,39 +26,53 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import { DateTime } from '@swindle/core';
+import { Process } from '@swindle/os';
+import { Path, FileSystem } from '@swindle/filesystem';
 import {
-   CommandType,
-   CommandStatus,
-   DIContainer,
-   Logger,
+    CommandType,
+    CommandStatus,
+    DIContainer,
+    Logger,
 } from './../utilities/index';
+import { runBuild } from './run-build';
+import { SolidusException } from '@solidusjs/utilities';
 
 /**
- * runHelp()
+ * runStart()
  * 
- * Executes the help command.
+ * starts the application.
  * @returns CommandStatus that represents the command status.
  */
 
-export const runHelp: CommandType = async () => {
-   const logger = DIContainer.get(Logger);
+export const runStart: CommandType = async () => {
+    const logger = DIContainer.get(Logger);
+    const root = Process.Cwd();
+    const serverEntry = Path.FromSegments(root, 'dist/index.js');
 
-   const helpMessage = `
-      SolidusJS CLI
-      Usage:               solidus <command>
-      -v                   Displays the current version of SolidusJS being run.
-      -h                   Shows this help message.
+    if (!await FileSystem.Contains(serverEntry)) {
+        // The application has not yet been built.
+        // Build the application.
+        logger.info('Building your application...')
+        const buildStatus = await runBuild();
 
-      Commands
-         build             Builds the application for production.
-         dev               Starts the application in Development Mode.
-         start             Starts the application in production.
-      
-      © ${DateTime.Now().year()} Perivel LLC. All rights reserved.
+        if (buildStatus === CommandStatus.Error) {
+            return buildStatus;
+        }
+        logger.info('Successfully built application.');
+    }
 
-   `;
-
-   logger.info('\n' + helpMessage);
-   return CommandStatus.Success;
+    // run the application in production mode.
+    try {
+        logger.info('Starting Application...');
+        await Process.Exec(`node ${serverEntry.toString()}`, {
+            cwd: root.toString(),
+        });
+    }
+    catch(e) {
+        const error = e as Error;
+        logger.error(error.message);
+        return CommandStatus.Error;
+    }
+    
+    return CommandStatus.Success;
 }

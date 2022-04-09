@@ -29,3 +29,5 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // The commands module
 export * from './run-build';
 export * from './run-help';
+export * from './run-version';
+export * from './run-start';

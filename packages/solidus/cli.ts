@@ -37,7 +37,9 @@ import {
 } from './src/utilities/index';
 import {
     runBuild,
-    runHelp
+    runHelp,
+    runStart,
+    runVersion
 } from './src/commands/index';
 
 const runCli = async (): Promise<number> => {
@@ -54,10 +56,13 @@ const runCli = async (): Promise<number> => {
     }
     else if (cmd == CommandArgs.start) {
         // run the app
-        return 1;
+        return await runStart();
     }
     else if ((cmd == CommandArgs.help) || (cmd == '')) {
         return await runHelp();
+    }
+    else if (cmd === CommandArgs.version) {
+        return await runVersion();
     }
     else {
         DIContainer.get(Logger).error('Invalid command.');

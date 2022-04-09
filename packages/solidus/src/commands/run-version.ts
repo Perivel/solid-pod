@@ -26,39 +26,23 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import { DateTime } from '@swindle/core';
 import {
-   CommandType,
-   CommandStatus,
-   DIContainer,
-   Logger,
+    CommandType,
+    CommandStatus,
+    DIContainer,
+    Logger,
 } from './../utilities/index';
+import { version } from './../../package.json';
 
 /**
- * runHelp()
+ * runVersion()
  * 
- * Executes the help command.
+ * Executes the version command.
  * @returns CommandStatus that represents the command status.
  */
 
-export const runHelp: CommandType = async () => {
-   const logger = DIContainer.get(Logger);
-
-   const helpMessage = `
-      SolidusJS CLI
-      Usage:               solidus <command>
-      -v                   Displays the current version of SolidusJS being run.
-      -h                   Shows this help message.
-
-      Commands
-         build             Builds the application for production.
-         dev               Starts the application in Development Mode.
-         start             Starts the application in production.
-      
-      © ${DateTime.Now().year()} Perivel LLC. All rights reserved.
-
-   `;
-
-   logger.info('\n' + helpMessage);
-   return CommandStatus.Success;
+export const runVersion: CommandType = async () => {
+    const logger = DIContainer.get(Logger);
+    logger.info(version);
+    return CommandStatus.Success;
 }
