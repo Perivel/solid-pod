@@ -51,7 +51,9 @@ export const runServer = (App: Application, config: Configuration, middleware: M
   const app = express();
 
   // set middleware
-  app.use(...middleware);
+  if (middleware.length > 0) {
+    app.use(...middleware);
+  }
 
   // register static assets
   app.use(express.static(join(__dirname, 'assets')));
@@ -97,10 +99,9 @@ export const runServer = (App: Application, config: Configuration, middleware: M
   // start the server.
   console.log("Starting app");
   app.listen(config.port, () => {
-    console.log(
-      `[${DateTime.Now().toString()}]: Application successfully running on ${
-        config.host
-      }:${config.port}`
-    );
+    const message = `[${DateTime.Now().toString()}]: Application successfully running on ${config.host}:${config.port}`;
+    console.log(message);
+  }).on('error', (e) => {
+    throw e;
   });
 }

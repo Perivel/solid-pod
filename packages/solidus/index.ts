@@ -27,6 +27,3 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 // the Solidus library API
-export * from '@solidusjs/core';
-export * from '@solidusjs/client';
-export * from '@solidusjs/server';
