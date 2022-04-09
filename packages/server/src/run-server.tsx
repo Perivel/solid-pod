@@ -27,14 +27,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 import { DateTime } from '@swindle/core';
+import { Process } from '@swindle/os';
+import { Path } from '@swindle/filesystem';
 import express from 'express';
-import { join } from 'path';
 import { 
     renderToString, 
     renderToStringAsync,
     renderToStream,
 } from 'solid-js/web';
-import { Application, Configuration, RenderContext } from '@solidusjs/core';
+import {
+  Application, 
+  Configuration, 
+  RenderContext
+} from '@solidusjs/core';
 import { Middleware } from './middleware';
 
 /**
@@ -56,7 +61,7 @@ export const runServer = (App: Application, config: Configuration, middleware: M
   }
 
   // register static assets
-  app.use(express.static(join(__dirname, 'assets')));
+  app.use(express.static(Path.FromSegments(Process.Cwd(), 'assets').toString()));
 
   // register the initial route.
   app.get("*", async (req, res) => {
@@ -91,6 +96,7 @@ export const runServer = (App: Application, config: Configuration, middleware: M
         }
         res.status(200).send(page);
       } catch (e) {
+        console.log((e as Error).message);
         res.status(500).send("Server Error");
       }
     }
@@ -98,10 +104,11 @@ export const runServer = (App: Application, config: Configuration, middleware: M
 
   // start the server.
   console.log("Starting app");
-  app.listen(config.port, () => {
-    const message = `[${DateTime.Now().toString()}]: Application successfully running on ${config.host}:${config.port}`;
-    console.log(message);
-  }).on('error', (e) => {
-    throw e;
-  });
+  app.listen(config.port)
+    .on('listening', () => {
+      console.log(`[${DateTime.Now().toString()}]: Application successfully running on ${config.host}:${config.port}`);
+    })
+    .on('error', (e) => {
+      throw e;
+    });
 }
