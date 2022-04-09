@@ -16,7 +16,7 @@ const deps = Object.keys(dependencies);
 const externals = [
     ...deps,
     ...Object.keys(devDependencies),
-    'solid-js/web'
+    //'solid-js/web'
 ];
 
 // core library globals.
@@ -25,7 +25,7 @@ const globals = {};
 deps.forEach(dep => {
     globals[dep] = fmt.camelCase(dep);
 });
-globals['solid-js/web'] = fmt.camelCase('solid-js/web');
+//globals['solid-js/web'] = fmt.camelCase('solid-js/web');
 
 const tsPluginOptions = {
     tsconfig: './tsconfig.json',

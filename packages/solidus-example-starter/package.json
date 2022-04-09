@@ -14,8 +14,6 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@solidusjs/client": "^1.0.3",
-    "@solidusjs/core": "^1.0.2",
-    "@solidusjs/server": "^1.0.3"
+    "@solidusjs/solidus": "^0.1.1"
   }
 }
