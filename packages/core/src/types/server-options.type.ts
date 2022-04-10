@@ -26,6 +26,11 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+export interface TagData {
+    tag: string;
+    props: Record<string, unknown>;
+}
+
 /**
  * ServerOptions
  * 
@@ -36,4 +41,5 @@ export interface ServerOptions {
     debug: boolean;
     port: number;
     url: string;
+    tags: TagData[]
 }

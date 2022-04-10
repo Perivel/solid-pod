@@ -26,25 +26,26 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import { DateTime } from '@swindle/core';
-import { Process } from '@swindle/os';
-import { Path } from '@swindle/filesystem';
-import express from 'express';
-import { 
-    renderToString, 
-    renderToStringAsync,
-    renderToStream,
-} from 'solid-js/web';
+import { DateTime } from "@swindle/core";
+import { Process } from "@swindle/os";
+import { Path } from "@swindle/filesystem";
+import express from "express";
+import {
+  renderToString,
+  renderToStringAsync,
+  renderToStream,
+} from "solid-js/web";
+import { renderTags } from "solid-meta";
 import {
   Application, 
   Configuration, 
-  RenderContext
-} from '@solidusjs/core';
-import { Middleware } from './middleware';
+  RenderContext 
+} from "@solidusjs/core";
+import { Middleware } from "./middleware";
 
 /**
  * runServer()
- * 
+ *
  * runs the application server.
  * @note THis function is intended to only run on the server.
  * @param App the application component to run.
@@ -52,7 +53,11 @@ import { Middleware } from './middleware';
  * @param middleware An array of Middleware to register.
  */
 
-export const runServer = (App: Application, config: Configuration, middleware: Middleware[] = []): void => {
+export const runServer = (
+  App: Application,
+  config: Configuration,
+  middleware: Middleware[] = []
+): void => {
   const app = express();
 
   // set middleware
@@ -61,7 +66,9 @@ export const runServer = (App: Application, config: Configuration, middleware: M
   }
 
   // register static assets
-  app.use(express.static(Path.FromSegments(Process.Cwd(), 'assets').toString()));
+  app.use(
+    express.static(Path.FromSegments(Process.Cwd(), "assets").toString())
+  );
 
   // register the initial route.
   app.get("*", async (req, res) => {
@@ -70,14 +77,13 @@ export const runServer = (App: Application, config: Configuration, middleware: M
         debug: config.env === "development",
         port: config.port,
         url: req.url,
+        tags: [],
       },
     };
 
     if (config.ssr === "stream") {
       // set up streaming ssr.
-      renderToStream(() => <App context={context} />).pipe(
-        res
-      );
+      renderToStream(() => <App context={context} />).pipe(res);
     } else {
       // the SSR configuration is set to either synchonous or asynchonous SSR.
       try {
@@ -85,16 +91,35 @@ export const runServer = (App: Application, config: Configuration, middleware: M
 
         if (config.ssr === "async") {
           // set up async ssr.
-          page = await renderToStringAsync(() => (
-            <App context={context} />
-          ));
+          page = await renderToStringAsync(() => <App context={context} />);
         } else {
           // set up standard ssr.
-          page = renderToString(() => (
-            <App context={context} />
-          ));
+          page = renderToString(() => <App context={context} />);
         }
-        res.status(200).send(page);
+        res.status(200).send(`
+        <!doctype html>
+        <html lang=${config.lang}>
+          <head>
+          <meta charset=${config.charset} />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+          />
+          <link
+            rel="shortcut icon"
+            type="image/ico"
+            href="/assets/favicon.ico"
+          />
+          <title>${config.title}</title>
+            ${renderTags(context.server.tags)}
+          </head>
+          <body>
+            <noscript>JavaScript is required to run this app.</noscript>
+            <div id="root">${page}</div>
+            <script type="module" src="js/index.js" async></script>
+          </body>
+        </html>
+        `);
       } catch (e) {
         console.log((e as Error).message);
         res.status(500).send("Server Error");
@@ -104,11 +129,16 @@ export const runServer = (App: Application, config: Configuration, middleware: M
 
   // start the server.
   console.log("Starting app");
-  app.listen(config.port)
-    .on('listening', () => {
-      console.log(`[${DateTime.Now().toString()}]: Application successfully running on ${config.host}:${config.port}`);
+  app
+    .listen(config.port)
+    .on("listening", () => {
+      console.log(
+        `[${DateTime.Now().toString()}]: Application successfully running on ${
+          config.host
+        }:${config.port}`
+      );
     })
-    .on('error', (e) => {
+    .on("error", (e) => {
       throw e;
     });
-}
+};

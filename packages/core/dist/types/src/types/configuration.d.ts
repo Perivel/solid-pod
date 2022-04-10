@@ -2,14 +2,14 @@
  * ENV
  *
  * ENV values
-*/
-export declare type ENV = 'development' | 'production';
+ */
+export declare type ENV = "development" | "production";
 /**
  * SSRMode
  *
  * The SSR mode to use.
  */
-export declare type SSRMode = 'sync' | 'stream' | 'async';
+export declare type SSRMode = "sync" | "stream" | "async";
 /**
  * Configuration
  *
@@ -17,11 +17,23 @@ export declare type SSRMode = 'sync' | 'stream' | 'async';
  */
 export interface Configuration {
     /**
+     * charset
+     *
+     * The character set. (i.e utf-8)
+     */
+    charset: string;
+    /**
      * host
      *
      * The server host
      */
     host: string;
+    /**
+     * lang
+     *
+     * The language to use. (i.e 'en')
+     */
+    lang: string;
     /**
      * port
      *
@@ -40,4 +52,10 @@ export interface Configuration {
      * the SSR mode to use.
      */
     ssr: SSRMode;
+    /**
+     * title
+     *
+     * A Default title to set.
+     */
+    title: string;
 }

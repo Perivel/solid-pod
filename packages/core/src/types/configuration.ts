@@ -28,56 +28,80 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
  * ENV
- * 
+ *
  * ENV values
-*/
+ */
 
-export type ENV = 'development' | 'production';
+export type ENV = "development" | "production";
 
 /**
  * SSRMode
- * 
+ *
  * The SSR mode to use.
  */
 
-export type SSRMode = 'sync' | 'stream' | 'async';
+export type SSRMode = "sync" | "stream" | "async";
 
 /**
  * Configuration
- * 
+ *
  * The Server Configuration.
  */
 
 export interface Configuration {
-    /**
-     * host
-     * 
-     * The server host
-     */
+  /**
+   * charset
+   *
+   * The character set. (i.e utf-8)
+   */
 
-    host: string;
+  charset: string;
 
-    /**
-     * port
-     * 
-     * the server port to listen to.
-     */
+  /**
+   * host
+   *
+   * The server host
+   */
 
-    port: number;
+  host: string;
 
-    /**
-     * env
-     * 
-     * The environment the server will run on.
-     */
+  /**
+   * lang
+   *
+   * The language to use. (i.e 'en')
+   */
 
-    env: ENV;
+  lang: string;
 
-    /**
-     * ssr
-     * 
-     * the SSR mode to use.
-     */
+  /**
+   * port
+   *
+   * the server port to listen to.
+   */
 
-    ssr: SSRMode;
+  port: number;
+
+  /**
+   * env
+   *
+   * The environment the server will run on.
+   */
+
+  env: ENV;
+
+  /**
+   * ssr
+   *
+   * the SSR mode to use.
+   */
+
+  ssr: SSRMode;
+
+  /**
+   * title
+   *
+   * A Default title to set.
+   */
+
+  title: string;
 }

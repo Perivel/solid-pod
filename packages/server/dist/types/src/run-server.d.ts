@@ -1,5 +1,5 @@
-import { Application, Configuration } from '@solidusjs/core';
-import { Middleware } from './middleware';
+import { Application, Configuration } from "@solidusjs/core";
+import { Middleware } from "./middleware";
 /**
  * runServer()
  *

@@ -5,12 +5,6 @@ import { LayoutComponent } from './layout-component.type';
 import { RenderContext } from './render-context.type';
 export interface ViewProps {
     /**
-     * charset
-     *
-     * The character set. Defaults to UTF-8
-     */
-    charset?: string;
-    /**
      * context
      *
      * the render context to use to create the application.
@@ -23,12 +17,6 @@ export interface ViewProps {
      * If index is omitted, be sure you have a '/' route in your routes.
      */
     index?: JSX.Element;
-    /**
-     * lang
-     *
-     * The language to use. Defaults to 'en'
-     */
-    lang?: string;
     /**
      * The layout of the application. If omitted, a default layout will be used.
      * You can define your own custom layout by creating a LayoutComponent
@@ -46,12 +34,6 @@ export interface ViewProps {
      * The Theme color.
      */
     themeColor?: Color | string;
-    /**
-     * title
-     *
-     * A Default title to set.
-     */
-    title?: string;
 }
 /**
  * ApplicationComponent

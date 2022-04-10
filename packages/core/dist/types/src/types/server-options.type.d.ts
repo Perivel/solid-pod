@@ -1,3 +1,7 @@
+export interface TagData {
+    tag: string;
+    props: Record<string, unknown>;
+}
 /**
  * ServerOptions
  *
@@ -7,4 +11,5 @@ export interface ServerOptions {
     debug: boolean;
     port: number;
     url: string;
+    tags: TagData[];
 }

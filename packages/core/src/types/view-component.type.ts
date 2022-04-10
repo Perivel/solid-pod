@@ -35,14 +35,6 @@ import { RenderContext } from './render-context.type';
 export interface ViewProps {
 
     /**
-     * charset
-     * 
-     * The character set. Defaults to UTF-8
-     */
-
-    charset?: string;
-
-    /**
      * context
      * 
      * the render context to use to create the application.
@@ -58,14 +50,6 @@ export interface ViewProps {
      */
 
     index?: JSX.Element;
-
-    /**
-     * lang
-     * 
-     * The language to use. Defaults to 'en'
-     */
-
-    lang?: string;
 
     /**
      * The layout of the application. If omitted, a default layout will be used.
@@ -89,14 +73,6 @@ export interface ViewProps {
      */
 
     themeColor?: Color|string;
-
-    /**
-     * title
-     * 
-     * A Default title to set.
-     */
-
-    title?: string;
 }
 
 /**

@@ -43,7 +43,8 @@ export const runClient = (App: Application, config: Configuration): () => void =
       server: {
         port: config.port,
         debug: config.env === "development",
-        url: '/'
+        url: '/',
+        tags: []
       },
     };
     return hydrate(() => <App context={context} />, document);

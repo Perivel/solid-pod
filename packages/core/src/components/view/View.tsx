@@ -27,7 +27,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 import { Router, useRoutes } from "solid-app-router";
-import { MetaProvider } from "solid-meta";
+import { MetaProvider, Meta } from "solid-meta";
 import { ViewComponent } from "../../types/view-component.type";
 import SolidusError from "../error/SolidusError";
 import DefaultLayout from "../layout/DefaultLayout";
@@ -46,8 +46,6 @@ import {
 const View: ViewComponent = (props) => {
   let routes = props.routes ? props.routes : [];
   const url = props.context.server.url;
-  const charset = props.charset ? props.charset : "utf-8";
-  const lang = props.lang ? props.lang : "en";
   let themeColor: string = "";
   let error: Error | null = null;
 
@@ -97,31 +95,10 @@ const View: ViewComponent = (props) => {
   const Layout = props.layout && !error ? props.layout : DefaultLayout;
 
   return (
-    <MetaProvider>
+    <MetaProvider tags={props.context.server.tags}>
+      <Meta name="theme-color" content={themeColor}/>
       <Router url={url}>
-        <html lang={lang}>
-          <head>
-            <meta charset={charset} />
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1"
-            />
-            <meta name="theme-color" content={themeColor} />
-            <link
-              rel="shortcut icon"
-              type="image/ico"
-              href="/assets/favicon.ico"
-            />
-            <title>{props.title}</title>
-          </head>
-          <body>
-            <noscript>JavaScript is required to run this app.</noscript>
-            <div>
-              <Layout content={<Content />} />
-            </div>
-            <script type="module" src="js/index.js" async></script>
-          </body>
-        </html>
+      <Layout content={<Content />} />
       </Router>
     </MetaProvider>
   );

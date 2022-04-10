@@ -2,6 +2,9 @@ import { runServer } from '@solidusjs/server';
 import { View } from '@solidusjs/core';
 
 var configuration = {
+  title: "SolidusJS",
+  charset: 'utf-8',
+  lang: 'en',
   env: 'production',
   host: 'localhost',
   port: 5000,

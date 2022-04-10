@@ -15,7 +15,8 @@ const deps = Object.keys(dependencies);
 // core library external dependencies.
 const externals = [
     ...deps,
-    ...Object.keys(devDependencies),
+    ...Object.keys(devDependencies),,
+    'child_process'
 ];
 
 // core library globals.
