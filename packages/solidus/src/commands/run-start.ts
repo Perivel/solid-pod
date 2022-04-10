@@ -28,6 +28,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import { Process } from '@swindle/os';
 import { Path, FileSystem } from '@swindle/filesystem';
+import { exec } from 'child_process';
 import {
     CommandType,
     CommandStatus,
@@ -64,9 +65,22 @@ export const runStart: CommandType = async () => {
     // run the application in production mode.
     try {
         logger.info('Starting Application...');
-        await Process.Exec(`node ${serverEntry.toString()}`, {
-            cwd: root.toString(),
-        });
+        // const outputStream = await Process.Exec(`node ${serverEntry.toString()}`, {
+        //     cwd: root.toString(),
+        // });
+        exec(`node ${serverEntry.toString()}`, (err, stdout, stderr) => {
+            if (err) {
+                throw new Error(err.message);
+            }
+
+            if (stdout) {
+                console.log("\n" + stdout + '\n');
+            }
+
+            if (stderr) {
+                console.log(`\n${stderr}\n`);
+            }
+        })
     }
     catch(e) {
         const error = e as Error;
