@@ -334,7 +334,8 @@ export const loadBuildConfigurationOptions = (
                 targets: [
                     { src: assetsFilePath.toString(), dest: 'dist/public' }
                 ],
-                hook: 'buildStart'
+                hook: 'buildStart',
+                verbose: true
             }),
         ],
         preserveEntrySignatures: false,
