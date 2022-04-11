@@ -333,7 +333,8 @@ export const loadBuildConfigurationOptions = (
             copy({
                 targets: [
                     { src: assetsFilePath.toString(), dest: 'dist/public' }
-                ]
+                ],
+                hook: 'buildStart'
             }),
         ],
         preserveEntrySignatures: false,

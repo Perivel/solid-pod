@@ -1,5 +1,6 @@
 import { runServer } from '@solidusjs/server';
 import { View } from '@solidusjs/core';
+import { createComponent } from 'solid-js';
 
 var configuration = {
   title: "SolidusJS",
@@ -12,21 +13,8 @@ var configuration = {
   ssr: 'async'
 };
 
-function untrack(fn) {
-  let result;
-  result = fn();
-  return result;
-}
-
-function createComponent(Comp, props) {
-
-  return untrack(() => Comp(props));
-}
-
 function ssr(template, ...nodes) {}
-
 function ssrHydrationKey() {}
-
 function escape(html) {}
 
 var e = [],
