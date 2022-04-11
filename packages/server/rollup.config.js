@@ -16,7 +16,8 @@ const deps = Object.keys(dependencies);
 const externals = [
     ...deps,
     ...Object.keys(devDependencies),
-    'solid-js/web'
+    'solid-js/web',
+    'path'
 ];
 
 // core library globals.

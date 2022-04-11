@@ -29,6 +29,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import { DateTime } from "@swindle/core";
 import { Process } from "@swindle/os";
 import { Path } from "@swindle/filesystem";
+import { join, dirname } from 'path';
 import express from "express";
 import {
   renderToString,
@@ -66,10 +67,7 @@ export const runServer = (
   }
 
   // register static assets
-  app.use('/public', express.static(Path.FromSegments(Process.Cwd(), '/public').toString(), {
-    fallthrough: false
-  }));
-  
+  app.use(express.static(Path.FromSegments(Process.Cwd(), 'public').toString()));
 
   // register the initial route.
   app.get("*", async (req, res) => {
@@ -117,7 +115,7 @@ export const runServer = (
           <body>
             <noscript>JavaScript is required to run this app.</noscript>
             <div id="root">${page}</div>
-            <script type="module" src="public/scripts/client.js" async></script>
+            <script type="module" src="scripts/client.js" async></script>
           </body>
         </html>
         `);

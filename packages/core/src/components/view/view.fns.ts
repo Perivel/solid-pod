@@ -37,7 +37,7 @@ import { Color } from '@swindle/color';
  */
 
 export const routesListContainsIndexRoute = (routes: RouteDefinition[]): boolean => {
-    return routes.some(route => route.path === '/');
+    return routes.some(route => route.path.trim() === '/');
 }
 
 /**
