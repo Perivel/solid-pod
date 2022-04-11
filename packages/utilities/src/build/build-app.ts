@@ -314,16 +314,14 @@ export const loadBuildConfigurationOptions = (
         ],
         external: externals,
         plugins: [
-            typescript(tsPluginOptions),
+            nodePolyfill(),
             nodeResolve({
                 preferBuiltins: true,
                 exportConditions: ["solid"],
                 extensions: [".js", ".jsx", ".ts", ".tsx"]
             }),
-            nodePolyfill(),
-            commonjs({
-                include: 'node_modules/**',
-            }),
+            typescript(tsPluginOptions),
+            commonjs(),
             babel({
                 babelHelpers: "bundled",
                 presets: [["solid", { generate: "dom", hydratable: true }]],
