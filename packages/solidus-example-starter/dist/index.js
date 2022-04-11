@@ -1,6 +1,7 @@
 import { runServer } from '@solidusjs/server';
+import { ssr, ssrHydrationKey, escape, createComponent } from 'solid-js/web';
 import { View } from '@solidusjs/core';
-import { createSignal, createComponent } from 'solid-js';
+import { createSignal } from 'solid-js';
 
 var configuration = {
   title: "SolidusJS",
@@ -13,9 +14,7 @@ var configuration = {
   ssr: 'async'
 };
 
-function ssr(template, ...nodes) {}
-function ssrHydrationKey() {}
-function escape(html) {}
+var img = "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 166 155.3'%3e%3cpath d='M163 35S110-4 69 5l-3 1c-6 2-11 5-14 9l-2 3-15 26 26 5c11 7 25 10 38 7l46 9 18-30z' fill='%2376b3e1'/%3e%3clinearGradient id='a' gradientUnits='userSpaceOnUse' x1='27.5' y1='3' x2='152' y2='63.5'%3e%3cstop offset='.1' stop-color='%2376b3e1'/%3e%3cstop offset='.3' stop-color='%23dcf2fd'/%3e%3cstop offset='1' stop-color='%2376b3e1'/%3e%3c/linearGradient%3e%3cpath d='M163 35S110-4 69 5l-3 1c-6 2-11 5-14 9l-2 3-15 26 26 5c11 7 25 10 38 7l46 9 18-30z' opacity='.3' fill='url(%23a)'/%3e%3cpath d='M52 35l-4 1c-17 5-22 21-13 35 10 13 31 20 48 15l62-21S92 26 52 35z' fill='%23518ac8'/%3e%3clinearGradient id='b' gradientUnits='userSpaceOnUse' x1='95.8' y1='32.6' x2='74' y2='105.2'%3e%3cstop offset='0' stop-color='%2376b3e1'/%3e%3cstop offset='.5' stop-color='%234377bb'/%3e%3cstop offset='1' stop-color='%231f3b77'/%3e%3c/linearGradient%3e%3cpath d='M52 35l-4 1c-17 5-22 21-13 35 10 13 31 20 48 15l62-21S92 26 52 35z' opacity='.3' fill='url(%23b)'/%3e%3clinearGradient id='c' gradientUnits='userSpaceOnUse' x1='18.4' y1='64.2' x2='144.3' y2='149.8'%3e%3cstop offset='0' stop-color='%23315aa9'/%3e%3cstop offset='.5' stop-color='%23518ac8'/%3e%3cstop offset='1' stop-color='%23315aa9'/%3e%3c/linearGradient%3e%3cpath d='M134 80a45 45 0 00-48-15L24 85 4 120l112 19 20-36c4-7 3-15-2-23z' fill='url(%23c)'/%3e%3clinearGradient id='d' gradientUnits='userSpaceOnUse' x1='75.2' y1='74.5' x2='24.4' y2='260.8'%3e%3cstop offset='0' stop-color='%234377bb'/%3e%3cstop offset='.5' stop-color='%231a336b'/%3e%3cstop offset='1' stop-color='%231a336b'/%3e%3c/linearGradient%3e%3cpath d='M114 115a45 45 0 00-48-15L4 120s53 40 94 30l3-1c17-5 23-21 13-34z' fill='url(%23d)'/%3e%3c/svg%3e";
 
 var e = [],
     t = [];
@@ -50,7 +49,7 @@ const _tmpl$ = ["<div", " class=\"", "\"><header class=\"", "\"><img src=\"", "\
 
 const App = () => {
   const [counter, setCounter] = createSignal(0);
-  return ssr(_tmpl$, ssrHydrationKey(), escape(), escape(), escape(), escape(), escape(counter()));
+  return ssr(_tmpl$, ssrHydrationKey(), escape(css.App, true), escape(css.header, true), escape(img, true), escape(css.logo, true), escape(counter()));
 };
 
 const MyApp = props => {

@@ -5,7 +5,6 @@
  */
 import { VoidAsyncFn } from '@swindle/core';
 import { Path } from '@swindle/filesystem';
-import { RollupOptions } from 'rollup';
 /**
  * BuildOptions
  *
@@ -22,16 +21,6 @@ export interface BuildOptions {
     onBeforeGenerate?: VoidAsyncFn;
     onGenerate?: VoidAsyncFn;
 }
-/**
- * loadBuildConfigurationOptions()
- *
- * loads the configuration options for building the application.
- * @param deps the project dependencies.
- * @param devDeps the development dependencies.
- * @param root The project root directory.
- * @returns A RollupOptions instance with the appropriate config settigs.
- */
-export declare const loadBuildConfigurationOptions: (tsconfigOptions: object, deps: string[], devDeps: string[], root: Path, outputDir: Path, serverEntryFilePath: Path, clientEntryFilePath: Path, assetsFilePath: Path) => RollupOptions[];
 /**
  * buildApp()
  *

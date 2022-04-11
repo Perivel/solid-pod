@@ -217,7 +217,7 @@ const loadDependenciesList = async (root: Path = Process.Cwd()): Promise<{ deps:
  * @returns A RollupOptions instance with the appropriate config settigs.
  */
 
-export const loadBuildConfigurationOptions = (
+const loadBuildConfigurationOptions = (
     tsconfigOptions: object, 
     deps: string[], 
     devDeps: string[], 
@@ -237,12 +237,14 @@ export const loadBuildConfigurationOptions = (
     ];
     const fmt = container.get(StringFormatter);
 
-    const globals = {};
+    const globals: Record<string, string> = {};
     deps.forEach(dep => {
-        Object.defineProperty(globals, dep, {
-            value: fmt.camelCase(dep)
-        })
+        globals[dep] = fmt.camelCase(dep);
     });
+    globals['@solidusjs/core'] = fmt.camelCase('@solidusjs/core');
+    globals['@solidusjs/client'] = fmt.camelCase('@solidusjs/client');
+    globals['@solidusjs/server'] = fmt.camelCase('@solidusjs/server');
+    globals['@solidusjs/utilities'] = fmt.camelCase('@solidusjs/utilities');
 
     const tsConfigOverrides = {
         declaration: true,
@@ -278,6 +280,8 @@ export const loadBuildConfigurationOptions = (
                 exportConditions: ["solid"],
                 extensions: [".js", ".jsx", ".ts", ".tsx"],
                 mainFields: ['main', 'module', 'browser', 'exports'],
+                rootDir: root.toString(),
+                moduleDirectories: [Path.FromSegments(root, 'src').toString()]
             }),
             typescript(tsPluginOptions),
             commonjs(),
@@ -312,13 +316,15 @@ export const loadBuildConfigurationOptions = (
                 globals: globals,
             },
         ],
-        external: externals,
+        //external: externals,
         plugins: [
             nodePolyfill(),
             nodeResolve({
                 preferBuiltins: true,
                 exportConditions: ["solid"],
-                extensions: [".js", ".jsx", ".ts", ".tsx"]
+                extensions: [".js", ".jsx", ".ts", ".tsx"],
+                moduleDirectories: [Path.FromSegments(root, 'src').toString()],
+                rootDir: root.toString()
             }),
             typescript(tsPluginOptions),
             commonjs(),
