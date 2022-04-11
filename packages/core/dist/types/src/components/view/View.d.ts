@@ -1,4 +1,4 @@
-import { ViewComponent } from "../../types/view-component.type";
+import { ViewComponent } from "../../types/index";
 /**
  * View
  *

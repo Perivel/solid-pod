@@ -1,6 +1,6 @@
 import { runServer } from '@solidusjs/server';
 import { View } from '@solidusjs/core';
-import { createComponent } from 'solid-js';
+import { createSignal, createComponent } from 'solid-js';
 
 var configuration = {
   title: "SolidusJS",
@@ -46,10 +46,11 @@ function n(n, r) {
 var css = ".App {\n  text-align: center;\n}\n\n.logo {\n  animation: logo-spin infinite 20s linear;\n  height: 40vmin;\n  pointer-events: none;\n}\n\n.header {\n  background-color: #282c34;\n  min-height: 100vh;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  font-size: calc(10px + 2vmin);\n  color: white;\n}\n\n.link {\n  color: #b318f0;\n}\n\n@keyframes logo-spin {\n  from {\n    transform: rotate(0deg);\n  }\n  to {\n    transform: rotate(360deg);\n  }\n}\n";
 n(css,{});
 
-const _tmpl$ = ["<div", " class=\"", "\"><header class=\"", "\"><img src=\"", "\" class=\"", "\" alt=\"logo\"><p>Edit <code>src/App.tsx</code> and save to reload.</p><a class=\"", "\" href=\"https://github.com/solidjs/solid\" target=\"_blank\" rel=\"noopener noreferrer\">Learn Solid</a></header></div>"];
+const _tmpl$ = ["<div", " class=\"", "\"><header class=\"", "\"><img src=\"", "\" class=\"", "\" alt=\"logo\"><p>", "</p><button>+</button><button>-</button></header></div>"];
 
 const App = () => {
-  return ssr(_tmpl$, ssrHydrationKey(), escape(), escape(), escape(), escape(), escape());
+  const [counter, setCounter] = createSignal(0);
+  return ssr(_tmpl$, ssrHydrationKey(), escape(), escape(), escape(), escape(), escape(counter()));
 };
 
 const MyApp = props => {

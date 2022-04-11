@@ -29,7 +29,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import { DateTime } from "@swindle/core";
 import { Process } from "@swindle/os";
 import { Path } from "@swindle/filesystem";
-import { join, dirname } from 'path';
+import { join } from 'path';
 import express from "express";
 import {
   renderToString,
@@ -67,7 +67,9 @@ export const runServer = (
   }
 
   // register static assets
-  app.use(express.static(Path.FromSegments(Process.Cwd(), 'public').toString()));
+  const publicPath = join(process.cwd(), '/dist/public');
+  console.log('Setting asset path to: ' + publicPath);
+  app.use(express.static(publicPath));
 
   // register the initial route.
   app.get("*", async (req, res) => {
@@ -129,14 +131,7 @@ export const runServer = (
   // start the server.
   console.log("Starting app");
   app
-    .listen(config.port)
-    .on("listening", () => {
-      console.log(
-        `[${DateTime.Now().toString()}]: Application successfully running on ${
-          config.host
-        }:${config.port}`
-      );
-    })
+    .listen(config.port, () => console.log(`[${DateTime.Now().toString()}]: Application successfully running on ${config.host}:${config.port}`))
     .on("error", (e) => {
       throw e;
     });

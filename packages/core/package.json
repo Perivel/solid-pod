@@ -1,6 +1,6 @@
 {
   "name": "@solidusjs/core",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "The core library for SolidusJS - a plug-and-play Server-Side Rendering solution for SolidJS",
   "info": "An easy plug and play solution for incorporating Server-Side Rendering to any existing SolidJS application with minimal refactoring of your codebase. This package contains the core elements",
   "types": "./dist/types/index.d.ts",

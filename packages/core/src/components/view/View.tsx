@@ -28,7 +28,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import { Router, useRoutes } from "solid-app-router";
 import { MetaProvider, Meta } from "solid-meta";
-import { ViewComponent } from "../../types/view-component.type";
+import { ViewComponent } from "../../types/index";
 import SolidusError from "../error/SolidusError";
 import DefaultLayout from "../layout/DefaultLayout";
 import {
@@ -61,7 +61,7 @@ const View: ViewComponent = (props) => {
     // there is no index path in the routes array. So, we need to check if
     // the index prop is set so we can use that as the index route.
 
-    if (props.index) {
+    if (props.index != undefined) {
       // there is an index component. So, we can assign that as the index route.
       routes.push({
         path: "/",
