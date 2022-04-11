@@ -1,6 +1,6 @@
 {
   "name": "@solidusjs/server",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "The server library for SolidusJS - a plug-and-play Server-Side Rendering solution for SolidJS",
   "info": "An easy plug and play solution for incorporating Server-Side Rendering to any existing SolidJS application with minimal refactoring of your codebase. This package contains the server-side specific functionalities",
   "types": "./dist/types/index.d.ts",
@@ -43,7 +43,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@solidusjs/core": "^1.0.5",
+    "@solidusjs/core": "^1.0.6",
     "@swindle/core": "^2.1.1",
     "@swindle/filesystem": "^1.0.8",
     "@swindle/os": "^1.0.11",
