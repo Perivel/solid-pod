@@ -47,6 +47,7 @@ import {
     RollupBuild,
     RollupError,
 } from 'rollup';
+import { copy } from 'fs-extra';
 import { 
     SolidusException,
     SolidusBuildException,
@@ -57,7 +58,7 @@ import { babel } from "@rollup/plugin-babel";
 import json from "@rollup/plugin-json";
 import typescript from 'rollup-plugin-typescript2';
 import styles from 'rollup-plugin-styles';
-import copy from 'rollup-plugin-copy';
+// import copy from 'rollup-plugin-copy';
 import nodePolyfill from 'rollup-plugin-polyfill-node';
 import image from '@rollup/plugin-image';
 import commonjs from '@rollup/plugin-commonjs';
@@ -277,7 +278,6 @@ export const loadBuildConfigurationOptions = (
                 exportConditions: ["solid"],
                 extensions: [".js", ".jsx", ".ts", ".tsx"],
                 mainFields: ['main', 'module', 'browser', 'exports'],
-
             }),
             typescript(tsPluginOptions),
             commonjs(),
@@ -290,12 +290,14 @@ export const loadBuildConfigurationOptions = (
             json(),
             styles(),
             image(),
-            copy({
-                targets: [
-                    { src: assetsFilePath.toString(), dest: Path.FromSegments(root, 'dist/public').toString() }
-                ],
-                hook: 'buildStart'
-            }),
+            // this is not working for some reason.
+            // copy({
+            //     targets: [
+            //         { src: assetsFilePath.toString(), dest: Path.FromSegments(root, 'dist/public').toString() }
+            //     ],
+            //     hook: 'buildEnd',
+            //     verbose: true
+            // }),
         ],
         preserveEntrySignatures: false,
         treeshake: true,
@@ -305,7 +307,7 @@ export const loadBuildConfigurationOptions = (
         input: clientEntryFilePath.toString(),
         output: [
             {
-                file: Path.FromSegments(outputDir, 'public/js/index.js').toString(),
+                file: Path.FromSegments(outputDir, 'public/scripts/client.js').toString(),
                 format: 'esm',
                 globals: globals,
             },
@@ -331,12 +333,14 @@ export const loadBuildConfigurationOptions = (
             json(),
             styles(),
             image(),
-            copy({
-                targets: [
-                    { src: assetsFilePath.toString(), dest: Path.FromSegments(root, 'dist/public').toString() }
-                ],
-                hook: 'buildStart',
-            }),
+            // this is not working for some reason. Seems it cannot work in multi-part builds.
+            // copy({
+            //     targets: [
+            //         { src: assetsFilePath.toString(), dest: Path.FromSegments(root, 'dist/public').toString() }
+            //     ],
+            //     hook: 'buildEnd',
+            //     verbose: true
+            // }),
         ],
         preserveEntrySignatures: false,
         treeshake: true,
@@ -406,6 +410,11 @@ export const buildApp = async (options: BuildOptions = {}): Promise<void> => {
         for (let i = 0; i < len; i++) {
             await generateBundle(builds[i], rollupOptions[i]);
         }
+        // manually copy asset files
+        await copy(buildOptions.assetsDir!.toString(), Path.FromSegments(buildOptions.root!.toString(), 'dist/public').toString(), {
+            overwrite: true,
+            preserveTimestamps: true
+        });
         await buildOptions.onGenerate!();
     }
     catch (e) {

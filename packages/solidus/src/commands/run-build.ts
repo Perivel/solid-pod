@@ -52,7 +52,7 @@ export const runBuild: CommandType = async () => {
     try {
         await buildApp({
             root: root,
-            assetsDir: Path.FromSegments(root, 'src/assets/**/**'),
+            assetsDir: Path.FromSegments(root, 'src/assets/'),
             clientEntryPoint: Path.FromSegments(root, 'src/client.ts'),
             outputDir: Path.FromSegments(root, 'dist'),
             serverEntryPoint: Path.FromSegments(root, 'src/server.ts'),

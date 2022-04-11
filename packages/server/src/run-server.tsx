@@ -66,9 +66,10 @@ export const runServer = (
   }
 
   // register static assets
-  app.use(
-    express.static(Path.FromSegments(Process.Cwd(), "assets").toString())
-  );
+  app.use('/public', express.static(Path.FromSegments(Process.Cwd(), '/public').toString(), {
+    fallthrough: false
+  }));
+  
 
   // register the initial route.
   app.get("*", async (req, res) => {
@@ -116,7 +117,7 @@ export const runServer = (
           <body>
             <noscript>JavaScript is required to run this app.</noscript>
             <div id="root">${page}</div>
-            <script type="module" src="js/index.js" async></script>
+            <script type="module" src="public/scripts/client.js" async></script>
           </body>
         </html>
         `);
