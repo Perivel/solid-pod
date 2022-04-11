@@ -292,8 +292,9 @@ export const loadBuildConfigurationOptions = (
             image(),
             copy({
                 targets: [
-                    { src: assetsFilePath.toString(), dest: 'dist/public' }
-                ]
+                    { src: assetsFilePath.toString(), dest: Path.FromSegments(root, 'dist/public').toString() }
+                ],
+                hook: 'buildStart'
             }),
         ],
         preserveEntrySignatures: false,
@@ -332,10 +333,9 @@ export const loadBuildConfigurationOptions = (
             image(),
             copy({
                 targets: [
-                    { src: assetsFilePath.toString(), dest: 'dist/public' }
+                    { src: assetsFilePath.toString(), dest: Path.FromSegments(root, 'dist/public').toString() }
                 ],
                 hook: 'buildStart',
-                verbose: true
             }),
         ],
         preserveEntrySignatures: false,

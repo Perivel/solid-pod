@@ -96,10 +96,10 @@ const MyApp = props => {
       return props.context;
     },
 
-    get index() {
-      return createComponent(App, {});
-    }
-
+    routes: [{
+      path: '/',
+      component: App
+    }]
   });
 };
 

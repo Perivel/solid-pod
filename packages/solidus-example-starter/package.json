@@ -4,17 +4,16 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "start": "",
-    "dev": "vite",
-    "build": "solidus build",
-    "serve": "vite preview"
+    "start": "solidus start",
+    "dev": "solidus dev",
+    "build": "solidus build"
   },
   "license": "MIT",
   "devDependencies": {
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@solidusjs/solidus": "^0.1.8",
+    "@solidusjs/solidus": "^0.1.9",
     "solid-js": "^1.3.14"
   }
 }

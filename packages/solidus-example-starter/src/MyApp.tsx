@@ -4,7 +4,13 @@ import App from "./App";
 const MyApp: Application = (props) => {
     return <View
         context={props.context}
-        index={<App />} 
+        //index={<App />}
+        routes={[
+            {
+                path: '/',
+                component: App
+            }
+        ]}
     />;
 }
 
