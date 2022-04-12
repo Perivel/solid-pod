@@ -3,7 +3,7 @@
 
 Solidus is a plug-and-play Server-Side Rendering solution for SolidJS. With Solidus, you can easily add Server-Side Rendering to any existing SolidJS application with minimal effort.
 
-> **Note**: Solidus is still in development and not yet ready for production. Use at your own risk.
+> **Note**: SolidusJS is still under development. Some features may not work yet.
 
 ## Installation
 To install Solidus, add the dependencies with NPM:
@@ -89,4 +89,6 @@ runClient(MyApp, config);
 ```
 The client entry point is very similar to the server entry point. The `runClient()` function renders your application on the client side, similar to a regular SolidJS application.
 
-With the client and server entry points defined, we can now run our application by running `solidus start`. The built-in `solidus start` command will build and run our Solidus application, using the configuation settings you provided.
+With the client and server entry points defined, we can now build our application by running `solidus build`. The built-in `solidus build` command will build our Solidus application, using the configuation settings you provided. Once it is built, we can start the application by running `solidus start`.
+
+You can find a demo [here](https://github.com/Perivel/solidus-demo).

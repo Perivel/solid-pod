@@ -47,6 +47,13 @@ export interface Configuration {
      */
     env: ENV;
     /**
+     * style
+     *
+     * The root stylesheet of the application, from the public directory.
+     * This must be a .css file.
+     */
+    style: string;
+    /**
      * ssr
      *
      * the SSR mode to use.

@@ -68,7 +68,6 @@ export const runServer = (
 
   // register static assets
   const publicPath = join(process.cwd(), '/dist/public');
-  console.log('Setting asset path to: ' + publicPath);
   app.use(express.static(publicPath));
 
   // register the initial route.
@@ -101,6 +100,7 @@ export const runServer = (
         <!doctype html>
         <html lang=${config.lang}>
           <head>
+          <link rel="stylesheet" href="${config.style}" />
           <meta charset=${config.charset} />
           <meta
             name="viewport"

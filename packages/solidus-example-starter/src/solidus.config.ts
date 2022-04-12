@@ -8,5 +8,6 @@ export default <Configuration> {
     host: 'localhost',
     port: 5000,
     static: './src/assets',
-    ssr: 'async'
+    ssr: 'async',
+    style: 'index.css'
 }
