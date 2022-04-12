@@ -34,12 +34,12 @@ function n(n, r) {
 var css = ".App {\n  text-align: center;\n}\n\n.logo {\n  animation: logo-spin infinite 20s linear;\n  height: 40vmin;\n  pointer-events: none;\n}\n\n.header {\n  background-color: #282c34;\n  min-height: 100vh;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  font-size: calc(10px + 2vmin);\n  color: white;\n}\n\n.link {\n  color: #b318f0;\n}\n\n@keyframes logo-spin {\n  from {\n    transform: rotate(0deg);\n  }\n  to {\n    transform: rotate(360deg);\n  }\n}\n";
 n(css,{});
 
-const _tmpl$ = /*#__PURE__*/template(`<div><header><img alt="logo"><p></p><button>+</button><button>-</button></header></div>`, 11);
+const _tmpl$$1 = /*#__PURE__*/template(`<div><header><img alt="logo"><p></p><button>+</button><button>-</button></header></div>`, 11);
 
 const App = () => {
   const [counter, setCounter] = createSignal(0);
   return (() => {
-    const _el$ = getNextElement(_tmpl$),
+    const _el$ = getNextElement(_tmpl$$1),
           _el$2 = _el$.firstChild,
           _el$3 = _el$2.firstChild,
           _el$4 = _el$3.nextSibling,
@@ -76,6 +76,12 @@ const App = () => {
 
 delegateEvents(["click"]);
 
+const _tmpl$ = /*#__PURE__*/template(`<h1>About Page</h1>`, 2);
+
+const About = () => {
+  return getNextElement(_tmpl$);
+};
+
 const MyApp = props => {
   return createComponent(View, {
     get context() {
@@ -88,7 +94,7 @@ const MyApp = props => {
 
     routes: [{
       path: '/about',
-      component: App
+      component: About
     }]
   });
 };

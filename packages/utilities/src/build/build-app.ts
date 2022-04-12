@@ -324,10 +324,13 @@ const loadBuildConfigurationOptions = (
                 exportConditions: ["solid"],
                 extensions: [".js", ".jsx", ".ts", ".tsx"],
                 moduleDirectories: [Path.FromSegments(root, 'src').toString()],
-                rootDir: root.toString()
+                rootDir: root.toString(),
+                browser: true,
             }),
             typescript(tsPluginOptions),
-            commonjs(),
+            commonjs({
+                include: Path.FromSegments(root, 'node_modules/**').toString()
+            }),
             babel({
                 babelHelpers: "bundled",
                 presets: [["solid", { generate: "dom", hydratable: true }]],

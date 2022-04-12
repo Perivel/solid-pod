@@ -1,5 +1,6 @@
 import { Application, View } from '@solidusjs/core';
 import App from "./App";
+import About from './About';
 
 const MyApp: Application = (props) => {
     return <View
@@ -8,7 +9,7 @@ const MyApp: Application = (props) => {
         routes={[
             {
                 path: '/about',
-                component: App
+                component: About
             }
         ]}
     />;
