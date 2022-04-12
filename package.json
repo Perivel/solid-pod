@@ -1,4 +1,21 @@
 {
+  "name": "solidusjs",
+  "version": "1..x",
+  "description": "The SolidusJS library - a plug-and-play Server-Side Rendering solution for SolidJS",
+  "info": "An easy plug and play solution for incorporating Server-Side Rendering to any existing SolidJS application with minimal refactoring of your codebase. This package cntains the main library",
+  "homepage": "https://github.com/Perivel/solidus.js",
+  "license": "BSD-2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Perivel/solidus.js"
+  },
+  "contributors": [
+    {
+      "name": "Patrick Luy",
+      "email": "pluy@perivel.com",
+      "url": "https://patrickluy.com"
+    }
+  ],
   "private": true,
   "workspaces": [
     "packages/*",
