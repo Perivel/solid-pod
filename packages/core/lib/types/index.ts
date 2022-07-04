@@ -108,12 +108,12 @@ export interface Configuration {
 }
 
 /**
- * ServerRequest
+ * ServerRequestContext
  * 
  * An object repreenting the initial request coming from the SolidusJS server.
  */
 
-export interface ServerRequest {
+export interface ServerRequestContext {
     url?: string;
     ip?: string;
 }

@@ -15,7 +15,7 @@ import {
 } from './../signals';
 import {
     Env,
-    ServerRequest
+    ServerRequestContext
 } from './../types';
 
 /**
@@ -44,12 +44,12 @@ import {
 // }
 
 /**
- * useServer()
+ * useServerRequestContext()
  * 
- * The userServer() primitive gives access to the initial server request.
+ * The userServerRequestContext() primitive gives access to the initial server request.
  */
 
- export const useServer = (): Accessor<ServerRequest|undefined> => {
+ export const useServer = (): Accessor<ServerRequestContext|undefined> => {
     return serverRequest;
 };
 

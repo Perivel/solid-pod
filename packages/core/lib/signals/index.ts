@@ -6,9 +6,9 @@
  */
 
  import { createSignal } from 'solid-js';
- import { Env, ServerRequest } from './../types/index';
+ import { Env, ServerRequestContext } from './../types/index';
  
- const [serverRequest, setServerRequest] = createSignal<ServerRequest>();
+ const [serverRequest, setServerRequest] = createSignal<ServerRequestContext>();
  const [environment, setEnvironment] = createSignal<Env>()
  
  export {

@@ -1,10 +1,10 @@
 import { Component } from 'solid-js';
 import { Title } from 'solid-meta';
-import { useServer, useIsServer } from '@solidus-js/core';
+import { useServerRequestContext, useIsServer } from '@solidus-js/core';
 import { useNavigate } from 'solid-app-router';
 
 const About: Component = () => {
-    const server = useServer();
+    const server = useServerRequestContext();
     const isServer = useIsServer();
     const navigate = useNavigate();
     const goHome = () => navigate('/');
