@@ -9,7 +9,6 @@
       "jsx": "preserve",
       "jsxImportSource": "solid-js",
       "declaration": true,
-      "declarationDir": "./dist/types",
-      "resolveJsonModule": true
+      "declarationDir": "./dist/types"
   }
 }

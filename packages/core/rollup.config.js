@@ -1,33 +1,32 @@
 import { terser } from "rollup-plugin-terser";
 import { resolve } from "path";
-import { StringFormatter } from '@swindle/core';
 import typescriptPlugin from "rollup-plugin-typescript2";
 import jsonPlugin from "@rollup/plugin-json";
-import nodePolyfillPlugin from "rollup-plugin-polyfill-node";
 import nodeResolve from "@rollup/plugin-node-resolve";
 import babel from "@rollup/plugin-babel";
-import commonjs from '@rollup/plugin-commonjs';
 import del from 'rollup-plugin-delete';
-import { dependencies, devDependencies } from './package.json';
+import { dependencies } from './package.json';
+import commonjs from '@rollup/plugin-commonjs';
+import hashbangPlugin from "rollup-plugin-hashbang";
+import nodePolyfillPlugin from "rollup-plugin-polyfill-node";
 
 const deps = Object.keys(dependencies);
 
 // core library external dependencies.
-const externals = [
-    ...deps,
-    ...Object.keys(devDependencies),
-    'solid-js/web'
-].filter(dep => dep !== 'solid-app-router');
 
-// core library globals.
-const fmt = new StringFormatter();
-const globals = {};
-deps.forEach(dep => {
-    if (dep !== 'solid-app-router') {
-        globals[dep] = fmt.camelCase(dep)
-    }
-});
-globals['solid-js/web'] = fmt.camelCase('solid-js/web');
+const baseExternals = [...deps];
+const browserExternals = [...baseExternals];
+const serverExternals = [
+    ...baseExternals,
+    'solid-js/web',
+    'path'
+];
+const cliExternals = [
+    ...baseExternals,
+    'solid-js/web',
+    'child_process'
+];
+
 
 const tsPluginOptions = {
     tsconfig: './tsconfig.json',
@@ -38,7 +37,6 @@ const tsPluginOptions = {
     useTsconfigDeclarationDir: true,
 };
 
-
 /**
  * The configuration object.
  */
@@ -46,15 +44,14 @@ const tsPluginOptions = {
 export default [
     // client library
     {
-        input: resolve(__dirname, "index.ts"),
-        treeshake: false,
+        input: resolve(__dirname, "lib/index.ts"),
+        treeshake: true,
         preserveEntrySignatures: true,
-        external: externals,
+        external: browserExternals,
         output: [
             {
                 format: "esm",
                 file: resolve("dist/browser.js"),
-                globals: globals,
             },
         ],
         plugins: [
@@ -69,11 +66,13 @@ export default [
                 exclude: ['node_modules/**'],
             }),
             typescriptPlugin(tsPluginOptions),
-            commonjs(),
             babel({
                 extensions: [".js", '.jsx', ".ts", ".tsx"],
                 babelHelpers: "bundled",
-                presets: [["solid", { generate: "dom", hydratable: true }], "@babel/preset-typescript"],
+                presets: [
+                    ["solid", { generate: "dom", hydratable: true }], 
+                    "@babel/preset-typescript"
+                ],
             }),
             jsonPlugin(),
             terser({
@@ -82,20 +81,18 @@ export default [
                 }
             })
         ],
-        treeshake: false
     },
 
     // server library
     {
-        input: resolve(__dirname, "index.ts"),
-        treeshake: false,
+        input: resolve(__dirname, "lib/index.ts"),
+        treeshake: true,
         preserveEntrySignatures: true,
-        external: externals,
+        external: serverExternals,
         output: [
             {
                 format: "esm",
                 file: resolve("dist/server.js"),
-                globals: globals,
             },
         ],
         plugins: [
@@ -120,6 +117,24 @@ export default [
                 }
             }),
         ],
-        treeshake: false
+    },
+     // CLI
+     {
+        input: resolve(__dirname, "cli/index.ts"),
+        external: cliExternals,
+        output: [
+            {
+                file: "./dist/bin/solidus.js",
+                format: "esm",
+            },
+        ],
+        plugins: [
+            nodePolyfillPlugin(),
+            typescriptPlugin(tsPluginOptions),
+            commonjs(),
+            jsonPlugin(),
+            hashbangPlugin(),
+            terser(),
+        ],
     },
 ];

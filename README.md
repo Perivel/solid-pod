@@ -1,67 +1,22 @@
 # SolidusJS
-![Solidus Logo](logo.png)
+Solidus is a plug-and-play Server-Side Rendering solution for SolidJS written in TypeScript.
 
-Solidus is a plug-and-play Server-Side Rendering solution for SolidJS. With Solidus, you can easily add Server-Side Rendering to any existing SolidJS application with minimal effort.
-
-> **Note**: SolidusJS is still under development. Some features may not work yet.
+> **Note**: This repository will eventually be merged with the [Main SolidusJS Repository](https://github.com/Perivel/solidus-js) upon completion of the [SolidHack](https://hack.solidjs.com/) hackathon. We are just continuing work in this repository because the main repository cannot be updated during the voting period of the Hackathon. 
 
 ## Installation
-To install Solidus, add the dependencies with NPM:
+SolidusJS is still not yet released. However, when we do release it, you'll be able to follow the below instructions to begin using Solidus.
 ```
-npm i @solidusjs/solidus
+npx create-solidus-app <my-app>
 ```
 or with Yarn:
 ```
-yarn add @solidusjs/solidus
+yarn create solidus-app <my-app>
 ```
 
-## Concepts
-Solidus is made up of three concepts: Applications, Views, and Layouts. 
+## Assumptions
+SolidusJS assumes all your public assets will be located in your project's `src/assets` directory. In addition, SolidusJS assunes that our client entrypoint is located in `root/src/client.ts`. And, your server entrypoint is located in `root/src/server.ts`. 
 
-### Applications
-Applications are containsers for your app. All Solidua apps consist of **one** Application component, which is the root component the Solidus server will run. Application components return `View` compoents, which are special components that set up the behavior of your app. Application components receive certain parameters from the server, such as the `url` that was requested, as well as other details like wheter the application is running in debug mode (development) or in production. In most cases, these parameters will just be forwarded to the `View` component returned by the `Application` component.
-
-### Views
-Views have one responsibility: To set up how your Application behaves. This includes setting up routing or setting up layouts. You can think of a `View` as the backbone of your application. 
-
-### Layouts
-Layouts are special components that define how content is presented in your application. Layouts are usually used to specify Application-wide UI elements such as sidebars and headers.
-
-## Creating a Solidus Application
-Solidus applications are just ordinary SolidJS applications wrapped in an `Application` component. Because of this, it is very straightforward to convert an existing SolidJS application to a Solidus application. 
-```tsx
-// In your root application component file.
-import { Application, DefaultLayout, View } from '@solidusjs/core';
-import App from 'path/to/solid/App';
-import About from 'path/to/About';
-
-const MyApp: Application = (props) => {
-    return (
-        <View 
-            index={<App />}
-            layout={DefaultLayout}
-            routes={[
-                {
-                    path: '/about',
-                    component: About
-                }
-            ]}
-            context={props.context}
-        />
-    );
-}
-
-export default MyApp;
-```
-Notice that our SolidJS app is wrapped in a Solidus `View` component, which is returned by a Solidus `Appliation` component. As mentioned earlier, `View`s are responsible for setting up how our application behaves. One of these responsibilities is setting up routing. Solidus routes are just regular SolidJS `RouteDefinition` instances. So, you can quickly and easily import your SolidJS routes array and pass it to your `View` component. 
-
-The second responsiblity of Solidus `View` components is to render our application using the specified layout. In the above example, we explicitly specified the `DefaultLayout` in order to illustrate how layouts are set. However, if the `layout` prop is omitted, Solidus will fall back on the `DefaultLayout`. You may want to rely on the `DefaultLayout` if, say, your existing SolidJS App component defines its own common layout.
-
-Lastly, notice that we pass a `context` prop to our `View` component. This is a special prop called a `RenderContext` which is passed to our `Application` by the Solidus server, which contains some information about the current request. The `context` should be passed directly to the `View` component without modification.
-
-That is pretty much all you need to do to set up Server Side Rendering with Solidus. All that is left is to run the server.
-
-## Running your Solidus application.
+## Usage
 In order to run your application, you need to define a server entrypoint and a client entrypoint. There are two special files Solidus will look for in order to run your application.
 
 ### Server Entry Point
@@ -69,19 +24,19 @@ Solidus expects your server entry point to be contained in `src/server.ts`. Belo
 
 ```ts
 // src/server.ts
-import { runServer } from '@solidusjs/server';
+import { runServer } from '@solidus-js/server';
 import MyApp from 'path/to/root/component/MyApp';
 import config from 'path/to/solidus/config';
 
 runServer(MyApp, config, []);
 ```
-The `runServer()` function starts the application server using the `Application` component you defined, as well as a configuration object and an array of middleware to run for every request to the server. The configuration object will specify how your server will be setup. These include how Server-Side Rendering will behave, and things like which port to listen for requests on.
+The `runServer()` function starts the application server using your root component, as well as a configuration object and an array of middleware to run for every request to the server. The configuration object will specify how your server will be setup. These include how Server-Side Rendering will behave, and things like which port to listen for requests on.
 
 ### Client Entry Point
 Solidus expects your client entry point to be contained in `src/client.ts`. Below is an example of a typical Solidus client entry point file.
 
 ```ts
-import { runClient } from '@solidusjs/client';
+import { runClient } from '@solidus-js/client';
 import MyApp from './MyApp';
 import config from './solidus.config';
 
@@ -91,4 +46,57 @@ The client entry point is very similar to the server entry point. The `runClient
 
 With the client and server entry points defined, we can now build our application by running `solidus build`. The built-in `solidus build` command will build our Solidus application, using the configuation settings you provided. Once it is built, we can start the application by running `solidus start`.
 
-You can find a demo [here](https://github.com/Perivel/solidus-demo).
+## Helper Primitives
+SolidusJS comes with some pre-built primitives to give you access to different pieces of information.
+
+### useServer()
+The `useServer()` primitive will give you access to the server request information. Below is an example of how we may use this primitive to pass routing information from the server to our app.
+```ts
+// App,tsx
+import { Component } from 'solid-js';
+import { useServer } from '@solidus-js/utilities';
+import { Router, useRoutes } from 'solid-app-router';
+import { routes } from './routes';
+
+const App: Component = () => {
+    const server = useServer();
+    const Routes = useRoutes(routes);
+
+    return (
+        <Router url={server()?.url}>
+            <Routes />
+        </Router>
+    );
+}
+
+export default App;
+```
+
+### useEnvironment()
+The `useEnvironment()` primitive tells us whether our application is in a production or development environment. We can use this to enable or disable features and components that are only meant for use in development. 
+
+Suppose we have an `<Inspect>` componet which lets us inspect our app's HTML during development. We propbably do not want this to be available during production. Below is an example of how we might restrict this using the `useEnvironment()` primitive.
+```ts
+// MyComponent.tsx
+import { Component } from 'solid-js';
+import { useEnvironment } from '@solidus-js/utilities';
+import Inspect from './Inspect';
+
+const MyComponent: Component = () => {
+    const env = useEnvironment();
+
+    return (
+        <Inspect disable={() => env() == 'production'}>
+            ....
+        </Inspect>
+    );
+}
+
+export default MyComponent;
+```
+
+### useIsServer() and useIsClient()
+The `useIsServer()` and `useIsClient()` primitives are used to determine if we are currently running on the client or on the server.
+
+# License
+SolidusJS is provided under the [MIT](LICENSE) License.
