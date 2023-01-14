@@ -1,0 +1,60 @@
+{
+  "name": "@solidus-js/assembler",
+  "version": "0.1.0",
+  "description": "Utilities for building SolidusJS applications and libraries.",
+  "author": "PatrickLumenus <patrickaluy@gmail.com>",
+  "homepage": "https://github.com/Perivel/solidus-redesign#readme",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "type": "module",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "node": {
+        "import": "./dist/server.js",
+        "require": "./dist/server.js"
+      },
+      "import": "./dist/server.js",
+      "require": "./dist/server.js"
+    }
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Perivel/solidus-redesign.git"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/Perivel/solidus-redesign/issues"
+  },
+  "dependencies": {
+    "@babel/core": "^7.17.9",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^21.1.0",
+    "@rollup/plugin-image": "^2.1.1",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.2.1",
+    "@swindle/container": "^1.0.1",
+    "@swindle/core": "^2.1.1",
+    "@swindle/filesystem": "^1.0.8",
+    "@swindle/os": "^1.0.11",
+    "babel-preset-solid": "^1.3.16",
+    "fs-extra": "^10.1.0",
+    "rollup": "^2.70.2",
+    "rollup-plugin-polyfill-node": "^0.9.0",
+    "rollup-plugin-styles": "^4.0.0",
+    "rollup-plugin-typescript2": "^0.31.2"
+  }
+}
