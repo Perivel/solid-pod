@@ -15,7 +15,7 @@ yarn create solidus-app <my-app>
 At its most basic form, all you have to do to run Solidus is change one line in your `src/index.tsx` file.
 
 ```ts
-import { runApp, Middleware } from '@solidus-js/core';
+import { runApp, Middleware } from 'solidus-js';
 import App from './App';
 
 runApp(App);
@@ -32,7 +32,7 @@ The `useServerRequestContext()` primitive will give you access to the server req
 ```ts
 // App,tsx
 import { Component } from 'solid-js';
-import { useServerRequestContext } from '@solidus-js/utilities';
+import { useServerRequestContext } from 'solidus-js';
 import { Router, useRoutes } from 'solid-app-router';
 import { routes } from './routes';
 
@@ -57,7 +57,7 @@ Suppose we have an `<Inspect>` componet which lets us inspect our app's HTML dur
 ```ts
 // MyComponent.tsx
 import { Component } from 'solid-js';
-import { useEnvironment } from '@solidus-js/utilities';
+import { useEnvironment } from 'solidus-js';
 import Inspect from './Inspect';
 
 const MyComponent: Component = () => {

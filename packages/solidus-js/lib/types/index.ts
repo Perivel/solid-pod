@@ -8,8 +8,7 @@ import {
     IncomingMessage,
     ServerResponse
 } from 'http';
-import { IncomingMessageExtended } from '@fastify/middie';
-import { CharacterSet, IsoLanguage } from '@chaperone/util';
+import { CharacterSet, DateTime, IsoLanguage } from '@chaperone/util';
 
 /**
  * Env
@@ -92,17 +91,17 @@ export interface Configuration {
 export interface ServerRequestContext {
     url?: string;
     ip?: string;
+    date?: DateTime;
 }
 
 /**
- * middleware.ts
+ * middleware
  * 
  * middleware.ts defines types and interfaces for server middleware.
  */
 
-export type Request = IncomingMessage & IncomingMessageExtended;
+export type Request = IncomingMessage;
 export type Response = ServerResponse;
-export type NextFn = (err?: any) => void;
 
  /**
   * Middleware
@@ -110,7 +109,7 @@ export type NextFn = (err?: any) => void;
   * Solidus Middleware.
   */
  
- export type Middleware = (req: Request, res: Response, next: NextFn) => Promise<void>;
+ export type Middleware = (req: Request, res: Response) => Promise<void>;
 
  /**
   * CorsOptions

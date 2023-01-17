@@ -8,7 +8,6 @@ import { join } from 'path';
 import Fastify, { FastifyInstance } from 'fastify';
 import Cors from '@fastify/cors';
 import Static from '@fastify/static';
-import Middie from '@fastify/middie';
 import { Component } from 'solid-js';
 import {
     renderToStringAsync,
@@ -28,32 +27,34 @@ import {
     TagDescription
 } from './../components';
 import { resolveConfig } from './../utilities';
+import { DateTime } from '@chaperone/util';
 
 /**
  * HttpServer
  * 
  * The Solidus HttpServer.
  */
+
 export class HttpServer implements HttpServerInterface {
 
     private readonly _rootComponent: Component;
     private readonly _server: FastifyInstance;
     private readonly _middleware: Middleware[];
     private readonly _config: Configuration;
-    private readonly _corsOptions?: CorsOptions
+    private readonly _corsOptions?: CorsOptions;
 
     constructor(
         root: Component,
         config: Configuration,
         middleware: Middleware[] = [],
-        cors: CorsOptions|undefined = undefined
+        cors: CorsOptions | undefined = undefined
     ) {
         this._rootComponent = root;
         this._middleware = middleware;
         this._config = resolveConfig(config);
         this._corsOptions = cors;
         this._server = Fastify({
-            logger: true,
+            logger: true
         });
         this._setupServer();
     }
@@ -70,10 +71,10 @@ export class HttpServer implements HttpServerInterface {
     private _configureResponse(page: string, tags: TagDescription[]): string {
         return `
         <!DOCTYPE html>
-        <html lang="${this._config.lang!}">
+        <html lang="${this._config.lang!.alpha2!}">
           <head>
           <link rel="stylesheet" href="index.css" />
-          <meta charset="${this._config.charset!}" />
+          <meta charset="${this._config.charset!.value.toString()}" />
           <meta
             name="viewport"
             content="width=device-width, initial-scale=1"
@@ -114,6 +115,7 @@ export class HttpServer implements HttpServerInterface {
                 tags={tags}
                 url={url}
                 ip={ip}
+                date={DateTime.Now()}
             >
                 <AppRoot />
             </Capsule>
@@ -129,11 +131,9 @@ export class HttpServer implements HttpServerInterface {
     private _setupServer(): void {
         // register middleware if it is defined
         if (this._middleware.length > 0) {
-             // register middleware.
-            this._server.register(Middie, {
-                hook: 'preHandler',
-            });
-            this._middleware.forEach(middleware => this._server.use(middleware));
+            this._middleware.forEach(middleware => this._server.addHook('preHandler', async (request, reply) => {
+                await middleware(request.raw, reply.raw);
+            }));
         }
 
         // set up cors if it is enabled.
@@ -204,7 +204,8 @@ export class HttpServer implements HttpServerInterface {
 
     public start(): void {
         this._server.listen({
-            port: this._config.port!
+            port: this._config.port!,
+            host: this._config.host,
         }, (error, address) => {
             if (error) {
                 throw error;

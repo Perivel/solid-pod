@@ -12,6 +12,7 @@
      setEnvironment,
      setServerRequest
  } from './../signals';
+import { DateTime } from '@chaperone/util';
  
  /**
   * TagDescription
@@ -28,6 +29,7 @@
      url?: string;
      ip?: string;
      env: Env;
+     date: DateTime;
      tags: TagDescription[];
      children: JSX.Element
  }
@@ -40,8 +42,7 @@
  
  const Capsule: Component<CapsuleProps> = (props) => {
      setEnvironment(props.env);
-     setServerRequest({ url: props.url, ip: props.ip });
-     //return <MetaProvider tags={props.tags}>{props.children}</MetaProvider>;
+     setServerRequest({ url: props.url, ip: props.ip, date: props.date });
      return <MetaProvider tags={props.tags}>{props.children}</MetaProvider>;
  };
 
