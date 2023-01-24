@@ -1,4 +1,4 @@
-import { DateTime } from '@swindle/core';
+import { DateTime } from '@chaperone/util';
 import chalk from 'chalk';
 import { LoggerInterface } from './logger.interface';
 

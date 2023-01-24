@@ -6,7 +6,7 @@
  * cli/index.ts is the entry point for the Solidus CLI
  */
 
-import { Process } from '@swindle/os';
+import { Process } from '@chaperone/system';
 import { Command } from './utils/command/command.type';
 import { CommandStatus } from './utils/command/command-status';
 import { CommandType } from './utils/command/command-type';
@@ -19,7 +19,7 @@ import { runStart } from './commands/run-start';
 import { runVersion } from './commands/run-version';
 
 const runCli: Command = async () => {
-    const [node, app, ...args] = Process.argv;
+    const [node, app, ...args] = Process.arguments;
     const cmd = args[0];
 
     if (cmd === CommandType.Build) {

@@ -36,7 +36,8 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@chaperone/util": "^0.1.9",
+    "@chaperone/system": "^0.1.12",
+    "@chaperone/util": "^0.1.12",
     "@fastify/cors": "^8.2.0",
     "@fastify/static": "^6.6.1",
     "chalk": "^5.2.0",

@@ -9,8 +9,7 @@ import { Command } from '../utils/command/command.type';
 import { CommandStatus } from '../utils/command/command-status';
 import container from '../utils/container';
 import { Logger } from '../utils/logger/logger';
-import { Path } from '@swindle/filesystem';
-import { Process } from '@swindle/os';
+import { Process, Directory, Path } from '@chaperone/system';
 
 /**
  * runStart
@@ -19,10 +18,10 @@ import { Process } from '@swindle/os';
  */
 export const runStart: Command = async () => {
     const logger = container.get(Logger);
-    const serverEntry = Path.FromSegments(Process.Cwd(), 'dist/index.js');
+    const serverEntry = Path.FromSegments(Directory.Current().path(), 'dist/index.js');
     let appError: Error|undefined = undefined;
     const appProcess = spawn(`node`, [serverEntry.toString()], {
-        cwd: Process.Cwd().toString()
+        cwd: Directory.Current().path().toString()
     });
     appProcess.stdout.setEncoding('utf8');
     appProcess.stderr.setEncoding('utf8');
