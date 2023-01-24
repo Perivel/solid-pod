@@ -14,19 +14,33 @@
   "exports": {
     ".": {
       "browser": {
-        "import": "./dist/browser.js",
-        "require": "./dist/browser.js"
+        "import": "./dist/browser.mjs",
+        "require": "./dist/browser.cjs"
       },
       "node": {
-        "import": "./dist/server.js",
-        "require": "./dist/server.js"
+        "import": "./dist/server.mjs",
+        "require": "./dist/server.cjs"
       },
-      "import": "./dist/server.js",
-      "require": "./dist/server.js"
+      "import": "./dist/server.mjs",
+      "require": "./dist/server.cjs"
+    },
+    "./assembler": {
+      "browser": {
+        "import": "./assember/dist/browser.mjs",
+        "require": "./assembler/dist/browser.cjs"
+      },
+      "node": {
+        "import": "./assembler/dist/server.mjs",
+        "require": "./assembler/dist/server.cjs"
+      },
+      "import": "./assembler/dist/server.mjs",
+      "require": "./assembler/dist/server.cjs"
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "assembler/dist",
+    "assembler/package.json"
   ],
   "bin": {
     "solidus": "./dist/bin/solidus.js"

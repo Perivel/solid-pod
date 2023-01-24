@@ -9,12 +9,12 @@ import { Command } from '../utils/command/command.type';
 import { CommandStatus } from '../utils/command/command-status';
 import container from '../utils/container';
 import { Logger } from '../utils/logger/logger';
-import { version } from './../../package.json';
+import pkg from './../../package.json' assert { type: 'json' };
 
 export const runHelp: Command = async () => {
     const logger = container.get(Logger);
     const helpMessage = `
-SolidusJS v${version}
+SolidusJS v${pkg.version}
 Usage:               solidus <command>
 -v                   Displays the current version of SolidusJS being run.
 -h                   Shows this help message.
@@ -27,5 +27,5 @@ Commands
 © ${DateTime.Now().year} Perivel LLC. All rights reserved.
      `;
     logger.log(helpMessage);
-    return CommandStatus.Error;
+    return CommandStatus.Success;
 }

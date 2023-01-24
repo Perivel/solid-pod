@@ -1,8 +1,7 @@
 import { Command } from './../utils/command/command.type';
-import { Path } from '@swindle/filesystem';
-import { Process } from '@swindle/os';
+import { Path, Directory } from '@chaperone/system';
 import { CommandStatus } from './../utils/command/command-status';
-import { buildApp } from '@solidus-js/assembler';
+import { buildApp } from 'solidus/assembler';
 import container from './../utils/container';
 import { Logger } from '../utils/logger/logger';
 
@@ -14,7 +13,7 @@ import { Logger } from '../utils/logger/logger';
  */
 
 export const runBuild: Command = async () => {
-    const root = Process.Cwd();
+    const root = Directory.Current().path();
     const logger = container.get(Logger);
 
     try {

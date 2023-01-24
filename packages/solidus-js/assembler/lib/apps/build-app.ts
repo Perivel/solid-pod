@@ -315,7 +315,7 @@ const loadWatchConfigurationOptions = (
 ): RollupWatchOptions[] => {
     const externals = [
         ...deps,
-        'solidus-js',
+        'solidus',
         'solid-js/web'
     ].filter(dep => dep !== 'solid-app-router');
 

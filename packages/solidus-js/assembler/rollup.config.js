@@ -5,12 +5,17 @@ import jsonPlugin from "@rollup/plugin-json";
 import nodeResolve from "@rollup/plugin-node-resolve";
 import babel from "@rollup/plugin-babel";
 import del from 'rollup-plugin-delete';
-import { camelCase } from 'change-case';
-import { dependencies } from './package.json' assert { type: 'json' };
+import { StringFormatter } from '@chaperone/util';
+import pkg from './package.json' assert { type: 'json' };
 import commonjs from '@rollup/plugin-commonjs';
 import nodePolyfillPlugin from "rollup-plugin-polyfill-node";
 
-const deps = Object.keys(dependencies);
+/**
+ * rollup configuration for the assembler.
+ */
+
+const deps = Object.keys(pkg.dependencies);
+const fmt = new StringFormatter();
 
 // core library external dependencies.
 const externals = [
@@ -22,9 +27,9 @@ const externals = [
 // core library globals.
 const globals = {};
 deps.forEach(dep => {
-    globals[dep] = camelCase(dep);
+    globals[dep] = fmt.camelCase(dep);
 });
-globals['solid-js/web'] = camelCase('solid-js/web');
+globals['solid-js/web'] = fmt.camelCase('solid-js/web');
 
 const tsPluginOptions = {
     tsconfig: './tsconfig.json',
@@ -40,48 +45,6 @@ const tsPluginOptions = {
  */
 
 export default [
-    // client library
-    // {
-    //     input: resolve(__dirname, "lib/index.ts"),
-    //     treeshake: false,
-    //     preserveEntrySignatures: true,
-    //     external: externals,
-    //     output: [
-    //         {
-    //             format: "esm",
-    //             file: resolve("dist/browser.js"),
-    //             globals: globals,
-    //         },
-    //     ],
-    //     plugins: [
-    //         del({
-    //             targets: ['./dist']
-    //         }),
-    //         nodePolyfillPlugin(),
-    //         nodeResolve({
-    //             extensions: [".js", ".jsx", ".ts", ".tsx"],
-    //             ignoreGlobals: false,
-    //             exportConditions: ["solid"],
-    //             exclude: ['node_modules/**'],
-    //         }),
-    //         typescriptPlugin(tsPluginOptions),
-    //         commonjs(),
-    //         babel({
-    //             extensions: [".js", '.jsx', ".ts", ".tsx"],
-    //             babelHelpers: "bundled",
-    //             presets: [["solid", { generate: "dom", hydratable: true }], "@babel/preset-typescript"],
-    //         }),
-    //         jsonPlugin(),
-    //         terser({
-    //             format: {
-    //                 comments: false
-    //             }
-    //         })
-    //     ],
-    //     treeshake: false
-    // },
-
-    // server library
     {
         input: resolve(__dirname, "lib/index.ts"),
         treeshake: false,
@@ -90,11 +53,19 @@ export default [
         output: [
             {
                 format: "esm",
-                file: resolve("dist/server.js"),
+                file: resolve("dist/server.mjs"),
                 globals: globals,
             },
+            {
+                format: 'cjs',
+                file: resolve('dist/server.cjs'),
+                globals: globals
+            }
         ],
         plugins: [
+            del({
+                targets: ['./dist']
+            }),
             nodePolyfillPlugin(),
             nodeResolve({
                 extensions: [".js", ".jsx", ".ts", ".tsx"],

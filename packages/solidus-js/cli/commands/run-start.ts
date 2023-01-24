@@ -9,7 +9,7 @@ import { Command } from '../utils/command/command.type';
 import { CommandStatus } from '../utils/command/command-status';
 import container from '../utils/container';
 import { Logger } from '../utils/logger/logger';
-import { Process, Directory, Path } from '@chaperone/system';
+import { Directory, Path } from '@chaperone/system';
 
 /**
  * runStart
@@ -35,6 +35,5 @@ export const runStart: Command = async () => {
     if (appError) {
         return CommandStatus.Error;
     }
-
     return CommandStatus.Error;
 }
