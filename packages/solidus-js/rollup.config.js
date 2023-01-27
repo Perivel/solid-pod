@@ -5,12 +5,12 @@ import jsonPlugin from "@rollup/plugin-json";
 import nodeResolve from "@rollup/plugin-node-resolve";
 import babel from "@rollup/plugin-babel";
 import del from 'rollup-plugin-delete';
-import { dependencies } from './package.json';
 import commonjs from '@rollup/plugin-commonjs';
-import hashbangPlugin from "rollup-plugin-hashbang";
+import hashbang from "rollup-plugin-hashbang";
 import nodePolyfillPlugin from "rollup-plugin-polyfill-node";
+import pkg from './package.json' assert { type: 'json' };
 
-const deps = Object.keys(dependencies);
+const deps = Object.keys(pkg.dependencies);
 
 // core library external dependencies.
 
@@ -133,7 +133,7 @@ export default [
             typescriptPlugin(tsPluginOptions),
             commonjs(),
             jsonPlugin(),
-            hashbangPlugin(),
+            hashbang(),
             terser(),
         ],
     },

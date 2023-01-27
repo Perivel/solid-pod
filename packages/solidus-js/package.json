@@ -46,7 +46,7 @@
     "solidus": "./dist/bin/solidus.js"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c --bundleConfigAsCjs",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
