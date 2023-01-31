@@ -1,9 +1,8 @@
-import { runApp, Middleware } from '@solidus-js/core';
+import { runApp, Middleware } from 'solid-pod';
 import App from './App';
 
-const logMiddleware: Middleware = async (req, res, next) => {
+const logMiddleware: Middleware = async (req, res) => {
     console.log(`Received request from ${req.socket.remoteAddress}`);
-    next();
 }
 
 runApp(App, {

@@ -1,5 +1,5 @@
 # Solid Pod
-Solid Pod is a plug-and-play Server-Side Rendering solution for SolidJS.
+Solid Pod is a plug-and-play Server-Side Rendering solution for SolidJS. This repository is the main library.
 
 ## Installation
 TODO

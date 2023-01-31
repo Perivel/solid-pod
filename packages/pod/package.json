@@ -38,12 +38,12 @@
     }
   },
   "files": [
-    "dist",
-    "assembler/dist",
-    "assembler/package.json"
+    "./dist",
+    "./assembler/dist",
+    "./assembler/package.json"
   ],
   "bin": {
-    "pod": "./dist/bin/pod.js"
+    "solid-pod": "./dist/bin/pod.js"
   },
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs",
