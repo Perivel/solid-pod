@@ -10,8 +10,5 @@
       "jsxImportSource": "solid-js",
       "declaration": true,
       "declarationDir": "./dist/types"
-  },
-  "exclude": [
-    "./dist"
-  ]
+  }
 }

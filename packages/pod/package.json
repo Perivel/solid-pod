@@ -1,0 +1,82 @@
+{
+  "name": "solid-pod",
+  "version": "0.1.0",
+  "description": "Plug-and-Play SSR for SolidJS",
+  "author": "PatrickLumenus <pluy@perivel.com>",
+  "homepage": "",
+  "license": "MIT",
+  "type": "module",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "types": "./dist/types/lib/index.d.ts",
+  "exports": {
+    ".": {
+      "browser": {
+        "import": "./dist/browser.mjs",
+        "require": "./dist/browser.cjs"
+      },
+      "node": {
+        "import": "./dist/server.mjs",
+        "require": "./dist/server.cjs"
+      },
+      "import": "./dist/server.mjs",
+      "require": "./dist/server.cjs"
+    },
+    "./assembler": {
+      "browser": {
+        "import": "./assember/dist/browser.mjs",
+        "require": "./assembler/dist/browser.cjs"
+      },
+      "node": {
+        "import": "./assembler/dist/server.mjs",
+        "require": "./assembler/dist/server.cjs"
+      },
+      "import": "./assembler/dist/server.mjs",
+      "require": "./assembler/dist/server.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "assembler/dist",
+    "assembler/package.json"
+  ],
+  "bin": {
+    "pod": "./dist/bin/pod.js"
+  },
+  "scripts": {
+    "build": "rollup -c --bundleConfigAsCjs",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "@chaperone/system": "^0.1.12",
+    "@chaperone/util": "^0.1.12",
+    "@fastify/cors": "^8.2.0",
+    "@fastify/static": "^6.6.1",
+    "chalk": "^5.2.0",
+    "fastify": "^4.11.0",
+    "fs-extra": "^11.1.0",
+    "solid-js": "^1.6.9",
+    "solid-meta": "^0.28.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@babel/preset-typescript": "^7.18.6",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-commonjs": "^24.0.0",
+    "@rollup/plugin-image": "^3.0.1",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@types/fs-extra": "^11.0.1",
+    "babel-preset-solid": "^1.6.9",
+    "rollup": "^3.10.0",
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-hashbang": "^2.2.2",
+    "rollup-plugin-polyfill-node": "^0.11.0",
+    "rollup-plugin-styles": "^4.0.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.34.1",
+    "typescript": "^4.6.3"
+  }
+}

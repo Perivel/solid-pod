@@ -7,5 +7,5 @@ const logMiddleware: Middleware = async (req, res, next) => {
 }
 
 runApp(App, {
-    middleware: [logMiddleware]
+    middleware: [logMiddleware],
 });
