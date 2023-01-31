@@ -6,7 +6,7 @@ import nodeResolve from "@rollup/plugin-node-resolve";
 import babel from "@rollup/plugin-babel";
 import del from 'rollup-plugin-delete';
 import commonjs from '@rollup/plugin-commonjs';
-import hashbang from "rollup-plugin-shebang-bin";
+import hashbang from "rollup-plugin-hashbang";
 import nodePolyfillPlugin from "rollup-plugin-polyfill-node";
 import pkg from './package.json' assert { type: 'json' };
 
@@ -25,6 +25,8 @@ const cliExternals = [
     ...baseExternals,
     'solid-js/web',
     'child_process',
+    'solidus/assembler',
+    '@chaperone/util/container'
 ];
 
 
@@ -133,10 +135,7 @@ export default [
             typescriptPlugin(tsPluginOptions),
             commonjs(),
             jsonPlugin(),
-            hashbang({
-                preserve: true,
-                executable: true
-            }),
+            hashbang(),
             terser(),
         ],
     },

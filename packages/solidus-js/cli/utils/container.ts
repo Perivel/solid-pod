@@ -1,5 +1,5 @@
-import { Container } from '@swindle/container';
-import { StringFormatter } from '@swindle/core';
+import { Container } from '@chaperone/util/container';
+import { StringFormatter } from '@chaperone/util';
 import { Logger } from './logger/logger';
 
 const container = new Container();
