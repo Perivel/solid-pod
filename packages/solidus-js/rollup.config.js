@@ -19,12 +19,12 @@ const browserExternals = [...baseExternals];
 const serverExternals = [
     ...baseExternals,
     'solid-js/web',
-    'path'
+    'path',
 ];
 const cliExternals = [
     ...baseExternals,
     'solid-js/web',
-    'child_process'
+    'child_process',
 ];
 
 

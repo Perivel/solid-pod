@@ -19,7 +19,6 @@ export {
     CorsOptions,
     Env,
     Middleware,
-    NextFn,
     Request,
     Response,
     SSRMode,

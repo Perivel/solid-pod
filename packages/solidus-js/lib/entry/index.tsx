@@ -4,7 +4,7 @@
  * entry/index.tsx contains the entry point 
  */
 
-import { VoidSyncFn } from '@chaperone/util';
+import { VoidSyncFn, DateTime } from '@chaperone/util';
 import { Component } from 'solid-js';
 import { isServer, hydrate } from 'solid-js/web';
 import {
@@ -41,7 +41,7 @@ export interface ServerOptions {
 const runClient = (App: Component, config: Configuration = {}): VoidSyncFn => {
     const appConfig = resolveConfig(config);
     const server = useServer();
-    const ClientComponent = () => <Capsule url={server()?.url} tags={[]} env={appConfig.env!}>
+    const ClientComponent = () => <Capsule url={server()?.url} tags={[]} env={appConfig.env!} date={DateTime.Now()}>
         <App />
     </Capsule>;
 
