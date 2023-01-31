@@ -1738,7 +1738,7 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
-"@rollup/pluginutils@^5.0.1":
+"@rollup/pluginutils@^5.0.1", "@rollup/pluginutils@^5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@rollup/pluginutils/-/pluginutils-5.0.2.tgz#012b8f53c71e4f6f9cb317e311df1404f56e7a33"
   integrity sha512-pTd9rIsP92h+B6wWwFbW8RkZv4hiR/xKsqre4SIuAOaOEQRxi0lqLke9k2/7WegC85GgUs9pjmOjCUi3In4vwA==
@@ -4759,6 +4759,13 @@ magic-string@^0.25.7:
   dependencies:
     sourcemap-codec "^1.4.8"
 
+magic-string@^0.26.7:
+  version "0.26.7"
+  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.26.7.tgz#caf7daf61b34e9982f8228c4527474dac8981d6f"
+  integrity sha512-hX9XH3ziStPoPhJxLq1syWuZMxbDvGNbVchfrdCtanC7D13888bMFow61x8axrx+GfHLtVeAx2kxL7tTGRl+Ow==
+  dependencies:
+    sourcemap-codec "^1.4.8"
+
 magic-string@^0.27.0:
   version "0.27.0"
   resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.27.0.tgz#e4a3413b4bab6d98d2becffd48b4a257effdbbf3"
@@ -6476,6 +6483,14 @@ rollup-plugin-polyfill-node@^0.9.0:
   integrity sha512-cVqm7LjgBqtZ77M9hLYayXrLz18nLIVPp3MPqNi2suStrFDg1LsA2cSdMIighr2yeuAQrphu8ymXTAsJNVABow==
   dependencies:
     "@rollup/plugin-inject" "^4.0.0"
+
+rollup-plugin-shebang-bin@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-shebang-bin/-/rollup-plugin-shebang-bin-0.0.5.tgz#52f7d84d4bc16fa48515a11993491a3914d5e38c"
+  integrity sha512-05atGTgoRiepthxmZHPWE6v1OfkFsdfyW2ALT/b3Fis0Bb8H779Osz2BEMT+c1uJKAdFsHGeDzGf5LOBFt02ZQ==
+  dependencies:
+    "@rollup/pluginutils" "^5.0.2"
+    magic-string "^0.26.7"
 
 rollup-plugin-styles@^4.0.0:
   version "4.0.0"

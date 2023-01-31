@@ -6,7 +6,7 @@ import nodeResolve from "@rollup/plugin-node-resolve";
 import babel from "@rollup/plugin-babel";
 import del from 'rollup-plugin-delete';
 import commonjs from '@rollup/plugin-commonjs';
-import hashbang from "rollup-plugin-hashbang";
+import hashbang from "rollup-plugin-shebang-bin";
 import nodePolyfillPlugin from "rollup-plugin-polyfill-node";
 import pkg from './package.json' assert { type: 'json' };
 
@@ -133,7 +133,10 @@ export default [
             typescriptPlugin(tsPluginOptions),
             commonjs(),
             jsonPlugin(),
-            hashbang(),
+            hashbang({
+                preserve: true,
+                executable: true
+            }),
             terser(),
         ],
     },
