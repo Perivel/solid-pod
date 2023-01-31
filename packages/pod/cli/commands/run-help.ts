@@ -14,8 +14,8 @@ import pkg from './../../package.json' assert { type: 'json' };
 export const runHelp: Command = async () => {
     const logger = container.get(Logger);
     const helpMessage = `
-SolidusJS v${pkg.version}
-Usage:               solidus <command>
+${pkg.name} v${pkg.version}
+Usage:               pod <command>
 -v                   Displays the current version of SolidusJS being run.
 -h                   Shows this help message.
 

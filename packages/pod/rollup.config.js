@@ -25,7 +25,7 @@ const cliExternals = [
     ...baseExternals,
     'solid-js/web',
     'child_process',
-    'solidus/assembler',
+    'solid-pod/assembler',
     '@chaperone/util/container'
 ];
 
@@ -126,7 +126,7 @@ export default [
         external: cliExternals,
         output: [
             {
-                file: "./dist/bin/solidus.js",
+                file: "./dist/bin/pod.js",
                 format: "esm",
             },
         ],

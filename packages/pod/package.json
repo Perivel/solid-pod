@@ -1,5 +1,5 @@
 {
-  "name": "solidus",
+  "name": "solid-pod",
   "version": "0.1.0",
   "description": "Plug-and-Play SSR for SolidJS",
   "author": "PatrickLumenus <pluy@perivel.com>",
@@ -43,7 +43,7 @@
     "assembler/package.json"
   ],
   "bin": {
-    "solidus": "./dist/bin/solidus.js"
+    "pod": "./dist/bin/pod.js"
   },
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs",

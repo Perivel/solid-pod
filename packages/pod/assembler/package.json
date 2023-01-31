@@ -1,7 +1,7 @@
 {
   "name": "assembler",
   "version": "0.1.0",
-  "description": "Utilities for building SolidusJS applications and libraries.",
+  "description": "Utilities for building Solid pod applications and libraries.",
   "author": "PatrickLumenus <patrickaluy@gmail.com>",
   "homepage": "https://github.com/Perivel/solidus-redesign#readme",
   "license": "MIT",

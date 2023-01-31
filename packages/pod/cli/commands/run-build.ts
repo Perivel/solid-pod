@@ -1,7 +1,7 @@
 import { Command } from './../utils/command/command.type';
 import { Path, Directory } from '@chaperone/system';
 import { CommandStatus } from './../utils/command/command-status';
-import { buildApp } from 'solidus/assembler';
+import { buildApp } from 'solid-pod/assembler';
 import container from './../utils/container';
 import { Logger } from '../utils/logger/logger';
 
