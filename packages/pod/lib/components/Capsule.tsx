@@ -6,7 +6,7 @@
  */
 
  import { Component, JSX } from 'solid-js';
- import { MetaProvider } from 'solid-meta';
+ import { MetaProvider } from '@solidjs/meta';
  import { Env } from './../types';
  import {
      setEnvironment,

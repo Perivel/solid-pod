@@ -13,6 +13,8 @@
     "typescript": "^4.6.3"
   },
   "dependencies": {
+    "@solidjs/meta": "^0.28.2",
+    "@solidjs/router": "^0.7.0",
     "solid-app-router": "^0.4.2",
     "solid-js": "^1.6.10",
     "solid-meta": "^0.28.1",

@@ -8,10 +8,11 @@
  import { CommandStatus } from './../utils/command/command-status';
  import container from './../utils/container';
  import { Logger } from '../utils/logger/logger';
- import pkg from './../../package.json' assert { type: 'json' };
+ import { PackageDetails } from '../utils/package-details.interface';
  
  export const runVersion: Command = async () => {
      const logger = container.get(Logger);
-     logger.log(`SolidusJS v${pkg.version}`);
+     const details = container.get(PackageDetails);
+     logger.log(`${details.name} v${details.version}`);
      return CommandStatus.Success;
  }

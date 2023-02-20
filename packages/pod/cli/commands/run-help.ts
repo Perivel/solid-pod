@@ -4,19 +4,21 @@
  * run-help.ts defines the runHelp command.
  */
 
-import { DateTime } from '@chaperone/util';
+import { DateTime, StringFormatter } from '@chaperone/util';
 import { Command } from '../utils/command/command.type';
 import { CommandStatus } from '../utils/command/command-status';
 import container from '../utils/container';
 import { Logger } from '../utils/logger/logger';
-import pkg from './../../package.json' assert { type: 'json' };
+import { PackageDetails } from '../utils/package-details.interface';
 
 export const runHelp: Command = async () => {
     const logger = container.get(Logger);
+    const strFmt = container.get(StringFormatter);
+    const details = container.get(PackageDetails);
     const helpMessage = `
-${pkg.name} v${pkg.version}
-Usage:               pod <command>
--v                   Displays the current version of SolidusJS being run.
+${details.name} v${details.version}
+Usage:               solid <command>
+-v                   Displays the current version of ${strFmt.capitalCase(details.name)} being run.
 -h                   Shows this help message.
 
 Commands

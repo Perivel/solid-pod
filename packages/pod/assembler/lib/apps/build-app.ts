@@ -66,11 +66,11 @@ export interface BuildOptions {
 };
 
 const defaultBuildOptions: BuildOptions = {
-    root: Directory.Current().path(),
-    outputDir: Path.FromSegments(Directory.Current().path(), 'dist'),
-    clientEntryPoint: Path.FromSegments(Directory.Current().path(), 'src/client.ts'),
-    serverEntryPoint: Path.FromSegments(Directory.Current().path(), 'src/server.ts'),
-    assetsDir: Path.FromSegments(Directory.Current().path(), 'src/assets/**/**'),
+    root: Path.FromSegments(process.cwd()),
+    outputDir: Path.FromSegments(process.cwd(), 'dist'),
+    clientEntryPoint: Path.FromSegments(process.cwd(), 'src/client.ts'),
+    serverEntryPoint: Path.FromSegments(process.cwd(), 'src/server.ts'),
+    assetsDir: Path.FromSegments(process.cwd(), 'src/assets/**/**'),
     onBeforeRollup: async () => { },
     onRollup: async () => { },
     onBeforeGenerate: async () => { },
@@ -123,12 +123,12 @@ const defaultConfig: any = {
  * @returns Tsconfig options.
  */
 
-const loadTsconfig = async (root: Path = Directory.Current().path()): Promise<any> => {
+const loadTsconfig = async (root: Path = Path.FromSegments(process.cwd())): Promise<any> => {
     const path = Path.FromSegments(root, 'tsconfig.json');
     let config = defaultConfig;
 
     try {
-        const file = new File(path);
+        const file = await File.ForPath(path);
         const reader = new FileReader(file, {
             encoding: 'utf-8'
         });
@@ -162,12 +162,12 @@ interface PackageDependenciesInterface {
  * @throws SolidusException when the package.json file cannot be found.
  */
 
-const loadDependenciesList = async (root: Path = Directory.Current().path()): Promise<{ deps: string[], dev: string[] }> => {
+const loadDependenciesList = async (root: Path = Path.FromSegments(process.cwd())): Promise<{ deps: string[], dev: string[] }> => {
     const path = Path.FromSegments(root, 'package.json');
     let depsList = { deps: [] as string[], dev: [] as string[] };
 
     try {
-        const file = new File(path);
+        const file = await File.ForPath(path);
         const reader = new FileReader(file);
         const data = reader.all();
         await reader.close();
@@ -203,7 +203,9 @@ const loadBuildConfigurationOptions = (
     const externals = [
         ...deps,
         'solidus-js'
-    ].filter(dep => dep !== 'solid-app-router');
+    ].filter(dep => {
+        return (dep !== '@solidjs/router') && (dep !== 'solid-ap-router')
+    });
 
     const tsConfigOverrides = {
         declaration: true,
@@ -451,7 +453,7 @@ export const buildApp = async (options: BuildOptions = {}): Promise<void> => {
         await buildOptions.onRollup!();
 
         try {
-            const buildDir = new Directory(buildOptions.outputDir!);
+            const buildDir = await Directory.ForPath(buildOptions.outputDir!);
             await buildDir.delete({
                 recursive: true
             });

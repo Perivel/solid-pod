@@ -19,7 +19,7 @@ import { runStart } from './commands/run-start';
 import { runVersion } from './commands/run-version';
 
 const runCli: Command = async () => {
-    const [node, app, ...args] = Process.arguments;
+    const [node, app, ...args] = process.argv;
     const cmd = args[0];
 
     if (cmd === CommandType.Build) {

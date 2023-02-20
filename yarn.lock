@@ -544,17 +544,17 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@chaperone/system@^0.1.12":
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/@chaperone/system/-/system-0.1.12.tgz#8d8ede1b6dabf5040795e5f882e347ecccba02a0"
-  integrity sha512-LqzRbVj1yjKm8aOZBgHgtPqhLwrl57rYRRcEp+Y/K3qiGETMxW4slXRHLaqZpG5XHE4N0fiBN9sj2HvMaACoDA==
+"@chaperone/system@^0.1.20":
+  version "0.1.20"
+  resolved "https://registry.yarnpkg.com/@chaperone/system/-/system-0.1.20.tgz#a6bab66475c0336e1a2801bbd5f4e8d617e5976b"
+  integrity sha512-Bz7P6IvrLLxCI/6SlzGTYSfpbGssgnw1xrQE8qlG55OCv9tggoCZea3i+QjDtc5Y4rOrGK/WYq8gbOkUR2A03Q==
   dependencies:
-    "@chaperone/util" "^0.1.12"
+    "@chaperone/util" "^0.1.16"
 
-"@chaperone/util@^0.1.12":
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/@chaperone/util/-/util-0.1.12.tgz#fc6f640837a6615dc026abb225a6b24c6109bcee"
-  integrity sha512-hg8mg3zFRXNPXaDB5659Igti09K5sz8Hbdh7VCVyUEOdmqEgvsoPzQsRAGwsAiBCeRFDQGUux9qgnTJXBIWvqQ==
+"@chaperone/util@^0.1.16":
+  version "0.1.16"
+  resolved "https://registry.yarnpkg.com/@chaperone/util/-/util-0.1.16.tgz#d695de34216d522f9080664b549b3c7be457fe5e"
+  integrity sha512-s2BP2vn+nVWkxTRSeXfUlzY+Md48A6tm6gQdj6MEDkpgW1iw1XYEbOXkkj0Auz5jMHLPXw4yR9ve6Jxpj6k1oQ==
   dependencies:
     awesome-phonenumber "^4.0.0"
     bcryptjs "^2.4.3"
@@ -1746,6 +1746,16 @@
     "@types/estree" "^1.0.0"
     estree-walker "^2.0.2"
     picomatch "^2.3.1"
+
+"@solidjs/meta@^0.28.2":
+  version "0.28.2"
+  resolved "https://registry.yarnpkg.com/@solidjs/meta/-/meta-0.28.2.tgz#384881e96bc38278f950f8af5f5313675e6d0b8c"
+  integrity sha512-avlLgBPdk4KVxzRGFlYp/MIJo8B5jVgXPgk6OUnUP8km21Z+ovO+DUd7ZPA7ejv8PBdWi9GE3zCzw8RU2YuV2Q==
+
+"@solidjs/router@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@solidjs/router/-/router-0.7.0.tgz#5f8f1289caf4a1eb24e57cbe93e6dde639b04a6e"
+  integrity sha512-8HI84twe5FjYRebSLMAhtkL9bRuTDIlxJK56kjfjU9WKGoUCTaWpCnkuj8Hqde1bWZ0X+GOZxKDfNkn1CjtjxA==
 
 "@swindle/container@^1.0.1":
   version "1.0.1"

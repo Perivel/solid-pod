@@ -50,15 +50,15 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@chaperone/system": "^0.1.12",
-    "@chaperone/util": "^0.1.12",
+    "@chaperone/system": "^0.1.20",
+    "@chaperone/util": "^0.1.16",
     "@fastify/cors": "^8.2.0",
     "@fastify/static": "^6.6.1",
+    "@solidjs/meta": "^0.28.2",
     "chalk": "^5.2.0",
     "fastify": "^4.11.0",
     "fs-extra": "^11.1.0",
-    "solid-js": "^1.6.9",
-    "solid-meta": "^0.28.1"
+    "solid-js": "^1.6.9"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",

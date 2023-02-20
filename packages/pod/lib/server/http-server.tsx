@@ -15,7 +15,7 @@ import {
     renderToString,
     generateHydrationScript,
 } from 'solid-js/web';
-import { renderTags } from 'solid-meta';
+import { renderTags } from '@solidjs/meta';
 import { HttpServerInterface } from './http-server.interface';
 import {
     Configuration,

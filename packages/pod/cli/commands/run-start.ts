@@ -18,10 +18,11 @@ import { Directory, Path } from '@chaperone/system';
  */
 export const runStart: Command = async () => {
     const logger = container.get(Logger);
-    const serverEntry = Path.FromSegments(Directory.Current().path(), 'dist/index.js');
+    const root = await Directory.Current();
+    const serverEntry = Path.FromSegments(root.path, 'dist/index.js');
     let appError: Error|undefined = undefined;
     const appProcess = spawn(`node`, [serverEntry.toString()], {
-        cwd: Directory.Current().path().toString()
+        cwd: root.path.toString()
     });
     appProcess.stdout.setEncoding('utf8');
     appProcess.stderr.setEncoding('utf8');
