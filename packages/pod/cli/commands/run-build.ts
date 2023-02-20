@@ -13,7 +13,8 @@ import { Logger } from '../utils/logger/logger';
  */
 
 export const runBuild: Command = async () => {
-    const root = await (await Directory.Current()).path;
+    const cwd = await Directory.Current();
+    const root = cwd.path;
     const logger = container.get(Logger);
 
     try {

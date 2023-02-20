@@ -319,7 +319,7 @@ const loadWatchConfigurationOptions = (
         ...deps,
         'solidus',
         'solid-js/web'
-    ].filter(dep => dep !== 'solid-app-router');
+    ].filter(dep => (dep !== 'solid-app-router') && (dep !== '@solidjs/router'));
 
     const tsConfigOverrides = {
         declaration: true,
