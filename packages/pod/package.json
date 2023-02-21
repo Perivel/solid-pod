@@ -43,7 +43,7 @@
     "./assembler/package.json"
   ],
   "bin": {
-    "solid-pod": "./dist/bin/pod.js"
+    "solid": "./dist/bin/pod.js"
   },
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs",
