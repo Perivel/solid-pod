@@ -9,7 +9,7 @@
     "publish": {
       "ignoreChanges": [
         "*.md",
-        "./examples"
+        "./examples/*"
       ]
     }
   }
