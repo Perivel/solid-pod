@@ -42,7 +42,7 @@
     "./assembler/dist",
     "./assembler/package.json"
   ],
-  "bin": "./dist/bin/pod.js",
+  "bin": "./dist/bin/cli.mjs",
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs",
     "test": "echo \"Error: run tests from root\" && exit 1"

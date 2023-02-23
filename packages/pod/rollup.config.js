@@ -126,7 +126,7 @@ export default [
         external: cliExternals,
         output: [
             {
-                file: "./dist/bin/pod.js",
+                file: "./dist/bin/cli.mjs",
                 format: "esm",
             },
         ],
