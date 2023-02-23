@@ -1,6 +1,6 @@
 import { Component, createEffect, createMemo, createSignal } from 'solid-js';
-import { Title } from 'solid-meta';
-import { useNavigate } from 'solid-app-router';
+import { Title } from '@solidjs/meta';
+import { useNavigate } from '@solidjs/router';
 
 const Home: Component = () => {
   const [count, setCount] = createSignal(0);

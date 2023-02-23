@@ -1,7 +1,7 @@
 import { Component } from 'solid-js';
-import { Title } from 'solid-meta';
-import { useServerRequestContext, useIsServer } from '@solidus-js/core';
-import { useNavigate } from 'solid-app-router';
+import { Title } from '@solidjs/meta';
+import { useServerRequestContext, useIsServer } from 'solid-pod';
+import { useNavigate } from '@solidjs/router';
 
 const About: Component = () => {
     const server = useServerRequestContext();

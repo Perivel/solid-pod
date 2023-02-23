@@ -1,9 +1,9 @@
 {
   "name": "assembler",
-  "version": "0.1.0",
-  "description": "Utilities for building Solid pod applications and libraries.",
-  "author": "PatrickLumenus <patrickaluy@gmail.com>",
-  "homepage": "https://github.com/Perivel/solidus-redesign#readme",
+  "version": "0.0.1",
+  "description": "Utilities for building Solid Pod applications and libraries.",
+  "author": "PatrickLumenus <pluy@perivel.com>",
+  "homepage": "https://github.com/Perivel/solid-pod",
   "license": "MIT",
   "directories": {
     "lib": "lib",
@@ -29,14 +29,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Perivel/solidus-redesign.git"
+    "url": "git+https://github.com/Perivel/solid-pod.git"
   },
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
-    "url": "https://github.com/Perivel/solidus-redesign/issues"
+    "url": "https://github.com/Perivel/solid-pod/issues"
   },
   "dependencies": {
     "@babel/core": "^7.20.12",

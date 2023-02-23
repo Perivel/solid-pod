@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "The core library for SolidusJS",
   "author": "PatrickLumenus <patrickaluy@gmail.com>",
+  "private": true,
   "homepage": "",
   "license": "MIT",
   "main": "dist/index.js",

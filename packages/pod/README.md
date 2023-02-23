@@ -1,14 +1,26 @@
 # Solid Pod
-Solid Pod is a plug-and-play Server-Side Rendering solution for SolidJS. This repository is the main library.
+Solid Pod is a plug-and-play Server-Side Rendering solution for SolidJS.
+
+**NOTE**: Solid Pod is still a work in progress. Some or all features may still not work. Use at your own risk.
 
 ## Installation
-TODO
+You can add `solid-pod` to any existing SolidJS app using the following commands:
+
+NPM
+```
+npm install solid-pod
+```
+
+Yarn
+```
+yarn add solid-pod
+```
 
 ## Usage
 At its most basic form, all you have to do to run Solid Pod is change one line in your `src/index.tsx` file.
 
 ```ts
-import { runApp, Middleware } from 'solid-pod';
+import { runApp } from 'solid-pod';
 import App from './App';
 
 runApp(App);
@@ -26,7 +38,7 @@ The `useServerRequestContext()` primitive will give you access to the server req
 // App,tsx
 import { Component } from 'solid-js';
 import { useServerRequestContext } from 'solid-pod';
-import { Router, useRoutes } from 'solid-app-router';
+import { Router, useRoutes } from '@solidjs/router';
 import { routes } from './routes';
 
 const App: Component = () => {

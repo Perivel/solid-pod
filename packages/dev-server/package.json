@@ -6,6 +6,7 @@
   "homepage": "https://github.com/Perivel/solidus-redesign#readme",
   "license": "MIT",
   "main": "dist/index.js",
+  "private": true,
   "directories": {
     "lib": "lib",
     "test": "__tests__"
