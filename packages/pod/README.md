@@ -27,7 +27,7 @@ runApp(App);
 ```
 Notice that the only change we made to our `index.ts` file is we change SolidJS' `render()` call to Solid Pod's `runApp()` call.
 
-At its most simplest form, this is all we need to do. We can now run the application by running `pod start` at the root of our project directory. This will run our application in SSR mode.
+At its most simplest form, this is all we need to do. We can now run the application by running `solid-pod start` at the root of our project directory. This will run our application in SSR mode.
 
 ## Helper Primitives
 Solid Pod comes with some pre-built primitives to give you access to different pieces of information.
