@@ -9,7 +9,7 @@
     "examples/*"
   ],
   "scripts": {
-    "publish": "lerna publish --no-private",
+    "release": "lerna publish --no-private",
     "build": "lerna run build"
   }
 }
