@@ -17,7 +17,7 @@ export const runHelp: Command = async () => {
     const details = container.get(PackageDetails);
     const helpMessage = `
 ${details.name} v${details.version}
-Usage:               solid <command>
+Usage:               ${details.name} <command>
 -v                   Displays the current version of ${strFmt.capitalCase(details.name)} being run.
 -h                   Shows this help message.
 
