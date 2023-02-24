@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "release": "lerna publish --no-private",
-    "build": "lerna run build"
+    "build": "lerna run build",
+    "bootstrap": "lerna bootstrap"
   }
 }

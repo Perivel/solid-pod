@@ -22,7 +22,8 @@
         "require": "./dist/server.cjs"
       },
       "import": "./dist/server.mjs",
-      "require": "./dist/server.cjs"
+      "require": "./dist/server.cjs",
+      "types": "./dist/types/lib/index.d.ts"
     },
     "./assembler": {
       "browser": {
@@ -34,13 +35,14 @@
         "require": "./assembler/dist/server.cjs"
       },
       "import": "./assembler/dist/server.mjs",
-      "require": "./assembler/dist/server.cjs"
+      "require": "./assembler/dist/server.cjs",
+      "types": "./assembler/dist/types/index.d.ts"
     }
   },
   "files": [
-    "./dist",
-    "./assembler/dist",
-    "./assembler/package.json"
+    "dist",
+    "assembler/dist",
+    "assembler/package.json"
   ],
   "bin": "./dist/bin/cli.mjs",
   "scripts": {

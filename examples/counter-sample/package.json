@@ -16,7 +16,6 @@
   "dependencies": {
     "@solidjs/meta": "^0.28.2",
     "@solidjs/router": "^0.7.0",
-    "solid-js": "^1.6.10",
-    "solid-pod": "^0.0.2"
+    "solid-js": "^1.6.10"
   }
 }
